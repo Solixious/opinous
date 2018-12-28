@@ -43,7 +43,7 @@ public class UserController {
 
         securityService.autologin(userForm.getUsername(), userForm.getPassword());
 
-        return "redirect:/welcome";
+        return "/welcome";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
