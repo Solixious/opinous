@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Create an account</title>
+    <title>Home Page</title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 
@@ -31,8 +31,28 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Opinous</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Popular</a></li>
+              <li><a href="#">Recent</a></li>
+              <li><a href="#">Notification</a></li>
+            </ul>
+            <button class="btn btn-primary navbar-btn">New</button>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome ${pageContext.request.userPrincipal.name}</a></li>
+              <li><a onclick="document.forms['logoutForm'].submit()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+          </div>
+        </nav>
 
+        <div class="container">
+          <h3>Test title</h3>
+          <p>This is a test paragraph. Proper content will be generated here.</p>
+        </div>
     </c:if>
 
 </div>
