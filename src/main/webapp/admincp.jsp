@@ -36,57 +36,57 @@
 
         <div class="row widgets">
           <div class="text-center col-md-3">
-              <a href="#">Add User</a>
+              <a href="#"><span class="glyphicon glyphicon-plus"></span> Add User</a>
           </div>
           <div class="text-center col-md-3">
-              <a href="#">Update/Delete User</a>
+              <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete User</a>
           </div>
           <div class="text-center col-md-3">
-              <a href="#">List Users</a>
-          </div>
-        </div>
-        <div class="row widgets">
-          <div class="text-center col-md-3">
-              <a href="#">Add Anonymous User</a>
-          </div>
-          <div class="text-center col-md-3">
-              <a href="#">Update/Delete Anonymous User</a>
-          </div>
-          <div class="text-center col-md-3">
-             <a href="#">List Anonymous Users</a>
+              <a href="#"><span class="glyphicon glyphicon-list"></span> List Users</a>
           </div>
         </div>
         <div class="row widgets">
           <div class="text-center col-md-3">
-              <a href="#">Add Moderator</a>
+              <a href="#"><span class="glyphicon glyphicon-plus"></span> Add Anonymous User</a>
           </div>
           <div class="text-center col-md-3">
-              <a href="#">Update/Delete Moderator</a>
+              <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete Anonymous User</a>
           </div>
           <div class="text-center col-md-3">
-              <a href="#">List Moderators</a>
-          </div>
-        </div>
-        <div class="row widgets">
-          <div class="text-center col-md-3">
-              <a href="#">Add Admin</a>
-          </div>
-          <div class="text-center col-md-3">
-              <a href="#">Update/Delete Admin</a>
-          </div>
-          <div class="text-center col-md-3">
-              <a href="#">List Admins</a>
+             <a href="#"><span class="glyphicon glyphicon-list"></span> List Anonymous Users</a>
           </div>
         </div>
         <div class="row widgets">
           <div class="text-center col-md-3">
-              <a href="#">Statistics</a>
+              <a href="#"><span class="glyphicon glyphicon-plus"></span> Add Moderator</a>
           </div>
           <div class="text-center col-md-3">
-              <a href="#">Mails</a>
+              <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete Moderator</a>
           </div>
           <div class="text-center col-md-3">
-              <a href="#">Site Settings</a>
+              <a href="#"><span class="glyphicon glyphicon-list"></span> List Moderators</a>
+          </div>
+        </div>
+        <div class="row widgets">
+          <div class="text-center col-md-3">
+              <a href="#"><span class="glyphicon glyphicon-plus"></span> Add Admin</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete Admin</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#"><span class="glyphicon glyphicon-list"></span> List Admins</a>
+          </div>
+        </div>
+        <div class="row widgets">
+          <div class="text-center col-md-3">
+              <a href="#"><span class="glyphicon glyphicon-stats"></span> Statistics</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#"><span class="glyphicon glyphicon-envelope"></span> Mails</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#"><span class="glyphicon glyphicon-cog"></span> Site Settings</a>
           </div>
         </div>
 
