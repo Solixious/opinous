@@ -16,6 +16,7 @@
     <title>Admin CP</title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -30,11 +31,51 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <jsp:include page="nav-bar.jsp" />
 
-        <div class="container">
-          <h3>Test title</h3>
-          <p>This is a test paragraph. Proper content will be generated here.</p>
+        <jsp:include page="nav-bar.jsp" />
+        <div class="row widgets">
+          <div class="text-center col-md-3">
+              <a href="#">Add User</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#">Update/Delete User</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#">List Users</a>
+          </div>
+        </div>
+        <div class="row widgets">
+          <div class="text-center col-md-3">
+              <a href="#">Add Anonymous User</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#">Update/Delete Anonymous User</a>
+          </div>
+          <div class="text-center col-md-3">
+             <a href="#">List Anonymous Users</a>
+          </div>
+        </div>
+        <div class="row widgets">
+          <div class="text-center col-md-3">
+              <a href="#">Add Moderator</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#">Update/Delete Moderator</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#">List Moderators</a>
+          </div>
+        </div>
+        <div class="row widgets">
+          <div class="text-center col-md-3">
+              <a href="#">Add Admin</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#">Update/Delete Admin</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#">List Admins</a>
+          </div>
         </div>
 
 </div>

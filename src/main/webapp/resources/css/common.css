@@ -46,3 +46,26 @@ body {
 .has-error {
     color: red
 }
+
+.widgets {
+    display: flex;
+    justify-content: space-around;
+    line-height: 3;
+    margin-bottom: 24px;
+}
+
+.widgets > div {
+    background-color: #FFF;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+}
+.widgets > div > a {
+    text-decoration: none;
+    color: #777777;
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+.widgets > div > a:hover {
+    color: #337ab7;
+}
