@@ -36,7 +36,7 @@ public class UserController {
         userValidator.validate(userForm, bindingResult);
 
         if(bindingResult.hasErrors()) {
-            return "registration";
+            return "/registration";
         }
 
         userService.save(userForm);

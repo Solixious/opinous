@@ -26,17 +26,14 @@
 </head>
 <body>
     <jsp:include page="nav-bar.jsp" />
+    <form id="logoutForm" method="POST" action="${contextPath}/logout">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
 
     <div class="container" style="margin-top:50px">
-
-        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-
-
         <div class="row widgets">
           <div class="text-center col-md-3">
-              <a href="#"><span class="glyphicon glyphicon-plus"></span> Add User</a>
+              <a href="${contextPath}/admin/new-user"><span class="glyphicon glyphicon-plus"></span> Add User</a>
           </div>
           <div class="text-center col-md-3">
               <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete User</a>
