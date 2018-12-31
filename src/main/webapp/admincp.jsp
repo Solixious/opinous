@@ -25,14 +25,15 @@
     <![endif]-->
 </head>
 <body>
-<div class="container">
+    <jsp:include page="nav-bar.jsp" />
+
+    <div class="container" style="margin-top:50px">
 
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
 
-        <jsp:include page="nav-bar.jsp" />
         <div class="row widgets">
           <div class="text-center col-md-3">
               <a href="#">Add User</a>
@@ -75,6 +76,17 @@
           </div>
           <div class="text-center col-md-3">
               <a href="#">List Admins</a>
+          </div>
+        </div>
+        <div class="row widgets">
+          <div class="text-center col-md-3">
+              <a href="#">Statistics</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#">Mails</a>
+          </div>
+          <div class="text-center col-md-3">
+              <a href="#">Site Settings</a>
           </div>
         </div>
 
