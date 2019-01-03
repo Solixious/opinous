@@ -43,7 +43,7 @@
         </thead>
         <tbody>
             <c:forEach items="${userList}" var="user">
-                <tr>
+                <tr class="clickable-row" onclick="window.location='${contextPath}/admin/update-delete-user/${user.username}';">
                     <td>${user.id}</td>
                     <td>${user.email}</td>
                     <td>${user.username}</td>

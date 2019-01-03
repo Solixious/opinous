@@ -83,3 +83,6 @@ body {
 .update-query-form {
     margin-bottom: 50px;
 }
+.clickable-row {
+    cursor: pointer;
+}
