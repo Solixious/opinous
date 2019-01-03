@@ -40,7 +40,7 @@
         <form:form method="POST" modelAttribute="userForm" class="update-form">
             <spring:bind path="id">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    Username<form:input type="hidden" path="id"></form:input>
+                    <form:hidden path="id"></form:hidden>
                     <form:errors path="id"></form:errors>
                 </div>
             </spring:bind>
@@ -88,7 +88,7 @@
                 </div>
             </spring:bind>
             <button class="btn btn-primary" type="submit">Update</button>
-
+            <button class="btn btn-secondary">Delete</button>
         </form:form>
     </c:if>
 </div>
