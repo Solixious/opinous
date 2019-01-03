@@ -39,7 +39,7 @@
               <a href="${contextPath}/admin/update-delete-user"><span class="glyphicon glyphicon-pencil"></span> Update/Delete User</a>
           </div>
           <div class="text-center col-md-3">
-              <a href="#"><span class="glyphicon glyphicon-list"></span> List Users</a>
+              <a href="${contextPath}/admin/listUsers"><span class="glyphicon glyphicon-list"></span> List Users</a>
           </div>
         </div>
         <div class="row widgets">

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -79,7 +80,9 @@ public class AdminController {
 
     @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.GET)
     public String updateDeleteUser(@PathVariable("username") String username, Model model) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).getCopy();
+        user.setPassword("");
+        user.setConfirmPassword("");
 
         if(user != null) {
             model.addAttribute("userForm", user);
@@ -91,13 +94,19 @@ public class AdminController {
     @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.POST)
     public String updateDeleteUser(@ModelAttribute("userForm") User updateUser,
                                    BindingResult bindingResult, Model model) {
-        userValidator.validate(updateUser, bindingResult);
-
         if (bindingResult.hasErrors()) {
-            return "admin-new-user";
+            return "admin-update-delete-user";
         }
-        User user = userRepository.save(updateUser);
-
+        User user = userRepository.findById(updateUser.getId()).get();
+        userService.copyNecessaryUpdates(updateUser, user);
+        userService.update(user);
         return "admin-update-delete-user";
+    }
+
+    @RequestMapping(value = "/listUsers", method = RequestMethod.GET)
+    public String listUsers(Model model) {
+        List<User> users = userRepository.findAll();
+        model.addAttribute("userList", users);
+        return "admin-list-user";
     }
 }

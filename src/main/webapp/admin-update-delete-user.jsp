@@ -38,6 +38,13 @@
     </div>
     <c:if test="${not empty userForm.username}">
         <form:form method="POST" modelAttribute="userForm" class="update-form">
+            <spring:bind path="id">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
+                    Username<form:input type="hidden" path="id"></form:input>
+                    <form:errors path="id"></form:errors>
+                </div>
+            </spring:bind>
+
             <spring:bind path="username">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     Username<form:input type="text" path="username" class="form-control" placeholder="Username"
@@ -75,9 +82,9 @@
             </spring:bind>
             <spring:bind path="lastName">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    Last Name<form:input type="text" path="firstName" class="form-control"
+                    Last Name<form:input type="text" path="lastName" class="form-control"
                                 placeholder="Last Name"></form:input>
-                    <form:errors path="firstName"></form:errors>
+                    <form:errors path="lastName"></form:errors>
                 </div>
             </spring:bind>
             <button class="btn btn-primary" type="submit">Update</button>

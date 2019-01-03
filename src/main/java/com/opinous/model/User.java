@@ -35,6 +35,22 @@ public class User {
 	@ManyToMany(mappedBy = "users")
 	private Set<AnonymousUser> anonymousUsers;
 
+	public User() {
+
+	}
+
+	public User(Long id, String email, String username, String password, String confirmPassword, String firstName, String lastName, Set<Role> roles, Set<AnonymousUser> anonymousUsers) {
+		this.id = id;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.roles = roles;
+		this.anonymousUsers = anonymousUsers;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -97,5 +113,9 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public User getCopy() {
+		return new User(id, email, username, password, confirmPassword, firstName, lastName, roles, anonymousUsers);
 	}
 }

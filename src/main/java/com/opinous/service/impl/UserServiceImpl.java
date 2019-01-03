@@ -29,18 +29,39 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         if(roleRepository.count() == 0) {
-        	for(RoleConst roleConst : RoleConst.values()) {
-        		Role role = new Role();
-        		role.setName(roleConst.toString());
-        		roleRepository.save(role);
+            for(RoleConst roleConst : RoleConst.values()) {
+                Role role = new Role();
+                role.setName(roleConst.toString());
+                roleRepository.save(role);
                 user.setRoles(new HashSet<>(roleRepository.findAll()));
-        	}
+            }
         } else {
-        	Set<Role> roles = new HashSet<>();
-        	roles.add(roleRepository.findByName(RoleConst.USER_ROLE.toString()));
-        	user.setRoles(roles);
+            Set<Role> roles = new HashSet<>();
+            roles.add(roleRepository.findByName(RoleConst.USER_ROLE.toString()));
+            user.setRoles(roles);
         }
         userRepository.save(user);
+    }
+
+    @Override
+    public void update(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+
+    @Override
+    public void copyNecessaryUpdates(User from, User to) {
+        if(!from.getEmail().equals(to.getEmail()))
+            to.setEmail(from.getEmail());
+        if(!from.getUsername().equals(to.getUsername()))
+            to.setUsername(from.getUsername());
+        if(!from.getFirstName().equals(to.getFirstName()))
+            to.setFirstName(from.getFirstName());
+        if(!from.getLastName().equals(to.getLastName()))
+            to.setLastName(from.getLastName());
+        if(!from.getPassword().equals("") && from.getPassword().equals(from.getConfirmPassword()))
+            to.setPassword(from.getPassword());
+
     }
 
     @Override
