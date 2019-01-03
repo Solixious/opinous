@@ -88,7 +88,15 @@
                 </div>
             </spring:bind>
             <button class="btn btn-primary" type="submit">Update</button>
-            <button class="btn btn-secondary">Delete</button>
+        </form:form>
+        <form:form method="DELETE" modelAttribute="userForm" class="update-form">
+            <spring:bind path="id">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
+                    <form:hidden path="id"></form:hidden>
+                    <form:errors path="id"></form:errors>
+                </div>
+            </spring:bind>
+            <button class="btn btn-secondary" type="submit">Delete</button>
         </form:form>
     </c:if>
 </div>

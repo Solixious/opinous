@@ -103,6 +103,14 @@ public class AdminController {
         return "admin-update-delete-user";
     }
 
+    @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.DELETE)
+    public String deleteUser(@ModelAttribute("userForm") User updateUser,
+                                   BindingResult bindingResult, Model model) {
+        User user = userRepository.findById(updateUser.getId()).get();
+        userRepository.delete(user);
+        return "admin-list-user";
+    }
+
     @RequestMapping(value = "/listUsers", method = RequestMethod.GET)
     public String listUsers(Model model) {
         List<User> users = userRepository.findAll();
