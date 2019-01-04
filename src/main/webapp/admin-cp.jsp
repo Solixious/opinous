@@ -55,7 +55,7 @@
         </div>
         <div class="row widgets">
           <div class="text-center col-md-3">
-              <a href="#"><span class="glyphicon glyphicon-plus"></span> Add Moderator</a>
+              <a href="${contextPath}/admin/new-moderator"><span class="glyphicon glyphicon-plus"></span> Add Moderator</a>
           </div>
           <div class="text-center col-md-3">
               <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete Moderator</a>

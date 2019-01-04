@@ -63,6 +63,18 @@ public class AdminController {
         }
     }
 
+    @RequestMapping(value = "/new-moderator", method = RequestMethod.GET)
+    public String newModerator(Model model) {
+        if(isAdmin()) {
+            model.addAttribute("userForm", new User());
+            return "/admin-new-moderator";
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
+            return "error";
+        }
+    }
+
     @RequestMapping(value = "/new-user", method = RequestMethod.POST)
     public String newUser(@ModelAttribute("userForm") User userForm,
                           BindingResult bindingResult, Model model) {
@@ -77,6 +89,31 @@ public class AdminController {
             userService.saveUser(userForm);
             model.addAttribute("userForm", new User());
             return "/admin-new-user";
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
+            return "error";
+        }
+    }
+
+    @RequestMapping(value = "/new-moderator", method = RequestMethod.POST)
+    public String newModerator(@ModelAttribute("userForm") User userForm,
+                          BindingResult bindingResult, Model model) {
+        if(isAdmin()) {
+
+            userValidator.validate(userForm, bindingResult);
+
+            if (bindingResult.hasErrors()) {
+                return "admin-new-moderator";
+            }
+            RoleConst[] roles = new RoleConst[]
+                    {
+                            RoleConst.USER_ROLE,
+                            RoleConst.MODERATOR_ROLE
+                    };
+            userService.saveUser(userForm, roles);
+            model.addAttribute("userForm", new User());
+            return "/admin-new-moderator";
         }
         else {
             logger.error("Illegal attempt to access admin page");

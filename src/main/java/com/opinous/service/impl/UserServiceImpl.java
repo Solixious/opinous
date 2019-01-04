@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
         for(RoleConst role : roles) {
             roleSet.add(roleRepository.findByName(role.toString()));
         }
+        user.setRoles(roleSet);
         userRepository.save(user);
     }
 
