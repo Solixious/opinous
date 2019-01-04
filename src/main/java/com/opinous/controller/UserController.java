@@ -39,7 +39,7 @@ public class UserController {
             return "/registration";
         }
 
-        userService.save(userForm);
+        userService.saveUser(userForm);
 
         securityService.autologin(userForm.getUsername(), userForm.getPassword());
 

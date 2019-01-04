@@ -7,6 +7,8 @@ import com.opinous.repository.UserRepository;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import com.opinous.validator.UserValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
+    Logger logger = LoggerFactory.getLogger(AdminController.class);
+
     @Autowired
     UserService userService;
 
@@ -37,10 +41,14 @@ public class AdminController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String adminHome(HttpServletRequest request) {
-        if(isAdmin())
+        if(isAdmin()) {
+            logger.debug("Going to admin control panel page.");
             return "admin-cp";
-        else
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
             return "error";
+        }
     }
 
     @RequestMapping(value = "/new-user", method = RequestMethod.GET)
@@ -49,8 +57,10 @@ public class AdminController {
             model.addAttribute("userForm", new User());
             return "/admin-new-user";
         }
-        else
+        else {
+            logger.error("Illegal attempt to access admin page");
             return "error";
+        }
     }
 
     @RequestMapping(value = "/new-user", method = RequestMethod.POST)
@@ -64,12 +74,14 @@ public class AdminController {
                 return "admin-new-user";
             }
 
-            userService.save(userForm);
+            userService.saveUser(userForm);
             model.addAttribute("userForm", new User());
             return "/admin-new-user";
         }
-        else
+        else {
+            logger.error("Illegal attempt to access admin page");
             return "error";
+        }
     }
 
 
@@ -77,8 +89,10 @@ public class AdminController {
     public String updateDeleteUser(Model model) {
         if(isAdmin())
             return "admin-update-delete-user";
-        else
+        else {
+            logger.error("Illegal attempt to access admin page");
             return "error";
+        }
     }
 
     @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.GET)
@@ -96,8 +110,10 @@ public class AdminController {
                 return "redirect:/admin/listUsers/" + username;
             }
         }
-        else
+        else {
+            logger.error("Illegal attempt to access admin page");
             return "error";
+        }
     }
 
     @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.POST)
@@ -110,11 +126,13 @@ public class AdminController {
 
             User user = userRepository.findById(updateUser.getId()).get();
             userService.copyNecessaryUpdates(updateUser, user);
-            userService.update(user);
+            userService.updateUser(user);
             return "admin-update-delete-user";
         }
-        else
+        else {
+            logger.error("Illegal attempt to access admin page");
             return "error";
+        }
     }
 
     @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.DELETE)
@@ -125,8 +143,10 @@ public class AdminController {
             userRepository.delete(user);
             return "redirect:/admin/listUsers";
         }
-        else
+        else {
+            logger.error("Illegal attempt to access admin page");
             return "error";
+        }
     }
 
     @RequestMapping(value = "/listUsers", method = RequestMethod.GET)
@@ -136,8 +156,10 @@ public class AdminController {
             model.addAttribute("userList", users);
             return "/admin-list-user";
         }
-        else
+        else {
+            logger.error("Illegal attempt to access admin page");
             return "error";
+        }
     }
 
     @RequestMapping(value = "/listUsers/{username}", method = RequestMethod.GET)
@@ -147,8 +169,10 @@ public class AdminController {
             model.addAttribute("userList", users);
             return "/admin-list-user";
         }
-        else
+        else {
+            logger.error("Illegal attempt to access admin page");
             return "error";
+        }
     }
 
     private boolean isAdmin() {

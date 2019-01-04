@@ -26,15 +26,11 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void save(User user) {
+    public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         if(roleRepository.count() == 0) {
-            for(RoleConst roleConst : RoleConst.values()) {
-                Role role = new Role();
-                role.setName(roleConst.toString());
-                roleRepository.save(role);
-                user.setRoles(new HashSet<>(roleRepository.findAll()));
-            }
+            populateDefaultRoles();
+            user.setRoles(new HashSet<>(roleRepository.findAll()));
         } else {
             Set<Role> roles = new HashSet<>();
             roles.add(roleRepository.findByName(RoleConst.USER_ROLE.toString()));
@@ -44,7 +40,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(User user) {
+    public void saveUser(User user, RoleConst[] roles) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        if(roleRepository.count() == 0) {
+            populateDefaultRoles();
+        }
+
+        HashSet<Role> roleSet = new HashSet<>();
+
+        for(RoleConst role : roles) {
+            roleSet.add(roleRepository.findByName(role.toString()));
+        }
+        userRepository.save(user);
+    }
+
+    private void populateDefaultRoles() {
+        for (RoleConst roleConst : RoleConst.values()) {
+            Role role = new Role();
+            role.setName(roleConst.toString());
+            roleRepository.save(role);
+        }
+    }
+
+    @Override
+    public void updateUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
