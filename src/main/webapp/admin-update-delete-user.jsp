@@ -108,6 +108,14 @@
         var usr = jQuery("#usr").val();
         window.location.replace("${contextPath}/admin/update-delete-user/" + usr);
     });
+    jQuery("#usr").keypress(function (e) {
+      var key = e.which;
+      if(key == 13)  // the enter key code
+       {
+            var usr = jQuery("#usr").val();
+            window.location.replace("${contextPath}/admin/update-delete-user/" + usr);
+       }
+   });
 </script>
 </body>
 </html>
