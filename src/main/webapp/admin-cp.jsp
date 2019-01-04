@@ -54,25 +54,19 @@
           </div>
         </div>
         <div class="row widgets">
-          <div class="text-center col-md-3">
+          <div class="text-center col-md-4">
               <a href="${contextPath}/admin/new-moderator"><span class="glyphicon glyphicon-plus"></span> Add Moderator</a>
           </div>
-          <div class="text-center col-md-3">
-              <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete Moderator</a>
-          </div>
-          <div class="text-center col-md-3">
-              <a href="#"><span class="glyphicon glyphicon-list"></span> List Moderators</a>
+          <div class="text-center col-md-4">
+              <a href="${contextPath}/admin/listModerators"><span class="glyphicon glyphicon-list"></span> List Moderators</a>
           </div>
         </div>
         <div class="row widgets">
-          <div class="text-center col-md-3">
+          <div class="text-center col-md-4">
               <a href="${contextPath}/admin/new-admin"><span class="glyphicon glyphicon-plus"></span> Add Admin</a>
           </div>
-          <div class="text-center col-md-3">
-              <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete Admin</a>
-          </div>
-          <div class="text-center col-md-3">
-              <a href="#"><span class="glyphicon glyphicon-list"></span> List Admins</a>
+          <div class="text-center col-md-4">
+              <a href="${contextPath}/admin/listAdmins"><span class="glyphicon glyphicon-list"></span> List Admins</a>
           </div>
         </div>
         <div class="row widgets">

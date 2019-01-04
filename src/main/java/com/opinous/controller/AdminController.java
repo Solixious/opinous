@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -230,6 +231,36 @@ public class AdminController {
             List<User> users = userRepository.findAll();
             model.addAttribute("userList", users);
             return "/admin-list-user";
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
+            return "error";
+        }
+    }
+
+    @RequestMapping(value = "/listModerators", method = RequestMethod.GET)
+    public String listModerator(Model model) {
+        if(isAdmin()) {
+            List<String> roles = new ArrayList<>();
+            roles.add(RoleConst.MODERATOR_ROLE.toString());
+            List<User> users = userRepository.findBySpecificRoles(roles);
+            model.addAttribute("userList", users);
+            return "/admin-list-moderator";
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
+            return "error";
+        }
+    }
+
+    @RequestMapping(value = "/listAdmins", method = RequestMethod.GET)
+    public String listAdmin(Model model) {
+        if(isAdmin()) {
+            List<String> roles = new ArrayList<>();
+            roles.add(RoleConst.ADMIN_ROLE.toString());
+            List<User> users = userRepository.findBySpecificRoles(roles);
+            model.addAttribute("userList", users);
+            return "/admin-list-admin";
         }
         else {
             logger.error("Illegal attempt to access admin page");
