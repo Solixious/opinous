@@ -75,6 +75,18 @@ public class AdminController {
         }
     }
 
+    @RequestMapping(value = "/new-admin", method = RequestMethod.GET)
+    public String newAdmin(Model model) {
+        if(isAdmin()) {
+            model.addAttribute("userForm", new User());
+            return "/admin-new-admin";
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
+            return "error";
+        }
+    }
+
     @RequestMapping(value = "/new-user", method = RequestMethod.POST)
     public String newUser(@ModelAttribute("userForm") User userForm,
                           BindingResult bindingResult, Model model) {
@@ -98,7 +110,7 @@ public class AdminController {
 
     @RequestMapping(value = "/new-moderator", method = RequestMethod.POST)
     public String newModerator(@ModelAttribute("userForm") User userForm,
-                          BindingResult bindingResult, Model model) {
+                               BindingResult bindingResult, Model model) {
         if(isAdmin()) {
 
             userValidator.validate(userForm, bindingResult);
@@ -114,6 +126,32 @@ public class AdminController {
             userService.saveUser(userForm, roles);
             model.addAttribute("userForm", new User());
             return "/admin-new-moderator";
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
+            return "error";
+        }
+    }
+
+    @RequestMapping(value = "/new-admin", method = RequestMethod.POST)
+    public String newAdmin(@ModelAttribute("userForm") User userForm,
+                               BindingResult bindingResult, Model model) {
+        if(isAdmin()) {
+
+            userValidator.validate(userForm, bindingResult);
+
+            if (bindingResult.hasErrors()) {
+                return "admin-new-admin";
+            }
+            RoleConst[] roles = new RoleConst[]
+                    {
+                            RoleConst.USER_ROLE,
+                            RoleConst.MODERATOR_ROLE,
+                            RoleConst.ADMIN_ROLE
+                    };
+            userService.saveUser(userForm, roles);
+            model.addAttribute("userForm", new User());
+            return "/admin-new-admin";
         }
         else {
             logger.error("Illegal attempt to access admin page");
