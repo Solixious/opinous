@@ -37,7 +37,7 @@ public class AdminController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String adminHome(HttpServletRequest request) {
-        if(securityService.hasRole(RoleConst.ADMIN_ROLE.toString()))
+        if(isAdmin())
             return "admin-cp";
         else
             return "error";
@@ -45,8 +45,7 @@ public class AdminController {
 
     @RequestMapping(value = "/new-user", method = RequestMethod.GET)
     public String newUser(Model model) {
-        if(securityService.hasRole(RoleConst.ADMIN_ROLE.toString())) {
-            System.out.println("Loading reg page...");
+        if(isAdmin()) {
             model.addAttribute("userForm", new User());
             return "/admin-new-user";
         }
@@ -57,7 +56,7 @@ public class AdminController {
     @RequestMapping(value = "/new-user", method = RequestMethod.POST)
     public String newUser(@ModelAttribute("userForm") User userForm,
                           BindingResult bindingResult, Model model) {
-        if(securityService.hasRole(RoleConst.ADMIN_ROLE.toString())) {
+        if(isAdmin()) {
 
             userValidator.validate(userForm, bindingResult);
 
@@ -73,48 +72,86 @@ public class AdminController {
             return "error";
     }
 
+
     @RequestMapping(value = "/update-delete-user", method = RequestMethod.GET)
     public String updateDeleteUser(Model model) {
-        return "admin-update-delete-user";
+        if(isAdmin())
+            return "admin-update-delete-user";
+        else
+            return "error";
     }
 
     @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.GET)
     public String updateDeleteUser(@PathVariable("username") String username, Model model) {
-        User user = userRepository.findByUsername(username).getCopy();
-        user.setPassword("");
-        user.setConfirmPassword("");
+        if(isAdmin()) {
+            User user = userRepository.findByUsername(username);
 
-        if(user != null) {
-            model.addAttribute("userForm", user);
+            if (user != null) {
+                user = user.getCopy();
+                user.setPassword("");
+                user.setConfirmPassword("");
+                model.addAttribute("userForm", user);
+                return "admin-update-delete-user";
+            } else {
+                return "redirect:/admin/listUsers/" + username;
+            }
         }
-
-        return "admin-update-delete-user";
+        else
+            return "error";
     }
 
     @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.POST)
     public String updateDeleteUser(@ModelAttribute("userForm") User updateUser,
                                    BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+        if(isAdmin()) {
+            if (bindingResult.hasErrors()) {
+                return "admin-update-delete-user";
+            }
+
+            User user = userRepository.findById(updateUser.getId()).get();
+            userService.copyNecessaryUpdates(updateUser, user);
+            userService.update(user);
             return "admin-update-delete-user";
         }
-        User user = userRepository.findById(updateUser.getId()).get();
-        userService.copyNecessaryUpdates(updateUser, user);
-        userService.update(user);
-        return "admin-update-delete-user";
+        else
+            return "error";
     }
 
     @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.DELETE)
     public String deleteUser(@ModelAttribute("userForm") User updateUser,
                                    BindingResult bindingResult, Model model) {
-        User user = userRepository.findById(updateUser.getId()).get();
-        userRepository.delete(user);
-        return "admin-list-user";
+        if(isAdmin()) {
+            User user = userRepository.findById(updateUser.getId()).get();
+            userRepository.delete(user);
+            return "redirect:/admin/listUsers";
+        }
+        else
+            return "error";
     }
 
     @RequestMapping(value = "/listUsers", method = RequestMethod.GET)
     public String listUsers(Model model) {
-        List<User> users = userRepository.findAll();
-        model.addAttribute("userList", users);
-        return "admin-list-user";
+        if(isAdmin()) {
+            List<User> users = userRepository.findAll();
+            model.addAttribute("userList", users);
+            return "/admin-list-user";
+        }
+        else
+            return "error";
+    }
+
+    @RequestMapping(value = "/listUsers/{username}", method = RequestMethod.GET)
+    public String listUsers(Model model, @PathVariable("username") String username) {
+        if(isAdmin()) {
+            List<User> users = userRepository.findByUsernameIgnoreCaseContaining(username);
+            model.addAttribute("userList", users);
+            return "/admin-list-user";
+        }
+        else
+            return "error";
+    }
+
+    private boolean isAdmin() {
+        return securityService.hasRole(RoleConst.ADMIN_ROLE.toString());
     }
 }
