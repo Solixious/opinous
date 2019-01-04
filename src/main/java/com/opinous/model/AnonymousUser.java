@@ -20,8 +20,9 @@ public class AnonymousUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private String name;
+	private String displayPicture;
 
 	@ManyToMany
 	@JoinTable(name = "anon_map", joinColumns = @JoinColumn(name = "anonymous_user_id"), 
@@ -63,5 +64,13 @@ public class AnonymousUser {
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}public String getDisplayPicture() {
+		return displayPicture;
 	}
+
+	public void setDisplayPicture(String displayPicture) {
+		this.displayPicture = displayPicture;
+	}
+
+
 }

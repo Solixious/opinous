@@ -44,7 +44,7 @@
         </div>
         <div class="row widgets">
           <div class="text-center col-md-3">
-              <a href="#"><span class="glyphicon glyphicon-plus"></span> Add Anonymous User</a>
+              <a href="${contextPath}/admin/new-anon-user"><span class="glyphicon glyphicon-plus"></span> Add Anonymous User</a>
           </div>
           <div class="text-center col-md-3">
               <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete Anonymous User</a>
