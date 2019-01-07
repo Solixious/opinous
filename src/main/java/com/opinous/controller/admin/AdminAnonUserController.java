@@ -1,5 +1,6 @@
 package com.opinous.controller.admin;
 
+import com.opinous.enums.NotificationType;
 import com.opinous.enums.RoleConst;
 import com.opinous.exception.FileStorageException;
 import com.opinous.exception.MyFileNotFoundException;
@@ -7,6 +8,7 @@ import com.opinous.model.AnonymousUser;
 import com.opinous.repository.AnonymousUserRepository;
 import com.opinous.repository.UserRepository;
 import com.opinous.service.FileStorageService;
+import com.opinous.service.NotificationService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import com.opinous.validator.UserValidator;
@@ -41,6 +43,9 @@ public class AdminAnonUserController {
     @Autowired
     private AnonymousUserRepository anonymousUserRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
 
     @RequestMapping(value = "/new/anon", method = RequestMethod.GET)
     public String newAnonUser(Model model) {
@@ -69,6 +74,7 @@ public class AdminAnonUserController {
                     .toUriString();
             userForm.setDisplayPicture(uri);
             anonymousUserRepository.save(userForm);
+            notificationService.notify(model, NotificationType.success, "Created new anonymous user successfully!");
             return "/admin-new-anon-user";
         }
         else {
@@ -120,6 +126,7 @@ public class AdminAnonUserController {
                 user.setDisplayPicture(uri);
             }
             anonymousUserRepository.save(user);
+            notificationService.notify(model, NotificationType.success, "Updated anonymous user details successfully!");
             return "admin-update-anon-user";
         }
         else {

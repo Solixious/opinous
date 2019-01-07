@@ -1,8 +1,10 @@
 package com.opinous.controller.admin;
 
+import com.opinous.enums.NotificationType;
 import com.opinous.enums.RoleConst;
 import com.opinous.model.User;
 import com.opinous.repository.UserRepository;
+import com.opinous.service.NotificationService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import com.opinous.validator.UserValidator;
@@ -37,6 +39,9 @@ public class AdminAdminController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
 
     @RequestMapping(value = "/new/admin", method = RequestMethod.GET)
     public String newAdmin(Model model) {
@@ -68,6 +73,7 @@ public class AdminAdminController {
                     };
             userService.saveUser(userForm, roles);
             model.addAttribute("userForm", new User());
+            notificationService.notify(model, NotificationType.success, "New administrator created successfully!");
             return "/admin-new-admin";
         }
         else {

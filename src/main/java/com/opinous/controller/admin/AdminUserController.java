@@ -79,6 +79,7 @@ public class AdminUserController {
 
             userService.saveUser(userForm);
             model.addAttribute("userForm", new User());
+            notificationService.notify(model, NotificationType.success, "Created new user successfully!");
             return "/admin-new-user";
         }
         else {
@@ -144,6 +145,7 @@ public class AdminUserController {
         if(securityService.isAdmin()) {
             User user = userRepository.findById(updateUser.getId()).get();
             userRepository.delete(user);
+            notificationService.notify(model, NotificationType.success, "The user concerned deleted successfully!");
             return "redirect:/admin/list/users";
         }
         else {

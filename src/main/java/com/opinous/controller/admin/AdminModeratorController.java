@@ -1,8 +1,10 @@
 package com.opinous.controller.admin;
 
+import com.opinous.enums.NotificationType;
 import com.opinous.enums.RoleConst;
 import com.opinous.model.User;
 import com.opinous.repository.UserRepository;
+import com.opinous.service.NotificationService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import com.opinous.validator.UserValidator;
@@ -37,6 +39,9 @@ public class AdminModeratorController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @RequestMapping(value = "/new/moderator", method = RequestMethod.GET)
     public String newModerator(Model model) {
         if(securityService.isAdmin()) {
@@ -66,6 +71,7 @@ public class AdminModeratorController {
                     };
             userService.saveUser(userForm, roles);
             model.addAttribute("userForm", new User());
+            notificationService.notify(model, NotificationType.success, "Created new moderator successfully!");
             return "/admin-new-moderator";
         }
         else {
