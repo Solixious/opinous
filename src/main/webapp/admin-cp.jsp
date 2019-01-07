@@ -47,7 +47,7 @@
               <a href="${contextPath}/admin/new/anon"><span class="glyphicon glyphicon-plus"></span> Add Anonymous User</a>
           </div>
           <div class="text-center col-md-3">
-              <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete Anonymous User</a>
+              <a href="${contextPath}/admin/update/anon"><span class="glyphicon glyphicon-pencil"></span> Update/Delete Anonymous User</a>
           </div>
           <div class="text-center col-md-3">
              <a href="${contextPath}/admin/list/anon"><span class="glyphicon glyphicon-list"></span> List Anonymous Users</a>

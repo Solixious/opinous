@@ -15,10 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -73,6 +70,30 @@ public class AdminAnonUserController {
             userForm.setDisplayPicture(uri);
             anonymousUserRepository.save(userForm);
             return "/admin-new-anon-user";
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
+            return "error";
+        }
+    }
+
+    @RequestMapping(value = "/update/anon", method = RequestMethod.GET)
+    public String updateAnonUser() {
+        if(securityService.isAdmin()) {
+            return "admin-update-anon-user";
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
+            return "error";
+        }
+    }
+
+    @RequestMapping(value = "/update/anon/{name}", method = RequestMethod.GET)
+    public String updateAnonUser(@PathVariable("name") String name, Model model) {
+        if(securityService.isAdmin()) {
+            AnonymousUser user = anonymousUserRepository.findByName(name);
+            model.addAttribute("userForm", user);
+            return "admin-update-anon-user";
         }
         else {
             logger.error("Illegal attempt to access admin page");
