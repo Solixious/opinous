@@ -25,3 +25,6 @@
 /.nb-gradle/
 /bin/
 /.apt_generated_tests/
+
+### Project Specific ###
+/img/

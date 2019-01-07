@@ -86,3 +86,7 @@ body {
 .clickable-row {
     cursor: pointer;
 }
+.anon-list-dp {
+    max-width:100px;
+    max-height:100px
+}

@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    SecurityService securityService;
+    private SecurityService securityService;
 
     @Autowired
-    UserValidator userValidator;
+    private UserValidator userValidator;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {

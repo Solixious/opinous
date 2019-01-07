@@ -2,6 +2,7 @@ package com.opinous.controller.admin;
 
 import com.opinous.enums.RoleConst;
 import com.opinous.exception.FileStorageException;
+import com.opinous.exception.MyFileNotFoundException;
 import com.opinous.model.AnonymousUser;
 import com.opinous.repository.AnonymousUserRepository;
 import com.opinous.repository.UserRepository;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -58,10 +62,31 @@ public class AdminAnonUserController {
                               @ModelAttribute("userForm") AnonymousUser userForm,
                               Model model) throws FileStorageException {
         if(securityService.isAdmin()) {
-            String uri = fileStorageService.storeFile(file, userForm.getName() + " " + new Random().nextInt(9999) + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')));
+            String suggestedFileName = userForm.getName() + " " + new Random().nextInt(9999)
+                    + " " +  file.getOriginalFilename().substring(
+                            file.getOriginalFilename().lastIndexOf('.'));
+            String fileName = fileStorageService.storeFile(file, suggestedFileName);
+            String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/file/")
+                    .path(fileName)
+                    .toUriString();
             userForm.setDisplayPicture(uri);
             anonymousUserRepository.save(userForm);
             return "/admin-new-anon-user";
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
+            return "error";
+        }
+    }
+
+    @RequestMapping(value = "/list/anon", method = RequestMethod.GET)
+    public String listAnonUser(Model model) {
+        if(securityService.isAdmin()) {
+            List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
+
+            model.addAttribute("userList", anonymousUsers);
+            return "admin-list-anon-user";
         }
         else {
             logger.error("Illegal attempt to access admin page");
