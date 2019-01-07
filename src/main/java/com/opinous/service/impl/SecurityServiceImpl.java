@@ -1,5 +1,6 @@
 package com.opinous.service.impl;
 
+import com.opinous.enums.RoleConst;
 import com.opinous.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,5 +53,10 @@ public class SecurityServiceImpl implements SecurityService {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean isAdmin() {
+        return hasRole(RoleConst.ADMIN_ROLE.toString());
     }
 }
