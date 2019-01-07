@@ -37,7 +37,7 @@ public class AdminModeratorController {
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping(value = "/new-moderator", method = RequestMethod.GET)
+    @RequestMapping(value = "/new/moderator", method = RequestMethod.GET)
     public String newModerator(Model model) {
         if(securityService.isAdmin()) {
             model.addAttribute("userForm", new User());
@@ -49,7 +49,7 @@ public class AdminModeratorController {
         }
     }
 
-    @RequestMapping(value = "/new-moderator", method = RequestMethod.POST)
+    @RequestMapping(value = "/new/moderator", method = RequestMethod.POST)
     public String newModerator(@ModelAttribute("userForm") User userForm,
                                BindingResult bindingResult, Model model) {
         if(securityService.isAdmin()) {
@@ -74,7 +74,7 @@ public class AdminModeratorController {
         }
     }
 
-    @RequestMapping(value = "/listModerators", method = RequestMethod.GET)
+    @RequestMapping(value = "/list/moderators", method = RequestMethod.GET)
     public String listModerator(Model model) {
         if(securityService.isAdmin()) {
             List<String> roles = new ArrayList<>();

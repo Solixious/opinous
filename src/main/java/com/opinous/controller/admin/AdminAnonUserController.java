@@ -41,7 +41,7 @@ public class AdminAnonUserController {
     private AnonymousUserRepository anonymousUserRepository;
 
 
-    @RequestMapping(value = "/new-anon-user", method = RequestMethod.GET)
+    @RequestMapping(value = "/new/anon", method = RequestMethod.GET)
     public String newAnonUser(Model model) {
         if(securityService.isAdmin()) {
             model.addAttribute("userForm", new AnonymousUser());
@@ -53,7 +53,7 @@ public class AdminAnonUserController {
         }
     }
 
-    @RequestMapping(value = "/new-anon-user", method = RequestMethod.POST)
+    @RequestMapping(value = "/new/anon", method = RequestMethod.POST)
     public String newAnonUser(@RequestParam("file") MultipartFile file,
                               @ModelAttribute("userForm") AnonymousUser userForm,
                               Model model) throws FileStorageException {

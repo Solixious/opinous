@@ -33,18 +33,18 @@
     <div class="container" style="margin-top:50px">
         <div class="row widgets">
           <div class="text-center col-md-3">
-              <a href="${contextPath}/admin/new-user"><span class="glyphicon glyphicon-plus"></span> Add User</a>
+              <a href="${contextPath}/admin/new/user"><span class="glyphicon glyphicon-plus"></span> Add User</a>
           </div>
           <div class="text-center col-md-3">
-              <a href="${contextPath}/admin/update-delete-user"><span class="glyphicon glyphicon-pencil"></span> Update/Delete User</a>
+              <a href="${contextPath}/admin/update/user"><span class="glyphicon glyphicon-pencil"></span> Update/Delete User</a>
           </div>
           <div class="text-center col-md-3">
-              <a href="${contextPath}/admin/listUsers"><span class="glyphicon glyphicon-list"></span> List Users</a>
+              <a href="${contextPath}/admin/list/users"><span class="glyphicon glyphicon-list"></span> List Users</a>
           </div>
         </div>
         <div class="row widgets">
           <div class="text-center col-md-3">
-              <a href="${contextPath}/admin/new-anon-user"><span class="glyphicon glyphicon-plus"></span> Add Anonymous User</a>
+              <a href="${contextPath}/admin/new/anon"><span class="glyphicon glyphicon-plus"></span> Add Anonymous User</a>
           </div>
           <div class="text-center col-md-3">
               <a href="#"><span class="glyphicon glyphicon-pencil"></span> Update/Delete Anonymous User</a>
@@ -55,18 +55,18 @@
         </div>
         <div class="row widgets">
           <div class="text-center col-md-4">
-              <a href="${contextPath}/admin/new-moderator"><span class="glyphicon glyphicon-plus"></span> Add Moderator</a>
+              <a href="${contextPath}/admin/new/moderator"><span class="glyphicon glyphicon-plus"></span> Add Moderator</a>
           </div>
           <div class="text-center col-md-4">
-              <a href="${contextPath}/admin/listModerators"><span class="glyphicon glyphicon-list"></span> List Moderators</a>
+              <a href="${contextPath}/admin/list/moderators"><span class="glyphicon glyphicon-list"></span> List Moderators</a>
           </div>
         </div>
         <div class="row widgets">
           <div class="text-center col-md-4">
-              <a href="${contextPath}/admin/new-admin"><span class="glyphicon glyphicon-plus"></span> Add Admin</a>
+              <a href="${contextPath}/admin/new/admin"><span class="glyphicon glyphicon-plus"></span> Add Admin</a>
           </div>
           <div class="text-center col-md-4">
-              <a href="${contextPath}/admin/listAdmins"><span class="glyphicon glyphicon-list"></span> List Admins</a>
+              <a href="${contextPath}/admin/list/admins"><span class="glyphicon glyphicon-list"></span> List Admins</a>
           </div>
         </div>
         <div class="row widgets">

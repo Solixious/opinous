@@ -49,7 +49,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/new-user", method = RequestMethod.GET)
+    @RequestMapping(value = "/new/user", method = RequestMethod.GET)
     public String newUser(Model model) {
         if(securityService.isAdmin()) {
             model.addAttribute("userForm", new User());
@@ -61,7 +61,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/new-user", method = RequestMethod.POST)
+    @RequestMapping(value = "/new/user", method = RequestMethod.POST)
     public String newUser(@ModelAttribute("userForm") User userForm,
                           BindingResult bindingResult, Model model) {
         if(securityService.isAdmin()) {
@@ -82,7 +82,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/update-delete-user", method = RequestMethod.GET)
+    @RequestMapping(value = "/update/user", method = RequestMethod.GET)
     public String updateDeleteUser(Model model) {
         if(securityService.isAdmin())
             return "admin-update-delete-user";
@@ -92,7 +92,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "/update/user/{username}", method = RequestMethod.GET)
     public String updateDeleteUser(@PathVariable("username") String username, Model model) {
         if(securityService.isAdmin()) {
             User user = userRepository.findByUsername(username);
@@ -104,7 +104,7 @@ public class AdminUserController {
                 model.addAttribute("userForm", user);
                 return "admin-update-delete-user";
             } else {
-                return "redirect:/admin/listUsers/" + username;
+                return "redirect:/admin/list/users/" + username;
             }
         }
         else {
@@ -113,7 +113,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/user/{username}", method = RequestMethod.POST)
     public String updateDeleteUser(@ModelAttribute("userForm") User updateUser,
                                    BindingResult bindingResult, Model model) {
         if(securityService.isAdmin()) {
@@ -132,13 +132,13 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/update-delete-user/{username}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/update/user/{username}", method = RequestMethod.DELETE)
     public String deleteUser(@ModelAttribute("userForm") User updateUser,
                              BindingResult bindingResult, Model model) {
         if(securityService.isAdmin()) {
             User user = userRepository.findById(updateUser.getId()).get();
             userRepository.delete(user);
-            return "redirect:/admin/listUsers";
+            return "redirect:/admin/list/users";
         }
         else {
             logger.error("Illegal attempt to access admin page");
@@ -146,7 +146,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/listUsers", method = RequestMethod.GET)
+    @RequestMapping(value = "/list/users", method = RequestMethod.GET)
     public String listUsers(Model model) {
         if(securityService.isAdmin()) {
             List<User> users = userRepository.findAll();
@@ -159,7 +159,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/listUsers/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "/list/users/{username}", method = RequestMethod.GET)
     public String listUsers(Model model, @PathVariable("username") String username) {
         if(securityService.isAdmin()) {
             List<User> users = userRepository.findByUsernameIgnoreCaseContaining(username);
