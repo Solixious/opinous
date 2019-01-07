@@ -1,8 +1,10 @@
 package com.opinous.controller.admin;
 
+import com.opinous.enums.NotificationType;
 import com.opinous.enums.RoleConst;
 import com.opinous.model.User;
 import com.opinous.repository.UserRepository;
+import com.opinous.service.NotificationService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import com.opinous.validator.UserValidator;
@@ -36,6 +38,9 @@ public class AdminUserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String adminHome(HttpServletRequest request) {
@@ -124,6 +129,7 @@ public class AdminUserController {
             User user = userRepository.findById(updateUser.getId()).get();
             userService.copyNecessaryUpdates(updateUser, user);
             userService.updateUser(user);
+            notificationService.notify(model, NotificationType.success, "User details updated successfully!");
             return "admin-update-delete-user";
         }
         else {

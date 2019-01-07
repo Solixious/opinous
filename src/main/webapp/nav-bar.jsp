@@ -35,3 +35,9 @@
     </ul>
   </div>
 </nav>
+<c:if test="${not empty notif}">
+    <div class="alert alert-${notifType} fade in" id="notification">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        ${notif}
+    </div>
+</c:if>

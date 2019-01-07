@@ -37,6 +37,7 @@
       <button type="button" class="btn btn-primary" id="load">Load</button>
     </div>
     <c:if test="${not empty userForm.username}">
+
         <form:form method="POST" modelAttribute="userForm" class="update-form">
             <spring:bind path="id">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
