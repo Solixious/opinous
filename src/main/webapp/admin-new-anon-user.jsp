@@ -40,8 +40,8 @@
                 <form:errors path="name"></form:errors>
             </div>
         </spring:bind>
-          <input type="file" name="file">
-
+          <input type="file" name="file" id="dpInput">
+          <img id="preview" src="#" alt="No Image Preview" class="anon-list-dp">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form:form>
 
@@ -49,5 +49,26 @@
 <!-- /container -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+
+<script>
+    function readURL(input) {
+
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+              $('#preview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+          }
+    }
+
+    $("#dpInput").change(function() {
+      readURL(this);
+    });
+
+</script>
+
 </body>
 </html>

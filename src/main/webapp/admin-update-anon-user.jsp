@@ -52,8 +52,8 @@
                 </div>
             </spring:bind>
             Current <img src="${userForm.displayPicture}" class="anon-list-dp"/>
-            <input type="file" name="file">
-
+            <input type="file" name="file" id="dpInput">
+            <img id="preview" src="#" alt="No Image Preview" class="anon-list-dp">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
         </form:form>
     </c:if>
@@ -74,6 +74,23 @@
             window.location.replace("${contextPath}/admin/update/anon/" + usr);
        }
    });
+
+   function readURL(input) {
+
+         if (input.files && input.files[0]) {
+           var reader = new FileReader();
+
+           reader.onload = function(e) {
+             $('#preview').attr('src', e.target.result);
+           }
+
+           reader.readAsDataURL(input.files[0]);
+         }
+    }
+
+    $("#dpInput").change(function() {
+     readURL(this);
+    });
 </script>
 </body>
 </html>
