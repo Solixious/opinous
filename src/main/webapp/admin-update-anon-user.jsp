@@ -38,6 +38,12 @@
     </div>
     <c:if test="${not empty userForm.name}">
         <form:form method="POST" modelAttribute="userForm" class="form-signin" enctype="multipart/form-data">
+            <spring:bind path="id">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
+                    <form:hidden path="id"></form:hidden>
+                    <form:errors path="id"></form:errors>
+                </div>
+            </spring:bind>
             <spring:bind path="name">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="text" path="name" class="form-control" placeholder="Anonymous Name"

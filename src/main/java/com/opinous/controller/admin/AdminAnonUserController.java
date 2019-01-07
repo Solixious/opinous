@@ -101,6 +101,33 @@ public class AdminAnonUserController {
         }
     }
 
+    @RequestMapping(value = "/update/anon/{name}", method = RequestMethod.POST)
+    public String updateAnonUser(@RequestParam("file") MultipartFile file,
+                                 @ModelAttribute("userForm") AnonymousUser updateUser,
+                                 Model model) throws FileStorageException {
+        if(securityService.isAdmin()) {
+            AnonymousUser user = anonymousUserRepository.findById(updateUser.getId()).get();
+            user.setName(updateUser.getName());
+            if(file != null && file.getOriginalFilename().length() > 0) {
+                String suggestedFileName = updateUser.getName() + " " + new Random().nextInt(9999)
+                        + " " +  file.getOriginalFilename().substring(
+                        file.getOriginalFilename().lastIndexOf('.'));
+                String fileName = fileStorageService.storeFile(file, suggestedFileName);
+                String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/file/")
+                        .path(fileName)
+                        .toUriString();
+                user.setDisplayPicture(uri);
+            }
+            anonymousUserRepository.save(user);
+            return "admin-update-anon-user";
+        }
+        else {
+            logger.error("Illegal attempt to access admin page");
+            return "error";
+        }
+    }
+
     @RequestMapping(value = "/list/anon", method = RequestMethod.GET)
     public String listAnonUser(Model model) {
         if(securityService.isAdmin()) {
