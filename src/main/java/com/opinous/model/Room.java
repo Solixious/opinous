@@ -19,9 +19,6 @@ public class Room {
 	
 	private String description;
 	
-	@ManyToMany(mappedBy = "rooms")
-	private Set<AnonymousUser> anonymousUsers;
-
 	public Long getId() {
 		return id;
 	}
@@ -44,13 +41,5 @@ public class Room {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Set<AnonymousUser> getAnonymousUsers() {
-		return anonymousUsers;
-	}
-
-	public void setAnonymousUsers(Set<AnonymousUser> anonymousUsers) {
-		this.anonymousUsers = anonymousUsers;
 	}
 }

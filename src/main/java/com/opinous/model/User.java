@@ -31,15 +31,12 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-    
-	@ManyToMany(mappedBy = "users")
-	private Set<AnonymousUser> anonymousUsers;
 
 	public User() {
 
 	}
 
-	public User(Long id, String email, String username, String password, String confirmPassword, String firstName, String lastName, Set<Role> roles, Set<AnonymousUser> anonymousUsers) {
+	public User(Long id, String email, String username, String password, String confirmPassword, String firstName, String lastName, Set<Role> roles) {
 		this.id = id;
 		this.email = email;
 		this.username = username;
@@ -48,7 +45,6 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.roles = roles;
-		this.anonymousUsers = anonymousUsers;
 	}
 
 	public Long getId() {
@@ -116,6 +112,6 @@ public class User {
 	}
 
 	public User getCopy() {
-		return new User(id, email, username, password, confirmPassword, firstName, lastName, roles, anonymousUsers);
+		return new User(id, email, username, password, confirmPassword, firstName, lastName, roles);
 	}
 }
