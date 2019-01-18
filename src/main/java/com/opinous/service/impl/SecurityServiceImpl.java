@@ -59,4 +59,14 @@ public class SecurityServiceImpl implements SecurityService {
     public boolean isAdmin() {
         return hasRole(RoleConst.ADMIN_ROLE.toString());
     }
+
+    @Override
+    public boolean isUser() {
+        return hasRole(RoleConst.USER_ROLE.toString());
+    }
+
+    @Override
+    public boolean isModerator() {
+        return hasRole(RoleConst.MODERATOR_ROLE.toString());
+    }
 }

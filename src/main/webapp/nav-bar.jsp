@@ -20,7 +20,7 @@
       </sec:authorize>
 
     </ul>
-    <button class="btn btn-primary navbar-btn">New</button>
+    <button class="btn btn-primary navbar-btn" onclick="window.location='${contextPath}/room/new'">New</button>
     <ul class="nav navbar-nav navbar-right">
     <c:choose>
         <c:when test="${pageContext.request.userPrincipal.name != null}">
