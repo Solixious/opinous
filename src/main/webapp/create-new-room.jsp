@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -34,17 +35,18 @@
 
         <form:form method="POST" modelAttribute="roomForm" class="form-signin">
             <h2 class="form-signin-heading">Create New Room</h2>
-            <spring:bind path="title">
+            <spring:bind path="description">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="title" class="form-control" placeholder="Title"
+                    <form:input type="text" path="description" class="form-control" placeholder="Title"
                                 autofocus="true"></form:input>
-                    <form:errors path="title"></form:errors>
+                    <form:errors path="description"></form:errors>
                 </div>
             </spring:bind>
 
             <spring:bind path="description">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="description" class="form-control" placeholder="Description"></form:input>
+                    <form:textarea path="description" class="form-control" placeholder="Description"
+                    rows="5"></form:textarea>
                     <form:errors path="description"></form:errors>
                 </div>
             </spring:bind>
