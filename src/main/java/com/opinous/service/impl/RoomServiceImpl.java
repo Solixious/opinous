@@ -42,4 +42,9 @@ public class RoomServiceImpl implements RoomService {
         anonMap.setRoomId(room.getId());
         anonMapRepository.save(anonMap);
     }
-}
+
+    @Override
+    public Room getRoomById(Long roomId) {
+        return roomRepository.getOne(roomId);
+    }
+ }

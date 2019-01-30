@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -37,10 +38,17 @@ public class RoomController {
         if(securityService.isUser()) {
             roomService.createRoom(room);
             model.addAttribute("roomForm", new Room());
-            return "create-new-room";
+            return "redirect:/room/" + room.getId();
         }
         else {
             return "login";
         }
+    }
+
+    @RequestMapping(value = "/{roomId}", method = RequestMethod.GET)
+    public String viewRoom(@PathVariable ("roomId") Long roomId, Model model) {
+        Room room = roomService.getRoomById(roomId);
+        model.addAttribute("room", room);
+        return "room-details";
     }
 }
