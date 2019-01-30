@@ -32,7 +32,7 @@
 
         <jsp:include page="nav-bar.jsp" />
 
-        <div class="container">
+        <div class="container" style="margin-top:80px">
           <div class="media">
             <div class="media-left">
               <img src="img_avatar1.png" class="media-object" style="width:60px">
