@@ -36,6 +36,7 @@ public class RoomController {
     public String newRoom(@ModelAttribute("roomForm") Room room, BindingResult bindingResult, Model model) {
         if(securityService.isUser()) {
             roomService.createRoom(room);
+            model.addAttribute("roomForm", new Room());
             return "create-new-room";
         }
         else {
