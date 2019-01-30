@@ -33,8 +33,15 @@
         <jsp:include page="nav-bar.jsp" />
 
         <div class="container">
-          <h3>${room.title}</h3>
-          <p>${room.description}</p>
+          <div class="media">
+            <div class="media-left">
+              <img src="img_avatar1.png" class="media-object" style="width:60px">
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">${room.title}</h4>
+              <p>${room.description}</p>
+            </div>
+          </div>
         </div>
 
 </div>
