@@ -4,18 +4,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-@Entity
-public class AnonMap {
+@Entity public class AnonMap {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long roomId;
+    @ManyToOne
+    @JoinColumn(name = "roomId")
+    private Room room;
 
-    private Long anonymousUserId;
+    @ManyToOne
+    @JoinColumn(name = "anonymousUserId")
+    private AnonymousUser anonymousUser;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
 
     public Long getId() {
         return id;
@@ -25,27 +32,27 @@ public class AnonMap {
         this.id = id;
     }
 
-    public Long getRoomId() {
-        return roomId;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomId(Long roomId) {
-        this.roomId = roomId;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
-    public Long getAnonymousUserId() {
-        return anonymousUserId;
+    public AnonymousUser getAnonymousUser() {
+        return anonymousUser;
     }
 
-    public void setAnonymousUserId(Long anonymousUserId) {
-        this.anonymousUserId = anonymousUserId;
+    public void setAnonymousUser(AnonymousUser anonymousUser) {
+        this.anonymousUser = anonymousUser;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -1,15 +1,17 @@
 package com.opinous.repository;
 
 import com.opinous.model.AnonMap;
+import com.opinous.model.Room;
+import com.opinous.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface AnonMapRepository extends JpaRepository<AnonMap, Long> {
 
-    public List<AnonMap> findByUserId(Long userId);
+    public List<AnonMap> findByUser(User user);
 
-    public List<AnonMap> findByRoomId(Long roomId);
+    public List<AnonMap> findByRoom(Room room);
 
-    public AnonMap findByRoomIdAndUserId(Long roomId, Long userId);
+    public AnonMap findByRoomAndUser(Room room, User user);
 }

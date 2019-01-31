@@ -36,12 +36,14 @@ public class RoomServiceImpl implements RoomService {
         AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
         User user = userRepository.findByUsername(securityService.findLoggedInUsername());
         AnonMap anonMap = new AnonMap();
-        anonMap.setAnonymousUserId(anonymousUser.getId());
-        anonMap.setUserId(user.getId());
-        anonMap.setRoomId(room.getId());
-        room.setCreatorId(anonMap.getAnonymousUserId());
+        anonMap.setAnonymousUser(anonymousUser);
+        anonMap.setUser(user);
+        anonMap.setRoom(room);
         roomRepository.save(room);
         anonMapRepository.save(anonMap);
+
+        room.setCreator(anonMap);
+        roomRepository.save(room);
     }
 
     @Override

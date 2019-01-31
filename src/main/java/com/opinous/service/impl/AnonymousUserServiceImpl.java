@@ -24,20 +24,19 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 
     @Override
     public AnonymousUser getAnonymousUser(User user, Room room) {
-        return anonymousUserRepository.findById(
-            anonMapRepository.findByRoomIdAndUserId(room.getId(), user.getId())
-                .getAnonymousUserId()).get();
+        return anonMapRepository.findByRoomAndUser(room, user)
+                .getAnonymousUser();
     }
 
     @Override
     public AnonymousUser generateAnonymousUser(Room room) {
         List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
         if (room.getId() != null) {
-            List<AnonMap> anonMaps = anonMapRepository.findByRoomId(room.getId());
+            List<AnonMap> anonMaps = anonMapRepository.findByRoom(room);
             for (AnonMap anonMap : anonMaps) {
-                Long id = anonMap.getAnonymousUserId();
+                AnonymousUser anonUser = anonMap.getAnonymousUser();
                 for (AnonymousUser anonymousUser : anonymousUsers) {
-                    if (anonymousUser.getId() == id) {
+                    if (anonymousUser.equals(anonUser)) {
                         anonymousUsers.remove(anonymousUser);
                         break;
                     }

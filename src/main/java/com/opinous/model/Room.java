@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity @Getter @Setter @ToString
 public class Room {
@@ -15,7 +17,9 @@ public class Room {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long creatorId;
+    @ManyToOne
+    @JoinColumn(name = "creatorId")
+    private AnonMap creator;
 
     private String title;
 
@@ -29,12 +33,12 @@ public class Room {
         this.id = id;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public AnonMap getCreator() {
+        return creator;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
+    public void setCreatorId(AnonMap creator) {
+        this.creator = creator;
     }
 
     public String getTitle() {
