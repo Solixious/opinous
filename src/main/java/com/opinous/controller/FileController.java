@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@Controller public class FileController {
+@Controller
+public class FileController {
 
-    @Autowired private FileStorageService fileStorageService;
+    @Autowired
+    private FileStorageService fileStorageService;
 
     @GetMapping(URLMappings.DOWNLOAD_FILE)
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName,

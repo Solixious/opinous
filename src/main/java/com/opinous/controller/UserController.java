@@ -20,17 +20,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller public class UserController {
+@Controller
+public class UserController {
 
-    @Autowired private UserService userService;
+    @Autowired
+    private UserService userService;
 
-    @Autowired private SecurityService securityService;
+    @Autowired
+    private SecurityService securityService;
 
-    @Autowired private UserValidator userValidator;
+    @Autowired
+    private UserValidator userValidator;
 
-    @Autowired private RoomRepository roomRepository;
+    @Autowired
+    private RoomRepository roomRepository;
 
-    @GetMapping(value = URLMappings.USER_REGISTRATION) public String registration(Model model) {
+    @GetMapping(value = URLMappings.USER_REGISTRATION)
+    public String registration(Model model) {
         model.addAttribute("userForm", new User());
         return JSPMapping.REGISTRATION;
     }
@@ -65,7 +71,8 @@ import java.util.List;
         return JSPMapping.LOGIN;
     }
 
-    @GetMapping(value = URLMappings.USER_HOME) public String welcome(Model model) {
+    @GetMapping(value = URLMappings.USER_HOME)
+    public String welcome(Model model) {
         List<Room> rooms = new ArrayList<>();
         rooms = roomRepository.findAll(Sort.by(Sort.Order.desc("id")));
         model.addAttribute("rooms", rooms);

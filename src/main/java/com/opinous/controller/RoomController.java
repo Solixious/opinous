@@ -16,13 +16,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller @RequestMapping(URLMappings.ROOM) public class RoomController {
+@Controller @RequestMapping(URLMappings.ROOM)
+public class RoomController {
 
-    @Autowired private SecurityService securityService;
+    @Autowired
+    private SecurityService securityService;
 
-    @Autowired private RoomService roomService;
+    @Autowired
+    private RoomService roomService;
 
-    @GetMapping(value = URLMappings.ROOM_NEW) public String newRoom(Model model) {
+    @GetMapping(value = URLMappings.ROOM_NEW)
+    public String newRoom(Model model) {
         if (securityService.isUser()) {
             model.addAttribute("roomForm", new Room());
             return JSPMapping.CREATE_NEW_ROOM;
