@@ -27,6 +27,11 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
         return anonMapRepository.findByRoomAndUser(room, user)
                 .getAnonymousUser();
     }
+    
+    @Override
+    public AnonMap getAnonMap(User user, Room room) {
+        return anonMapRepository.findByRoomAndUser(room, user);
+    }
 
     @Override
     public AnonymousUser generateAnonymousUser(Room room) {

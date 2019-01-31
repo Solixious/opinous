@@ -26,4 +26,8 @@ public class URLMappings {
     public static final String NEW_USER = "/new/user";
     public static final String UPDATE_USER = "/update/user";
     public static final String LIST_USER = "/list/users";
+    
+    //Post mappings
+    public static final String POST = "/post";
+    public static final String POST_NEW = "/new";
 }
