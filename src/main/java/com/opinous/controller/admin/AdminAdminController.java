@@ -1,5 +1,6 @@
 package com.opinous.controller.admin;
 
+import com.opinous.constants.URLMappings;
 import com.opinous.enums.NotificationType;
 import com.opinous.enums.RoleConst;
 import com.opinous.model.User;
@@ -14,15 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping(URLMappings.ADMIN)
 public class AdminAdminController {
 
     private Logger logger = LoggerFactory.getLogger(AdminAdminController.class);
@@ -43,7 +45,7 @@ public class AdminAdminController {
     private NotificationService notificationService;
 
 
-    @RequestMapping(value = "/new/admin", method = RequestMethod.GET)
+    @GetMapping(value = URLMappings.NEW_ADMIN)
     public String newAdmin(Model model) {
         if(securityService.isAdmin()) {
             model.addAttribute("userForm", new User());
@@ -55,7 +57,7 @@ public class AdminAdminController {
         }
     }
 
-    @RequestMapping(value = "/new/admin", method = RequestMethod.POST)
+    @PostMapping(value = URLMappings.NEW_ADMIN)
     public String newAdmin(@ModelAttribute("userForm") User userForm,
                            BindingResult bindingResult, Model model) {
         if(securityService.isAdmin()) {
@@ -82,7 +84,7 @@ public class AdminAdminController {
         }
     }
 
-    @RequestMapping(value = "/list/admins", method = RequestMethod.GET)
+    @GetMapping(value = URLMappings.LIST_ADMINS)
     public String listAdmin(Model model) {
         if(securityService.isAdmin()) {
             List<String> roles = new ArrayList<>();

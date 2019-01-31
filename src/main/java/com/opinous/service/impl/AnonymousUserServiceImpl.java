@@ -30,12 +30,9 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 
     @Override
     public AnonymousUser generateAnonymousUser(Room room) {
-        List<AnonMap> anonMaps = null;
         List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
-
         if(room.getId() != null) {
-            anonMaps = anonMapRepository.findByRoomId(room.getId());
-
+            List<AnonMap> anonMaps = anonMapRepository.findByRoomId(room.getId());
             for (AnonMap anonMap : anonMaps) {
                 Long id = anonMap.getAnonymousUserId();
                 for (AnonymousUser anonymousUser : anonymousUsers) {

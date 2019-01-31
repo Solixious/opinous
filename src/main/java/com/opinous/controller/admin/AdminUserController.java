@@ -1,5 +1,6 @@
 package com.opinous.controller.admin;
 
+import com.opinous.constants.URLMappings;
 import com.opinous.enums.NotificationType;
 import com.opinous.enums.RoleConst;
 import com.opinous.model.User;
@@ -14,8 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping(URLMappings.ADMIN)
 public class AdminUserController {
     private Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 
@@ -42,7 +46,7 @@ public class AdminUserController {
     @Autowired
     private NotificationService notificationService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = URLMappings.USER_HOME)
     public String adminHome(HttpServletRequest request) {
         if(securityService.isAdmin()) {
             logger.debug("Going to admin control panel page.");
@@ -54,7 +58,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/new/user", method = RequestMethod.GET)
+    @GetMapping(value = URLMappings.NEW_USER)
     public String newUser(Model model) {
         if(securityService.isAdmin()) {
             model.addAttribute("userForm", new User());
@@ -66,7 +70,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/new/user", method = RequestMethod.POST)
+    @PostMapping(value = URLMappings.NEW_USER)
     public String newUser(@ModelAttribute("userForm") User userForm,
                           BindingResult bindingResult, Model model) {
         if(securityService.isAdmin()) {
@@ -88,7 +92,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/update/user", method = RequestMethod.GET)
+    @GetMapping(value = URLMappings.UPDATE_USER)
     public String updateDeleteUser(Model model) {
         if(securityService.isAdmin())
             return "admin-update-delete-user";
@@ -98,7 +102,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/update/user/{username}", method = RequestMethod.GET)
+    @GetMapping(value = URLMappings.UPDATE_USER + "/{username}")
     public String updateDeleteUser(@PathVariable("username") String username, Model model) {
         if(securityService.isAdmin()) {
             User user = userRepository.findByUsername(username);
@@ -119,7 +123,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/update/user/{username}", method = RequestMethod.POST)
+    @PostMapping(value = URLMappings.UPDATE_USER + "/{username}")
     public String updateDeleteUser(@ModelAttribute("userForm") User updateUser,
                                    BindingResult bindingResult, Model model) {
         if(securityService.isAdmin()) {
@@ -139,7 +143,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/update/user/{username}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = URLMappings.UPDATE_USER + "/{username}")
     public String deleteUser(@ModelAttribute("userForm") User updateUser,
                              BindingResult bindingResult, Model model) {
         if(securityService.isAdmin()) {
@@ -154,7 +158,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/list/users", method = RequestMethod.GET)
+    @RequestMapping(value = URLMappings.LIST_USER, method = RequestMethod.GET)
     public String listUsers(Model model) {
         if(securityService.isAdmin()) {
             List<User> users = userRepository.findAll();
@@ -167,7 +171,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping(value = "/list/users/{username}", method = RequestMethod.GET)
+    @GetMapping(value = URLMappings.LIST_USER + "/{username}")
     public String listUsers(Model model, @PathVariable("username") String username) {
         if(securityService.isAdmin()) {
             List<User> users = userRepository.findByUsernameIgnoreCaseContaining(username);
