@@ -15,6 +15,8 @@ public class Room {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	private Long creatorId;
+	
 	private String title;
 	
 	private String description;
@@ -25,6 +27,14 @@ public class Room {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
 	}
 
 	public String getTitle() {

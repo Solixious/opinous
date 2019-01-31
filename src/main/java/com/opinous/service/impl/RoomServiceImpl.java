@@ -33,13 +33,14 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void createRoom(Room room) {
-        roomRepository.save(room);
         AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
         User user = userRepository.findByUsername(securityService.findLoggedInUsername());
         AnonMap anonMap = new AnonMap();
         anonMap.setAnonymousUserId(anonymousUser.getId());
         anonMap.setUserId(user.getId());
         anonMap.setRoomId(room.getId());
+        room.setCreatorId(anonMap.getAnonymousUserId());
+        roomRepository.save(room);
         anonMapRepository.save(anonMap);
     }
 
