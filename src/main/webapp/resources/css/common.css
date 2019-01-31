@@ -110,3 +110,11 @@ body {
     float: left;
     text-align: center;
 }
+span.user-name {
+    text-align: center;
+    width: 100%;
+    float: left;
+    font-weight: 700;
+    color: #337ab7;
+    margin-top: 10px;
+}

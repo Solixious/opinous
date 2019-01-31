@@ -16,6 +16,7 @@
     <title>${room.title}</title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -35,7 +36,8 @@
         <div class="container" style="margin-top:80px">
           <div class="media">
             <div class="media-left">
-              <img src="img_avatar1.png" class="media-object" style="width:60px">
+              <img src="${room.creator.anonymousUser.displayPicture}" class="media-object" style="width:100px">
+              <span class="user-name">${room.creator.anonymousUser.name}</span>
             </div>
             <div class="media-body">
               <h4 class="media-heading">${room.title}</h4>

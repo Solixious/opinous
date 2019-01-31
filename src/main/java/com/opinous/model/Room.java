@@ -37,7 +37,7 @@ public class Room {
         return creator;
     }
 
-    public void setCreatorId(AnonMap creator) {
+    public void setCreator(AnonMap creator) {
         this.creator = creator;
     }
 
