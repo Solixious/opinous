@@ -48,4 +48,4 @@ public class RoomServiceImpl implements RoomService {
     public Room getRoomById(Long roomId) {
         return roomRepository.getOne(roomId);
     }
- }
+}

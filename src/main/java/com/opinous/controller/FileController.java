@@ -15,29 +15,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@Controller
-public class FileController {
+@Controller public class FileController {
 
-    @Autowired
-    private FileStorageService fileStorageService;
+    @Autowired private FileStorageService fileStorageService;
 
     @GetMapping(URLMappings.DOWNLOAD_FILE)
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws MyFileNotFoundException {
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName,
+        HttpServletRequest request) throws MyFileNotFoundException {
         Resource resource = fileStorageService.loadFileAsResource(fileName);
         String contentType = null;
 
         try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch(IOException e) {
+            contentType =
+                request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException e) {
             //could not determine content type
         }
 
-        if(contentType == null)
+        if (contentType == null)
             contentType = "application/octet-stream";
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+            .header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
     }
 }

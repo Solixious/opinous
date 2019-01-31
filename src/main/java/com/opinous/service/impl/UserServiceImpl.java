@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if(roleRepository.count() == 0) {
+        if (roleRepository.count() == 0) {
             populateDefaultRoles();
             user.setRoles(new HashSet<>(roleRepository.findAll()));
         } else {
@@ -42,13 +42,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(User user, RoleConst[] roles) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if(roleRepository.count() == 0) {
+        if (roleRepository.count() == 0) {
             populateDefaultRoles();
         }
 
         HashSet<Role> roleSet = new HashSet<>();
 
-        for(RoleConst role : roles) {
+        for (RoleConst role : roles) {
             roleSet.add(roleRepository.findByName(role.toString()));
         }
         user.setRoles(roleSet);
@@ -70,15 +70,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void copyNecessaryUpdates(User from, User to) {
-        if(!from.getEmail().equals(to.getEmail()))
+        if (!from.getEmail().equals(to.getEmail()))
             to.setEmail(from.getEmail());
-        if(!from.getUsername().equals(to.getUsername()))
+        if (!from.getUsername().equals(to.getUsername()))
             to.setUsername(from.getUsername());
-        if(!from.getFirstName().equals(to.getFirstName()))
+        if (!from.getFirstName().equals(to.getFirstName()))
             to.setFirstName(from.getFirstName());
-        if(!from.getLastName().equals(to.getLastName()))
+        if (!from.getLastName().equals(to.getLastName()))
             to.setLastName(from.getLastName());
-        if(!from.getPassword().equals("") && from.getPassword().equals(from.getConfirmPassword()))
+        if (!from.getPassword().equals("") && from.getPassword().equals(from.getConfirmPassword()))
             to.setPassword(bCryptPasswordEncoder.encode(from.getPassword()));
 
     }

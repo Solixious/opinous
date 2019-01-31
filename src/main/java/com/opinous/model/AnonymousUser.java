@@ -1,44 +1,43 @@
 package com.opinous.model;
 
-import java.util.Set;
-
-import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 @Entity @Getter @Setter @ToString
 public class AnonymousUser {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 
-	private String name;
-	private String displayPicture;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    private String name;
+    private String displayPicture;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getDisplayPicture() {
-		return displayPicture;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDisplayPicture(String displayPicture) {
-		this.displayPicture = displayPicture;
-	}
+    public String getDisplayPicture() {
+        return displayPicture;
+    }
+
+    public void setDisplayPicture(String displayPicture) {
+        this.displayPicture = displayPicture;
+    }
 }

@@ -9,5 +9,6 @@ import org.springframework.stereotype.Service;
 public interface AnonymousUserService {
 
     public AnonymousUser getAnonymousUser(User user, Room room);
+
     public AnonymousUser generateAnonymousUser(Room room);
 }

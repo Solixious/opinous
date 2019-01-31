@@ -24,14 +24,15 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 
     @Override
     public AnonymousUser getAnonymousUser(User user, Room room) {
-        return anonymousUserRepository.findById(anonMapRepository.findByRoomIdAndUserId(
-                room.getId(), user.getId()).getAnonymousUserId()).get();
+        return anonymousUserRepository.findById(
+            anonMapRepository.findByRoomIdAndUserId(room.getId(), user.getId())
+                .getAnonymousUserId()).get();
     }
 
     @Override
     public AnonymousUser generateAnonymousUser(Room room) {
         List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
-        if(room.getId() != null) {
+        if (room.getId() != null) {
             List<AnonMap> anonMaps = anonMapRepository.findByRoomId(room.getId());
             for (AnonMap anonMap : anonMaps) {
                 Long id = anonMap.getAnonymousUserId();
@@ -43,8 +44,8 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
                 }
             }
         }
-        AnonymousUser randomAnonymosUser = anonymousUsers.get(
-                new Random().nextInt(anonymousUsers.size()));
+        AnonymousUser randomAnonymosUser =
+            anonymousUsers.get(new Random().nextInt(anonymousUsers.size()));
 
         return randomAnonymosUser;
     }

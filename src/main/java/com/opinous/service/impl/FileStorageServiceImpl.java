@@ -23,26 +23,29 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     public FileStorageServiceImpl() throws FileStorageException {
         super();
-        this.fileStorageLocation = Paths.get("./img")
-                .toAbsolutePath().normalize();
+        this.fileStorageLocation = Paths.get("./img").toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
-        } catch(Exception e) {
-            throw new FileStorageException("Could not create the directory where " +
-                    "file will be stored", e);
+        } catch (Exception e) {
+            throw new FileStorageException(
+                "Could not create the directory where " + "file will be stored", e);
         }
     }
-    public String storeFile(MultipartFile file, String suggestedFileName) throws FileStorageException {
+
+    public String storeFile(MultipartFile file, String suggestedFileName)
+        throws FileStorageException {
         String fileName = StringUtils.cleanPath(suggestedFileName);
         try {
-            if(fileName.contains("..")) {
-                throw new FileStorageException("File name contains invalid path sequence " + fileName);
+            if (fileName.contains("..")) {
+                throw new FileStorageException(
+                    "File name contains invalid path sequence " + fileName);
             }
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             return fileName;
-        } catch(IOException e) {
-            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", e);
+        } catch (IOException e) {
+            throw new FileStorageException(
+                "Could not store file " + fileName + ". Please try again!", e);
         }
     }
 
@@ -50,11 +53,11 @@ public class FileStorageServiceImpl implements FileStorageService {
         try {
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
-            if(resource.exists())
+            if (resource.exists())
                 return resource;
             else
                 throw new MyFileNotFoundException("File not found " + fileName);
-        } catch(MalformedURLException e) {
+        } catch (MalformedURLException e) {
             throw new MyFileNotFoundException("File not found " + fileName, e);
         }
     }

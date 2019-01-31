@@ -1,5 +1,6 @@
 package com.opinous.controller.admin;
 
+import com.opinous.constants.JSPMapping;
 import com.opinous.constants.URLMappings;
 import com.opinous.enums.NotificationType;
 import com.opinous.enums.RoleConst;
@@ -23,79 +24,64 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-@RequestMapping(URLMappings.ADMIN)
-public class AdminAdminController {
+@Controller @RequestMapping(URLMappings.ADMIN) public class AdminAdminController {
 
     private Logger logger = LoggerFactory.getLogger(AdminAdminController.class);
 
-    @Autowired
-    private SecurityService securityService;
+    @Autowired private SecurityService securityService;
 
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
 
-    @Autowired
-    private UserValidator userValidator;
+    @Autowired private UserValidator userValidator;
 
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private UserRepository userRepository;
 
-    @Autowired
-    private NotificationService notificationService;
+    @Autowired private NotificationService notificationService;
 
 
-    @GetMapping(value = URLMappings.NEW_ADMIN)
-    public String newAdmin(Model model) {
-        if(securityService.isAdmin()) {
+    @GetMapping(value = URLMappings.NEW_ADMIN) public String newAdmin(Model model) {
+        if (securityService.isAdmin()) {
             model.addAttribute("userForm", new User());
-            return "/admin-new-admin";
-        }
-        else {
+            return JSPMapping.ADMIN_NEW_ADMIN;
+        } else {
             logger.error("Illegal attempt to access admin page");
-            return "error";
+            return JSPMapping.ERROR;
         }
     }
 
     @PostMapping(value = URLMappings.NEW_ADMIN)
-    public String newAdmin(@ModelAttribute("userForm") User userForm,
-                           BindingResult bindingResult, Model model) {
-        if(securityService.isAdmin()) {
+    public String newAdmin(@ModelAttribute("userForm") User userForm, BindingResult bindingResult,
+        Model model) {
+        if (securityService.isAdmin()) {
 
             userValidator.validate(userForm, bindingResult);
 
             if (bindingResult.hasErrors()) {
-                return "admin-new-admin";
+                return JSPMapping.ADMIN_NEW_ADMIN;
             }
-            RoleConst[] roles = new RoleConst[]
-                    {
-                            RoleConst.USER_ROLE,
-                            RoleConst.MODERATOR_ROLE,
-                            RoleConst.ADMIN_ROLE
-                    };
+            RoleConst[] roles = new RoleConst[] {RoleConst.USER_ROLE, RoleConst.MODERATOR_ROLE,
+                RoleConst.ADMIN_ROLE};
             userService.saveUser(userForm, roles);
             model.addAttribute("userForm", new User());
-            notificationService.notify(model, NotificationType.success, "New administrator created successfully!");
-            return "/admin-new-admin";
-        }
-        else {
+            notificationService
+                .notify(model, NotificationType.success, "New administrator created successfully!");
+            return JSPMapping.ADMIN_NEW_ADMIN;
+        } else {
             logger.error("Illegal attempt to access admin page");
-            return "error";
+            return JSPMapping.ERROR;
         }
     }
 
-    @GetMapping(value = URLMappings.LIST_ADMINS)
-    public String listAdmin(Model model) {
-        if(securityService.isAdmin()) {
+    @GetMapping(value = URLMappings.LIST_ADMINS) public String listAdmin(Model model) {
+        if (securityService.isAdmin()) {
             List<String> roles = new ArrayList<>();
             roles.add(RoleConst.ADMIN_ROLE.toString());
             List<User> users = userRepository.findBySpecificRoles(roles);
             model.addAttribute("userList", users);
-            return "/admin-list-admin";
-        }
-        else {
+            return JSPMapping.ADMIN_LIST_ADMIN;
+        } else {
             logger.error("Illegal attempt to access admin page");
-            return "error";
+            return JSPMapping.ERROR;
         }
     }
 }

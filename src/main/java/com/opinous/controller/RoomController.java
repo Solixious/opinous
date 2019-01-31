@@ -1,5 +1,6 @@
 package com.opinous.controller;
 
+import com.opinous.constants.JSPMapping;
 import com.opinous.constants.URLMappings;
 import com.opinous.model.Room;
 import com.opinous.service.RoomService;
@@ -15,43 +16,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller
-@RequestMapping(URLMappings.ROOM)
-public class RoomController {
+@Controller @RequestMapping(URLMappings.ROOM) public class RoomController {
 
-    @Autowired
-    private SecurityService securityService;
+    @Autowired private SecurityService securityService;
 
-    @Autowired
-    private RoomService roomService;
+    @Autowired private RoomService roomService;
 
-    @GetMapping(value = URLMappings.ROOM_NEW)
-    public String newRoom(Model model) {
-        if(securityService.isUser()) {
+    @GetMapping(value = URLMappings.ROOM_NEW) public String newRoom(Model model) {
+        if (securityService.isUser()) {
             model.addAttribute("roomForm", new Room());
-            return "create-new-room";
-        }
-        else {
-            return "login";
+            return JSPMapping.CREATE_NEW_ROOM;
+        } else {
+            return JSPMapping.LOGIN;
         }
     }
 
     @PostMapping(value = URLMappings.ROOM_NEW)
-    public String newRoom(@ModelAttribute("roomForm") Room room, BindingResult bindingResult, Model model) {
-        if(securityService.isUser()) {
+    public String newRoom(@ModelAttribute("roomForm") Room room, BindingResult bindingResult,
+        Model model) {
+        if (securityService.isUser()) {
             roomService.createRoom(room);
             model.addAttribute("roomForm", new Room());
-            return "redirect:/room/" + room.getId();
-        }
-        else {
-            return "login";
+            return "redirect:" + URLMappings.ROOM + "/" + room.getId();
+        } else {
+            return JSPMapping.LOGIN;
         }
     }
 
     @RequestMapping(value = "/{roomId}", method = RequestMethod.GET)
-    public String viewRoom(@PathVariable ("roomId") Long roomId, Model model) {
+    public String viewRoom(@PathVariable("roomId") Long roomId, Model model) {
         Room room = roomService.getRoomById(roomId);
         model.addAttribute("room", room);
-        return "room-details";
+        return JSPMapping.ROOM_DETAILS;
     }
 }

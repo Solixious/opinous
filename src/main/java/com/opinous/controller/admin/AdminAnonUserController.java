@@ -1,5 +1,6 @@
 package com.opinous.controller.admin;
 
+import com.opinous.constants.JSPMapping;
 import com.opinous.constants.URLMappings;
 import com.opinous.enums.NotificationType;
 import com.opinous.exception.FileStorageException;
@@ -26,127 +27,111 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 import java.util.Random;
 
-@Controller
-@RequestMapping(URLMappings.ADMIN)
-public class AdminAnonUserController {
+@Controller @RequestMapping(URLMappings.ADMIN) public class AdminAnonUserController {
 
     private Logger logger = LoggerFactory.getLogger(AdminAnonUserController.class);
 
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
 
-    @Autowired
-    private SecurityService securityService;
+    @Autowired private SecurityService securityService;
 
-    @Autowired
-    private FileStorageService fileStorageService;
+    @Autowired private FileStorageService fileStorageService;
 
-    @Autowired
-    private AnonymousUserRepository anonymousUserRepository;
+    @Autowired private AnonymousUserRepository anonymousUserRepository;
 
-    @Autowired
-    private NotificationService notificationService;
+    @Autowired private NotificationService notificationService;
 
 
-    @GetMapping(value = URLMappings.NEW_ANON)
-    public String newAnonUser(Model model) {
-        if(securityService.isAdmin()) {
+    @GetMapping(value = URLMappings.NEW_ANON) public String newAnonUser(Model model) {
+        if (securityService.isAdmin()) {
             model.addAttribute("userForm", new AnonymousUser());
-            return "/admin-new-anon-user";
-        }
-        else {
+            return JSPMapping.ADMIN_NEW_ANON_USER;
+        } else {
             logger.error("Illegal attempt to access admin page");
-            return "error";
+            return JSPMapping.ERROR;
         }
     }
 
     @PostMapping(value = URLMappings.NEW_ANON)
     public String newAnonUser(@RequestParam("file") MultipartFile file,
-                              @ModelAttribute("userForm") AnonymousUser userForm,
-                              Model model) throws FileStorageException {
-        if(securityService.isAdmin()) {
-            String suggestedFileName = userForm.getName() + " " + new Random().nextInt(9999)
-                    + " " +  file.getOriginalFilename().substring(
-                            file.getOriginalFilename().lastIndexOf('.'));
+        @ModelAttribute("userForm") AnonymousUser userForm, Model model)
+        throws FileStorageException {
+        if (securityService.isAdmin()) {
+            String suggestedFileName =
+                userForm.getName() + " " + new Random().nextInt(9999) + " " + file
+                    .getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
             String fileName = fileStorageService.storeFile(file, suggestedFileName);
-            String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/file/")
-                    .path(fileName)
+            String uri =
+                ServletUriComponentsBuilder.fromCurrentContextPath().path("/file/").path(fileName)
                     .toUriString();
             userForm.setDisplayPicture(uri);
             anonymousUserRepository.save(userForm);
-            notificationService.notify(model, NotificationType.success, "Created new anonymous user successfully!");
-            return "/admin-new-anon-user";
-        }
-        else {
+            notificationService.notify(model, NotificationType.success,
+                "Created new anonymous user successfully!");
+            return JSPMapping.ADMIN_NEW_ANON_USER;
+        } else {
             logger.error("Illegal attempt to access admin page");
-            return "error";
+            return JSPMapping.ERROR;
         }
     }
 
-    @GetMapping(value = URLMappings.UPDATE_ANON)
-    public String updateAnonUser() {
-        if(securityService.isAdmin()) {
-            return "admin-update-anon-user";
-        }
-        else {
+    @GetMapping(value = URLMappings.UPDATE_ANON) public String updateAnonUser() {
+        if (securityService.isAdmin()) {
+            return JSPMapping.ADMIN_UPDATE_ANON_USER;
+        } else {
             logger.error("Illegal attempt to access admin page");
-            return "error";
+            return JSPMapping.ERROR;
         }
     }
 
     @GetMapping(value = URLMappings.UPDATE_ANON + "/{name}")
     public String updateAnonUser(@PathVariable("name") String name, Model model) {
-        if(securityService.isAdmin()) {
+        if (securityService.isAdmin()) {
             AnonymousUser user = anonymousUserRepository.findByName(name);
             model.addAttribute("userForm", user);
-            return "admin-update-anon-user";
-        }
-        else {
+            return JSPMapping.ADMIN_UPDATE_ANON_USER;
+        } else {
             logger.error("Illegal attempt to access admin page");
-            return "error";
+            return JSPMapping.ERROR;
         }
     }
 
     @PostMapping(value = URLMappings.UPDATE_ANON + "/{name}")
     public String updateAnonUser(@RequestParam("file") MultipartFile file,
-                                 @ModelAttribute("userForm") AnonymousUser updateUser,
-                                 Model model) throws FileStorageException {
-        if(securityService.isAdmin()) {
+        @ModelAttribute("userForm") AnonymousUser updateUser, Model model)
+        throws FileStorageException {
+        if (securityService.isAdmin()) {
             AnonymousUser user = anonymousUserRepository.findById(updateUser.getId()).get();
             user.setName(updateUser.getName());
-            if(file != null && file.getOriginalFilename().length() > 0) {
-                String suggestedFileName = updateUser.getName() + " " + new Random().nextInt(9999)
-                        + " " +  file.getOriginalFilename().substring(
-                        file.getOriginalFilename().lastIndexOf('.'));
+            if (file != null && file.getOriginalFilename().length() > 0) {
+                String suggestedFileName =
+                    updateUser.getName() + " " + new Random().nextInt(9999) + " " + file
+                        .getOriginalFilename()
+                        .substring(file.getOriginalFilename().lastIndexOf('.'));
                 String fileName = fileStorageService.storeFile(file, suggestedFileName);
-                String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/file/")
-                        .path(fileName)
-                        .toUriString();
+                String uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/file/")
+                    .path(fileName).toUriString();
                 user.setDisplayPicture(uri);
             }
             anonymousUserRepository.save(user);
-            notificationService.notify(model, NotificationType.success, "Updated anonymous user details successfully!");
-            return "admin-update-anon-user";
-        }
-        else {
+            notificationService.notify(model, NotificationType.success,
+                "Updated anonymous user details successfully!");
+            return JSPMapping.ADMIN_UPDATE_ANON_USER;
+        } else {
             logger.error("Illegal attempt to access admin page");
-            return "error";
+            return JSPMapping.ERROR;
         }
     }
 
-    @GetMapping(value = URLMappings.LIST_ANON)
-    public String listAnonUser(Model model) {
-        if(securityService.isAdmin()) {
+    @GetMapping(value = URLMappings.LIST_ANON) public String listAnonUser(Model model) {
+        if (securityService.isAdmin()) {
             List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
 
             model.addAttribute("userList", anonymousUsers);
-            return "admin-list-anon-user";
-        }
-        else {
+            return JSPMapping.ADMIN_LIST_ANON_USER;
+        } else {
             logger.error("Illegal attempt to access admin page");
-            return "error";
+            return JSPMapping.ERROR;
         }
     }
 }
