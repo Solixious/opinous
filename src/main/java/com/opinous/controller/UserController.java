@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -72,7 +73,7 @@ public class UserController {
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String welcome(Model model) {
     	List<Room> rooms = new ArrayList<>();
-    	rooms = roomRepository.findAll();
+    	rooms = roomRepository.findAll(Sort.by(Sort.Order.desc("id")));
     	model.addAttribute("rooms", rooms);
         return "welcome";
     }
