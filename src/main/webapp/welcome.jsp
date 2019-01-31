@@ -32,9 +32,10 @@
 
         <jsp:include page="nav-bar.jsp" />
 
-        <div class="container">
-          <h3>Test title</h3>
-          <p>This is a test paragraph. Proper content will be generated here.</p>
+        <div class="container" style="margin-top:80px;">
+          <c:forEach items="${rooms}" var="room">
+            <p>${room.title}</p>
+          </c:forEach>
         </div>
 
 </div>
