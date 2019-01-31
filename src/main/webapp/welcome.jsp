@@ -16,6 +16,7 @@
     <title>Home Page</title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -34,7 +35,9 @@
 
         <div class="container" style="margin-top:80px;">
           <c:forEach items="${rooms}" var="room">
-            <p>${room.title}</p>
+            <div class="room-card">
+                <a href="${contextPath}/room/${room.id}">${room.title}</a>
+            </div>
           </c:forEach>
         </div>
 
