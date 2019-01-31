@@ -1,9 +1,15 @@
 package com.opinous.controller;
 
+import com.opinous.model.Room;
 import com.opinous.model.User;
+import com.opinous.repository.RoomRepository;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import com.opinous.validator.UserValidator;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +29,9 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+    
+    @Autowired
+    private RoomRepository roomRepository;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -62,6 +71,9 @@ public class UserController {
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String welcome(Model model) {
+    	List<Room> rooms = new ArrayList<>();
+    	rooms = roomRepository.findAll();
+    	model.addAttribute("rooms", rooms);
         return "welcome";
     }
 }
