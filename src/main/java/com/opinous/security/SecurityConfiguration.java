@@ -23,7 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
     @Override protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable();
-        httpSecurity.authorizeRequests().antMatchers("/resources/**", "/registration", "/")
+        httpSecurity.authorizeRequests().antMatchers("/resources/**", "/room/**", "/file/**", "/registration", "/")
             .permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login")
             .permitAll().and().logout().permitAll();
 

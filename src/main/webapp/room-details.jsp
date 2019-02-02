@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -44,6 +45,35 @@
               <p>${room.description}</p>
             </div>
           </div>
+          
+          <div >
+          	<c:forEach items="${posts}" var="post">
+          		<div class="media">
+		            <div class="media-left">
+		              <img src="${post.anonMap.anonymousUser.displayPicture}" class="media-object" style="width:100px">
+		              <span class="user-name">${post.anonMap.anonymousUser.name}</span>
+		            </div>
+		            <div class="media-body">
+		              <p>${post.text}</p>
+		            </div>
+		        </div>
+          	</c:forEach>
+          </div>
+          
+          <c:if test='${isUser == true }'>
+          	<div class="post-reply">
+          		<form:form method="POST" modelAttribute="postForm" class="form-signin">
+          			<spring:bind path="text">
+			            <div class="form-group ${status.error ? 'has-error' : ''}">
+			                <form:textarea path="text" class="form-control" placeholder="Post your reply here"
+			                            autofocus="true"></form:textarea>
+			                <form:errors path="text"></form:errors>
+			                <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+			            </div>
+			        </spring:bind>
+          		</form:form>
+          	</div>
+          </c:if>
         </div>
 
 </div>

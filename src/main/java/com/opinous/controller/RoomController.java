@@ -2,9 +2,20 @@ package com.opinous.controller;
 
 import com.opinous.constants.JSPMapping;
 import com.opinous.constants.URLMappings;
+import com.opinous.model.AnonMap;
+import com.opinous.model.AnonymousUser;
+import com.opinous.model.Post;
 import com.opinous.model.Room;
+import com.opinous.model.User;
+import com.opinous.repository.AnonMapRepository;
+import com.opinous.repository.PostRepository;
+import com.opinous.service.AnonymousUserService;
 import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;
+import com.opinous.service.UserService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +35,18 @@ public class RoomController {
 
     @Autowired
     private RoomService roomService;
+    
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private AnonymousUserService anonymousUserService;
+    
+    @Autowired
+    private AnonMapRepository anonMapRepository;
+    
+    @Autowired
+    private PostRepository postRepository;
 
     @GetMapping(value = URLMappings.ROOM_NEW)
     public String newRoom(Model model) {
@@ -51,6 +74,35 @@ public class RoomController {
     public String viewRoom(@PathVariable("roomId") Long roomId, Model model) {
         Room room = roomService.getRoomById(roomId);
         model.addAttribute("room", room);
+        
+        List<AnonMap> anonMaps = anonMapRepository.findByRoom(room);
+        List<Post> posts = postRepository.findByAnonMapIn(anonMaps);
+        model.addAttribute("posts", posts);
+        
+        model.addAttribute("isUser", securityService.isUser());
+        if(securityService.isUser()) {
+        	model.addAttribute("postForm", new Post());
+        }
         return JSPMapping.ROOM_DETAILS;
+    }
+    
+    @RequestMapping(value = "/{roomId}", method = RequestMethod.POST)
+    public String postReply(@ModelAttribute("postForm") Post post, @PathVariable("roomId") Long roomId, Model model) {
+        User user = userService.findByUsername(securityService.findLoggedInUsername());
+        Room room = roomService.getRoomById(roomId);
+        AnonMap anonMap = anonMapRepository.findByRoomAndUser(room, user);
+        
+        if(anonMap == null) {
+        	AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
+        	anonMap = new AnonMap();
+        	anonMap.setAnonymousUser(anonymousUser);
+        	anonMap.setUser(user);
+        	anonMap.setRoom(room);
+        	anonMapRepository.save(anonMap);
+        }
+        
+        post.setAnonMap(anonMap);
+        postRepository.save(post);
+        return "redirect:" + URLMappings.ROOM + "/" + room.getId();
     }
 }
