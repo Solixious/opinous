@@ -12,6 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.util.Date;
 import java.util.Set;
 
 @Entity @Getter @Setter @ToString
@@ -26,7 +31,8 @@ public class User {
 
     private String password;
 
-    @Transient private String confirmPassword;
+    @Transient
+    private String confirmPassword;
 
     private String firstName;
 
@@ -35,7 +41,13 @@ public class User {
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
+    
+    @CreationTimestamp
+    private Date createDate;
+    
+    @UpdateTimestamp
+    private Date updateDate;
+    
     public User() {
 
     }
@@ -115,6 +127,15 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 
     public User getCopy() {
         return new User(id, email, username, password, confirmPassword, firstName, lastName, roles);

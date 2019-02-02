@@ -1,11 +1,16 @@
 package com.opinous.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity public class AnonMap {
 
@@ -23,6 +28,12 @@ import javax.persistence.ManyToOne;
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+    
+    @CreationTimestamp
+    private Date createDate;
+    
+    @UpdateTimestamp
+    private Date updateDate;
 
     public Long getId() {
         return id;
@@ -55,4 +66,20 @@ import javax.persistence.ManyToOne;
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
 }

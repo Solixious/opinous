@@ -4,12 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity @Getter @Setter @ToString
 public class Room {
@@ -24,6 +29,12 @@ public class Room {
     private String title;
 
     private String description;
+    
+    @CreationTimestamp
+    private Date createDate;
+    
+    @UpdateTimestamp
+    private Date updateDate;
 
     public Long getId() {
         return id;
@@ -56,4 +67,12 @@ public class Room {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 }
