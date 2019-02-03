@@ -1,7 +1,8 @@
 package com.opinous.controller.admin;
 
+import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
-import com.opinous.constants.URLMappings;
+import com.opinous.constants.URLMapping;
 import com.opinous.enums.NotificationType;
 import com.opinous.enums.RoleConst;
 import com.opinous.model.User;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller @RequestMapping(URLMappings.ADMIN) public class AdminModeratorController {
+@Controller @RequestMapping(URLMapping.ADMIN) public class AdminModeratorController {
 
     private Logger logger = LoggerFactory.getLogger(AdminModeratorController.class);
 
@@ -38,9 +39,9 @@ import java.util.List;
 
     @Autowired private NotificationService notificationService;
 
-    @GetMapping(value = URLMappings.NEW_MODERATOR) public String newModerator(Model model) {
+    @GetMapping(value = URLMapping.NEW_MODERATOR) public String newModerator(Model model) {
         if (securityService.isAdmin()) {
-            model.addAttribute("userForm", new User());
+            model.addAttribute(AttributeName.USER_FORM, new User());
             return JSPMapping.ADMIN_NEW_MODERATOR;
         } else {
             logger.error("Illegal attempt to access admin page");
@@ -48,8 +49,8 @@ import java.util.List;
         }
     }
 
-    @PostMapping(value = URLMappings.NEW_MODERATOR)
-    public String newModerator(@ModelAttribute("userForm") User userForm,
+    @PostMapping(value = URLMapping.NEW_MODERATOR)
+    public String newModerator(@ModelAttribute(AttributeName.USER_FORM) User userForm,
         BindingResult bindingResult, Model model) {
         if (securityService.isAdmin()) {
 
@@ -60,7 +61,7 @@ import java.util.List;
             }
             RoleConst[] roles = new RoleConst[] {RoleConst.USER_ROLE, RoleConst.MODERATOR_ROLE};
             userService.saveUser(userForm, roles);
-            model.addAttribute("userForm", new User());
+            model.addAttribute(AttributeName.USER_FORM, new User());
             notificationService
                 .notify(model, NotificationType.success, "Created new moderator successfully!");
             return JSPMapping.ADMIN_NEW_MODERATOR;
@@ -70,12 +71,12 @@ import java.util.List;
         }
     }
 
-    @GetMapping(value = URLMappings.LIST_MODERATOR) public String listModerator(Model model) {
+    @GetMapping(value = URLMapping.LIST_MODERATOR) public String listModerator(Model model) {
         if (securityService.isAdmin()) {
             List<String> roles = new ArrayList<>();
             roles.add(RoleConst.MODERATOR_ROLE.toString());
             List<User> users = userRepository.findBySpecificRoles(roles);
-            model.addAttribute("userList", users);
+            model.addAttribute(AttributeName.USER_LIST, users);
             return JSPMapping.ADMIN_LIST_MODERATOR;
         } else {
             logger.error("Illegal attempt to access admin page");

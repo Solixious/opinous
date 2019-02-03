@@ -1,6 +1,6 @@
 package com.opinous.constants;
 
-public class URLMappings {
+public class URLMapping {
 
     //File mappings
     public static final String DOWNLOAD_FILE = "/file/{fileName:.+}";

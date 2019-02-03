@@ -1,7 +1,8 @@
 package com.opinous.controller.admin;
 
+import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
-import com.opinous.constants.URLMappings;
+import com.opinous.constants.URLMapping;
 import com.opinous.enums.NotificationType;
 import com.opinous.exception.FileStorageException;
 import com.opinous.model.AnonymousUser;
@@ -27,7 +28,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 import java.util.Random;
 
-@Controller @RequestMapping(URLMappings.ADMIN) public class AdminAnonUserController {
+@Controller @RequestMapping(URLMapping.ADMIN) public class AdminAnonUserController {
 
     private Logger logger = LoggerFactory.getLogger(AdminAnonUserController.class);
 
@@ -42,9 +43,9 @@ import java.util.Random;
     @Autowired private NotificationService notificationService;
 
 
-    @GetMapping(value = URLMappings.NEW_ANON) public String newAnonUser(Model model) {
+    @GetMapping(value = URLMapping.NEW_ANON) public String newAnonUser(Model model) {
         if (securityService.isAdmin()) {
-            model.addAttribute("userForm", new AnonymousUser());
+            model.addAttribute(AttributeName.USER_FORM, new AnonymousUser());
             return JSPMapping.ADMIN_NEW_ANON_USER;
         } else {
             logger.error("Illegal attempt to access admin page");
@@ -52,9 +53,9 @@ import java.util.Random;
         }
     }
 
-    @PostMapping(value = URLMappings.NEW_ANON)
+    @PostMapping(value = URLMapping.NEW_ANON)
     public String newAnonUser(@RequestParam("file") MultipartFile file,
-        @ModelAttribute("userForm") AnonymousUser userForm, Model model)
+        @ModelAttribute(AttributeName.USER_FORM) AnonymousUser userForm, Model model)
         throws FileStorageException {
         if (securityService.isAdmin()) {
             String suggestedFileName =
@@ -75,7 +76,7 @@ import java.util.Random;
         }
     }
 
-    @GetMapping(value = URLMappings.UPDATE_ANON) public String updateAnonUser() {
+    @GetMapping(value = URLMapping.UPDATE_ANON) public String updateAnonUser() {
         if (securityService.isAdmin()) {
             return JSPMapping.ADMIN_UPDATE_ANON_USER;
         } else {
@@ -84,11 +85,11 @@ import java.util.Random;
         }
     }
 
-    @GetMapping(value = URLMappings.UPDATE_ANON + "/{name}")
+    @GetMapping(value = URLMapping.UPDATE_ANON + "/{name}")
     public String updateAnonUser(@PathVariable("name") String name, Model model) {
         if (securityService.isAdmin()) {
             AnonymousUser user = anonymousUserRepository.findByName(name);
-            model.addAttribute("userForm", user);
+            model.addAttribute(AttributeName.USER_FORM, user);
             return JSPMapping.ADMIN_UPDATE_ANON_USER;
         } else {
             logger.error("Illegal attempt to access admin page");
@@ -96,9 +97,9 @@ import java.util.Random;
         }
     }
 
-    @PostMapping(value = URLMappings.UPDATE_ANON + "/{name}")
+    @PostMapping(value = URLMapping.UPDATE_ANON + "/{name}")
     public String updateAnonUser(@RequestParam("file") MultipartFile file,
-        @ModelAttribute("userForm") AnonymousUser updateUser, Model model)
+        @ModelAttribute(AttributeName.USER_FORM) AnonymousUser updateUser, Model model)
         throws FileStorageException {
         if (securityService.isAdmin()) {
             AnonymousUser user = anonymousUserRepository.findById(updateUser.getId()).get();
@@ -123,11 +124,11 @@ import java.util.Random;
         }
     }
 
-    @GetMapping(value = URLMappings.LIST_ANON) public String listAnonUser(Model model) {
+    @GetMapping(value = URLMapping.LIST_ANON) public String listAnonUser(Model model) {
         if (securityService.isAdmin()) {
             List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
 
-            model.addAttribute("userList", anonymousUsers);
+            model.addAttribute(AttributeName.USER_LIST, anonymousUsers);
             return JSPMapping.ADMIN_LIST_ANON_USER;
         } else {
             logger.error("Illegal attempt to access admin page");

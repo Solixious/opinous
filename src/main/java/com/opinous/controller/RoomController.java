@@ -1,7 +1,8 @@
 package com.opinous.controller;
 
+import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
-import com.opinous.constants.URLMappings;
+import com.opinous.constants.URLMapping;
 import com.opinous.model.AnonMap;
 import com.opinous.model.AnonymousUser;
 import com.opinous.model.Post;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller @RequestMapping(URLMappings.ROOM)
+@Controller @RequestMapping(URLMapping.ROOM)
 public class RoomController {
 
     @Autowired
@@ -48,23 +49,23 @@ public class RoomController {
     @Autowired
     private PostRepository postRepository;
 
-    @GetMapping(value = URLMappings.ROOM_NEW)
+    @GetMapping(value = URLMapping.ROOM_NEW)
     public String newRoom(Model model) {
         if (securityService.isUser()) {
-            model.addAttribute("roomForm", new Room());
+            model.addAttribute(AttributeName.ROOM_FORM, new Room());
             return JSPMapping.CREATE_NEW_ROOM;
         } else {
             return JSPMapping.LOGIN;
         }
     }
 
-    @PostMapping(value = URLMappings.ROOM_NEW)
-    public String newRoom(@ModelAttribute("roomForm") Room room, BindingResult bindingResult,
+    @PostMapping(value = URLMapping.ROOM_NEW)
+    public String newRoom(@ModelAttribute(AttributeName.ROOM_FORM) Room room, BindingResult bindingResult,
         Model model) {
         if (securityService.isUser()) {
             roomService.createRoom(room);
-            model.addAttribute("roomForm", new Room());
-            return "redirect:" + URLMappings.ROOM + "/" + room.getId();
+            model.addAttribute(AttributeName.ROOM_FORM, new Room());
+            return "redirect:" + URLMapping.ROOM + "/" + room.getId();
         } else {
             return JSPMapping.LOGIN;
         }
@@ -73,21 +74,21 @@ public class RoomController {
     @RequestMapping(value = "/{roomId}", method = RequestMethod.GET)
     public String viewRoom(@PathVariable("roomId") Long roomId, Model model) {
         Room room = roomService.getRoomById(roomId);
-        model.addAttribute("room", room);
+        model.addAttribute(AttributeName.ROOMS, room);
         
         List<AnonMap> anonMaps = anonMapRepository.findByRoom(room);
         List<Post> posts = postRepository.findByAnonMapIn(anonMaps);
-        model.addAttribute("posts", posts);
+        model.addAttribute(AttributeName.POSTS, posts);
         
         model.addAttribute("isUser", securityService.isUser());
         if(securityService.isUser()) {
-        	model.addAttribute("postForm", new Post());
+        	model.addAttribute(AttributeName.POST_FORM, new Post());
         }
         return JSPMapping.ROOM_DETAILS;
     }
     
     @RequestMapping(value = "/{roomId}", method = RequestMethod.POST)
-    public String postReply(@ModelAttribute("postForm") Post post, @PathVariable("roomId") Long roomId, Model model) {
+    public String postReply(@ModelAttribute(AttributeName.POST_FORM) Post post, @PathVariable("roomId") Long roomId, Model model) {
         User user = userService.findByUsername(securityService.findLoggedInUsername());
         Room room = roomService.getRoomById(roomId);
         AnonMap anonMap = anonMapRepository.findByRoomAndUser(room, user);
@@ -103,6 +104,6 @@ public class RoomController {
         
         post.setAnonMap(anonMap);
         postRepository.save(post);
-        return "redirect:" + URLMappings.ROOM + "/" + room.getId();
+        return "redirect:" + URLMapping.ROOM + "/" + room.getId();
     }
 }

@@ -1,6 +1,6 @@
 package com.opinous.controller;
 
-import com.opinous.constants.URLMappings;
+import com.opinous.constants.URLMapping;
 import com.opinous.exception.MyFileNotFoundException;
 import com.opinous.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class FileController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @GetMapping(URLMappings.DOWNLOAD_FILE)
+    @GetMapping(URLMapping.DOWNLOAD_FILE)
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName,
         HttpServletRequest request) throws MyFileNotFoundException {
         Resource resource = fileStorageService.loadFileAsResource(fileName);

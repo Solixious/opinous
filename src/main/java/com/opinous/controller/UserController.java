@@ -1,7 +1,8 @@
 package com.opinous.controller;
 
+import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
-import com.opinous.constants.URLMappings;
+import com.opinous.constants.URLMapping;
 import com.opinous.model.Room;
 import com.opinous.model.User;
 import com.opinous.repository.RoomRepository;
@@ -35,14 +36,14 @@ public class UserController {
     @Autowired
     private RoomRepository roomRepository;
 
-    @GetMapping(value = URLMappings.USER_REGISTRATION)
+    @GetMapping(value = URLMapping.USER_REGISTRATION)
     public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+        model.addAttribute(AttributeName.USER_FORM, new User());
         return JSPMapping.REGISTRATION;
     }
 
-    @PostMapping(value = URLMappings.USER_REGISTRATION)
-    public String registration(@ModelAttribute("userForm") User userForm,
+    @PostMapping(value = URLMapping.USER_REGISTRATION)
+    public String registration(@ModelAttribute(AttributeName.USER_FORM) User userForm,
         BindingResult bindingResult, Model model) {
         userValidator.validate(userForm, bindingResult);
 
@@ -57,7 +58,7 @@ public class UserController {
         return JSPMapping.HOME;
     }
 
-    @GetMapping(value = URLMappings.USER_LOGIN)
+    @GetMapping(value = URLMapping.USER_LOGIN)
     public String login(Model model, String error, String logout) {
 
         if (error != null) {
@@ -71,11 +72,11 @@ public class UserController {
         return JSPMapping.LOGIN;
     }
 
-    @GetMapping(value = URLMappings.USER_HOME)
+    @GetMapping(value = URLMapping.USER_HOME)
     public String welcome(Model model) {
         List<Room> rooms = new ArrayList<>();
         rooms = roomRepository.findAll(Sort.by(Sort.Order.desc("id")));
-        model.addAttribute("rooms", rooms);
+        model.addAttribute(AttributeName.ROOMS, rooms);
         return JSPMapping.HOME;
     }
 }
