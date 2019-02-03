@@ -2,6 +2,7 @@ package com.opinous.controller;
 
 import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
+import com.opinous.constants.Misc;
 import com.opinous.constants.URLMapping;
 import com.opinous.model.AnonMap;
 import com.opinous.model.AnonymousUser;
@@ -74,13 +75,13 @@ public class RoomController {
     @RequestMapping(value = "/{roomId}", method = RequestMethod.GET)
     public String viewRoom(@PathVariable("roomId") Long roomId, Model model) {
         Room room = roomService.getRoomById(roomId);
-        model.addAttribute(AttributeName.ROOMS, room);
+        model.addAttribute(AttributeName.ROOM, room);
         
         List<AnonMap> anonMaps = anonMapRepository.findByRoom(room);
         List<Post> posts = postRepository.findByAnonMapIn(anonMaps);
         model.addAttribute(AttributeName.POSTS, posts);
         
-        model.addAttribute("isUser", securityService.isUser());
+        model.addAttribute(AttributeName.IS_USER, securityService.isUser());
         if(securityService.isUser()) {
         	model.addAttribute(AttributeName.POST_FORM, new Post());
         }
@@ -104,6 +105,6 @@ public class RoomController {
         
         post.setAnonMap(anonMap);
         postRepository.save(post);
-        return "redirect:" + URLMapping.ROOM + "/" + room.getId();
+        return Misc.REDIRECT + URLMapping.ROOM + "/" + room.getId();
     }
 }

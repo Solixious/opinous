@@ -2,6 +2,7 @@ package com.opinous.controller.admin;
 
 import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
+import com.opinous.constants.Misc;
 import com.opinous.constants.URLMapping;
 import com.opinous.enums.NotificationType;
 import com.opinous.model.User;
@@ -103,7 +104,7 @@ import java.util.List;
                 model.addAttribute(AttributeName.USER_FORM, user);
                 return JSPMapping.ADMIN_UPDATE_DELETE_USER;
             } else {
-                return "redirect:" + URLMapping.ADMIN + URLMapping.LIST_USER + username;
+                return Misc.REDIRECT + URLMapping.ADMIN + URLMapping.LIST_USER + username;
             }
         } else {
             logger.error("Illegal attempt to access admin page");
