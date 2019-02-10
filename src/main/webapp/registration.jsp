@@ -15,6 +15,7 @@
 		<link href="${contextPath}/resources/css/common.css" rel="stylesheet">
 	</head>
 	<body>
+		<jsp:include page="nav-bar.jsp" />
 		<div class="container">
 			<form:form method="POST" modelAttribute="userForm" class="form form-register">
 				<h2 class="form-heading">Register Account</h2>

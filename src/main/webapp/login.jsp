@@ -15,6 +15,7 @@
 		<link href="${contextPath}/resources/css/common.css" rel="stylesheet">
 	</head>
 	<body>
+		<jsp:include page="nav-bar.jsp" />
 		<div class="container">
 			<form method="POST" action="${contextPath}/login" class="form form-login">
 				<h2 class="form-heading">Log in</h2>

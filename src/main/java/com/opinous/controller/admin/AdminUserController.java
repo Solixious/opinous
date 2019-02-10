@@ -28,20 +28,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@Controller @RequestMapping(URLMapping.ADMIN) public class AdminUserController {
+@Controller
+@RequestMapping(URLMapping.ADMIN)
+public class AdminUserController {
     private Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 
-    @Autowired private SecurityService securityService;
+    @Autowired
+    private SecurityService securityService;
 
-    @Autowired private UserValidator userValidator;
+    @Autowired
+    private UserValidator userValidator;
 
-    @Autowired private UserService userService;
+    @Autowired
+    private UserService userService;
 
-    @Autowired private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    @Autowired private NotificationService notificationService;
+    @Autowired
+    private NotificationService notificationService;
 
-    @GetMapping(value = URLMapping.USER_HOME) public String adminHome(HttpServletRequest request) {
+    @GetMapping(value = URLMapping.USER_HOME)
+    public String adminHome(HttpServletRequest request) {
         if (securityService.isAdmin()) {
             logger.debug("Going to admin control panel page.");
             return JSPMapping.ADMIN_CONTROL_PANEL;
@@ -51,7 +59,8 @@ import java.util.List;
         }
     }
 
-    @GetMapping(value = URLMapping.NEW_USER) public String newUser(Model model) {
+    @GetMapping(value = URLMapping.NEW_USER)
+    public String newUser(Model model) {
         if (securityService.isAdmin()) {
             model.addAttribute(AttributeName.USER_FORM, new User());
             return JSPMapping.ADMIN_NEW_USER;
@@ -83,7 +92,8 @@ import java.util.List;
         }
     }
 
-    @GetMapping(value = URLMapping.UPDATE_USER) public String updateDeleteUser(Model model) {
+    @GetMapping(value = URLMapping.UPDATE_USER)
+    public String updateDeleteUser(Model model) {
         if (securityService.isAdmin())
             return JSPMapping.ADMIN_UPDATE_DELETE_USER;
         else {
