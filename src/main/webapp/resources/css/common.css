@@ -77,6 +77,7 @@ a {
 	position: fixed;
 	left: 0px;
 	right: 0px;
+	z-index: 999;
 }
 
 .container-fluid {
@@ -153,4 +154,47 @@ a {
 }
 .float-right {
 	float: right;
+}
+.media {
+	margin: 10px;
+	width: 98%;
+	background: #000;
+	opacity: 0.8;
+}
+.room-replies {
+	width: 100%;
+}
+.media-left {
+	width: 120px;
+	padding: 30px;
+	border-right: 1px solid #101010;
+}
+.media-heading {
+	width: 100%;
+}
+.media-body {
+	width: 80%;
+    margin-left: 25px;
+}
+.media-object {
+	width: 120px;
+}
+.user-name {
+    text-align: center;
+    width: 100%;
+    margin-top: 15px;
+}
+.post-reply {
+	width: 100%;
+}
+.form-room-reply {
+	margin-left: 500px;
+	margin-top: 20px;
+	padding: 30px;
+	height: 160px;
+}
+
+.form-room-reply  textarea{
+	height: 100px;
+	width: 315px;
 }
