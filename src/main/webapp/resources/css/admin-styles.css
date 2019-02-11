@@ -103,3 +103,14 @@
 #preview {
 	display: none;
 }
+.form-update-anonymous {
+	position: absolute;
+	left: 600px;
+	top: 150px;
+	height: 700px;
+}
+.anon-dp {
+	max-width: 312px;
+	max-height: 400px;
+	margin-bottom: 20px;
+}
