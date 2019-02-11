@@ -10,7 +10,6 @@ import com.opinous.repository.AnonymousUserRepository;
 import com.opinous.service.FileStorageService;
 import com.opinous.service.NotificationService;
 import com.opinous.service.SecurityService;
-import com.opinous.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,22 +27,27 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 import java.util.Random;
 
-@Controller @RequestMapping(URLMapping.ADMIN) public class AdminAnonUserController {
+@Controller
+@RequestMapping(URLMapping.ADMIN)
+public class AdminAnonUserController {
 
     private Logger logger = LoggerFactory.getLogger(AdminAnonUserController.class);
 
-    @Autowired private UserService userService;
+    @Autowired
+    private SecurityService securityService;
 
-    @Autowired private SecurityService securityService;
+    @Autowired
+    private FileStorageService fileStorageService;
 
-    @Autowired private FileStorageService fileStorageService;
+    @Autowired
+    private AnonymousUserRepository anonymousUserRepository;
 
-    @Autowired private AnonymousUserRepository anonymousUserRepository;
+    @Autowired
+    private NotificationService notificationService;
 
-    @Autowired private NotificationService notificationService;
 
-
-    @GetMapping(value = URLMapping.NEW_ANON) public String newAnonUser(Model model) {
+    @GetMapping(value = URLMapping.NEW_ANON)
+    public String newAnonUser(Model model) {
         if (securityService.isAdmin()) {
             model.addAttribute(AttributeName.USER_FORM, new AnonymousUser());
             return JSPMapping.ADMIN_NEW_ANON_USER;
@@ -76,7 +80,8 @@ import java.util.Random;
         }
     }
 
-    @GetMapping(value = URLMapping.UPDATE_ANON) public String updateAnonUser() {
+    @GetMapping(value = URLMapping.UPDATE_ANON)
+    public String updateAnonUser() {
         if (securityService.isAdmin()) {
             return JSPMapping.ADMIN_UPDATE_ANON_USER;
         } else {
@@ -124,7 +129,8 @@ import java.util.Random;
         }
     }
 
-    @GetMapping(value = URLMapping.LIST_ANON) public String listAnonUser(Model model) {
+    @GetMapping(value = URLMapping.LIST_ANON)
+    public String listAnonUser(Model model) {
         if (securityService.isAdmin()) {
             List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
 

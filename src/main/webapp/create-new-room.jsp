@@ -13,49 +13,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Create New Room</title>
-
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	<link href="${contextPath}/resources/css/common.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-
-        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-
-        <jsp:include page="nav-bar.jsp" />
-
-        <form:form method="POST" modelAttribute="roomForm" class="form-signin">
-            <h2 class="form-signin-heading">Create New Room</h2>
-            <spring:bind path="title">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="title" class="form-control" placeholder="Title"
-                                autofocus="true"></form:input>
+	<jsp:include page="nav-bar.jsp" />
+	<div class="container">
+        <form:form method="POST" modelAttribute="roomForm" class="form form-new-room">
+            <h2 class="form-heading">Create New Room</h2>
+            <div class="form-content">
+	            <spring:bind path="title">
+                    <form:input type="text" path="title" class="form-element form-input" placeholder="Title"
+						autofocus="true"></form:input>
                     <form:errors path="title"></form:errors>
-                </div>
-            </spring:bind>
-
-            <spring:bind path="description">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:textarea path="description" class="form-control" placeholder="Description"
-                    rows="5"></form:textarea>
-                    <form:errors path="description"></form:errors>
-                </div>
-            </spring:bind>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+	            </spring:bind>
+	
+	            <spring:bind path="description">
+					<form:textarea path="description" class="form-element form-textarea" placeholder="Description"
+						rows="5"></form:textarea>
+					<form:errors path="description"></form:errors>
+	            </spring:bind>
+	            <button class="form-button-primary" type="submit">Submit</button>
+	        </div>
         </form:form>
 
 </div>
 <!-- /container -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

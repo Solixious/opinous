@@ -83,7 +83,12 @@ public class RoomController {
         
         model.addAttribute(AttributeName.IS_USER, securityService.isUser());
         if(securityService.isUser()) {
+        	User user = userService.findByUsername(securityService.findLoggedInUsername());
         	model.addAttribute(AttributeName.POST_FORM, new Post());
+        	AnonMap anonMap = anonMapRepository.findByRoomAndUser(room, user);
+        	if(anonMap != null) {
+        		model.addAttribute(AttributeName.POSTING_AS, anonMap);
+        	}
         }
         return JSPMapping.ROOM_DETAILS;
     }

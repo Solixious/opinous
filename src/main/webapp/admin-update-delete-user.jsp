@@ -12,85 +12,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Create an account</title>
-
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <title>Update User Account</title>
     <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="${contextPath}/resources/css/admin-styles.css" rel="stylesheet">
 </head>
 
 <body>
-<form id="logoutForm" method="POST" action="${contextPath}/logout">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form>
 <jsp:include page="nav-bar.jsp" />
-<div class="container" style="margin-top:50px">
-    <div class="form-group update-query-form">
-      <label for="usr">Username</label>
-      <input type="text" class="" id="usr">
-      <button type="button" class="btn btn-primary" id="load">Load</button>
-    </div>
+<div class="container">
+	<div class="form update-query-form">
+		<h2 class="form-heading">Enter Username</h2>
+		<div class="form-content">
+			<input type="text" class="form-element form-input" id="usr">
+			<button type="button" class="form-button-primary" id="load">Load</button>
+		</div>
+	</div>
     <c:if test="${not empty userForm.username}">
-
-        <form:form method="POST" modelAttribute="userForm" class="update-form">
-            <spring:bind path="id">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:hidden path="id"></form:hidden>
-                    <form:errors path="id"></form:errors>
-                </div>
-            </spring:bind>
-
-            <spring:bind path="username">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    Username<form:input type="text" path="username" class="form-control" placeholder="Username"
-                                autofocus="true"></form:input>
-                    <form:errors path="username"></form:errors>
-                </div>
-            </spring:bind>
-
-            <spring:bind path="email">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    Email<form:input type="text" path="email" class="form-control" placeholder="Email Address"></form:input>
-                    <form:errors path="email"></form:errors>
-                </div>
-            </spring:bind>
-
-            <spring:bind path="password">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    Password<form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
-                    <form:errors path="password"></form:errors>
-                </div>
-            </spring:bind>
-            <spring:bind path="confirmPassword">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    Confirm Password<form:input type="password" path="confirmPassword" class="form-control"
-                                placeholder="Confirm your password"></form:input>
-                    <form:errors path="confirmPassword"></form:errors>
-                </div>
-            </spring:bind>
-            <spring:bind path="firstName">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    First Name<form:input type="text" path="firstName" class="form-control"
-                                placeholder="First Name"></form:input>
-                    <form:errors path="confirmPassword"></form:errors>
-                </div>
-            </spring:bind>
-            <spring:bind path="lastName">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    Last Name<form:input type="text" path="lastName" class="form-control"
-                                placeholder="Last Name"></form:input>
-                    <form:errors path="lastName"></form:errors>
-                </div>
-            </spring:bind>
-            <button class="btn btn-primary" type="submit">Update</button>
-            <button class="btn btn-secondary" type="submit" onclick="document.forms['deleteForm'].submit()">Delete</button>
-        </form:form>
+		<form:form method="POST" modelAttribute="userForm" class="form form-update-user">
+			<h3 class="form-heading">User Details</h3>
+			<div class="form-content">
+				<spring:bind path="id">
+					<form:hidden path="id"></form:hidden>
+					<form:errors path="id"></form:errors>
+				</spring:bind>
+				<spring:bind path="username">
+					<div class="form-element">Username</div>
+					<form:input type="text" path="username" class="form-element form-input" placeholder="Username"
+						autofocus="true"></form:input>
+					<form:errors path="username"></form:errors>
+	            </spring:bind>
+				<spring:bind path="email">
+					<div class="form-element">Email</div>
+					<form:input type="text" path="email" class="form-element form-input" placeholder="Email Address"></form:input>
+					<form:errors path="email"></form:errors>
+				</spring:bind>
+	            <spring:bind path="password">
+					<div class="form-element">Password</div>
+					<form:input type="password" path="password" class="form-element form-input" placeholder="Password"></form:input>
+					<form:errors path="password"></form:errors>
+	            </spring:bind>
+	            <spring:bind path="confirmPassword">
+					<div class="form-element">Confirm Password</div>
+					<form:input type="password" path="confirmPassword" class="form-element form-input"
+	                                placeholder="Confirm your password"></form:input>
+					<form:errors path="confirmPassword"></form:errors>
+	            </spring:bind>
+	            <spring:bind path="firstName">
+					<div class="form-element">First Name</div>
+					<form:input type="text" path="firstName" class="form-element form-input"
+	                                placeholder="First Name"></form:input>
+					<form:errors path="confirmPassword"></form:errors>
+	            </spring:bind>
+	            <spring:bind path="lastName">
+					<div class="form-element">Last Name</div>
+					<form:input type="text" path="lastName" class="form-element form-input"
+	                                placeholder="Last Name"></form:input>
+					<form:errors path="lastName"></form:errors>
+	            </spring:bind>
+				<button class="form-button-primary" type="submit">Update</button>
+				<button class="form-button-secondary" type="submit" onclick="document.forms['deleteForm'].submit()">Delete</button>
+			</div>
+		</form:form>
         <form:form method="DELETE" modelAttribute="userForm" class="update-form" id="deleteForm">
             <spring:bind path="id">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -103,7 +85,6 @@
 </div>
 <!-- /container -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 <script>
     jQuery("#load").click( function() {
         var usr = jQuery("#usr").val();

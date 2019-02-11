@@ -1,0 +1,147 @@
+.admin-cp-row {
+	width: 100%;
+	margin-top: 30px;
+}
+.admin-cp-option {
+	width: 30%;
+	margin-left: 30px;
+	height: 70px;
+	font-size: 24px;
+	background: #000;
+	border-radius: 5px;
+	opacity: 0.8;
+}
+
+.admin-cp-option a {
+	width: 100%;
+	color: #FFF;
+	text-align: center;
+	margin-top: 18px;
+}
+
+.form-register-admin {
+	height: 410px;
+}
+.update-query-form {
+	position: absolute;
+	top: 150px;
+	left: 75px;
+	height: 240px;
+}
+.form-update-user {
+	position: absolute;
+	top: 150px;
+	left: 565px;
+	height: 670px;
+}
+.table-div {
+	position: absolute;
+	left: 40px;
+	right: 40px;
+	top: 150px;
+}
+.user-list-table thead, .user-list-table tr {
+	width: 100%;
+	background-color: black;
+}
+.user-list-table td, .user-list-table th {
+	width: 20%;
+	height: 50px;
+	padding-top: 24px;
+	padding-left: 0;
+	padding-right: 0;
+	font-size: 20px;
+	border-bottom: 1px solid #FFF;
+}
+.user-list-table td {
+	text-align: center;
+}
+.user-list-table th {
+	background-color: #303030;
+}
+.user-list-table tr:hover {
+	background-color: #ff0000;
+}
+.user-list-table, .user-list-table tbody {
+	width: 100%;
+}
+.form-new-anon {
+	position: absolute;
+	top: 150px;
+	left: 100px;
+	height: 300px;
+}
+.anon-dp-preview {
+	position: absolute;
+	top: 150px;
+	left: 600px;
+	max-width: 600px;
+	max-height: 500px;
+}
+#dpInput::-webkit-file-upload-button {
+  visibility: hidden;
+}
+#dpInput::before {
+  content: 'Select Display Picture';
+  display: inline-block;
+  background: #ff0000;
+  padding: 15px 18px;
+  margin-bottom: 15px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+}
+#dpInput:hover::before {
+  border-color: black;
+}
+#dpInput:active::before {
+  background: #ff0000;
+}
+#preview {
+	display: none;
+}
+.form-update-anonymous {
+	position: absolute;
+	left: 600px;
+	top: 150px;
+	height: 700px;
+}
+.anon-dp {
+	max-width: 312px;
+	max-height: 400px;
+	margin-bottom: 20px;
+}
+.anon-list-dp {
+	max-width: 150px;
+	max-height: 150px;
+}
+.anon-table thead, .anon-table tr {
+	width: 100%;
+	background-color: black;
+	border-bottom: 1px solid #FFF;
+}
+.anon-table td, .anon-table th {
+	width: 33%;
+	padding-top: 24px;
+	padding-left: 0;
+	padding-right: 0;
+	font-size: 20px;
+}
+.anon-table td {
+	text-align: center;
+}
+.anon-table th {
+	background-color: #303030;
+}
+.anon-table tr:hover {
+	background-color: #ff0000;
+}
+.anon-table, .anon-table tbody {
+	width: 100%;
+}
+.anon-table-div {
+	margin: 35px;
+}
