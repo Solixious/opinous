@@ -46,6 +46,9 @@
           		<form:form method="POST" modelAttribute="postForm" class="form form-room-reply">
           			<div class="form-content">
 	          			<spring:bind path="text">
+	          				<c:if test='${postingAs != null}'>
+	          					<div class="form-element posting-as"><span>Posting As &nbsp</span><span class="highlight">${postingAs.anonymousUser.name}</span></div>
+	          				</c:if>
 			                <form:textarea path="text" class="form-control" placeholder="Post your reply here"
 			                            autofocus="true"></form:textarea>
 			                <form:errors path="text"></form:errors>

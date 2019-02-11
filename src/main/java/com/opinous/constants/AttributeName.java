@@ -9,4 +9,5 @@ public class AttributeName {
 	public static final String ROOM = "room";
 	public static final String POSTS = "posts";
 	public static final String IS_USER = "isUser";
+	public static final String POSTING_AS = "postingAs";
 }

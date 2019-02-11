@@ -190,11 +190,18 @@ a {
 .form-room-reply {
 	margin-left: 500px;
 	margin-top: 20px;
+	margin-bottom: 50px;
 	padding: 30px;
-	height: 160px;
+	height: 200px;
 }
 
 .form-room-reply  textarea{
 	height: 100px;
 	width: 315px;
+}
+.posting-as {
+	margin-bottom: 20px;
+}
+.highlight {
+	color: #FF7777;
 }
