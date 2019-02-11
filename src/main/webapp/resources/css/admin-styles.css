@@ -22,3 +22,15 @@
 .form-register-admin {
 	height: 410px;
 }
+.update-query-form {
+	position: absolute;
+	top: 150px;
+	left: 75px;
+	height: 240px;
+}
+.form-update-user {
+	position: absolute;
+	top: 150px;
+	left: 565px;
+	height: 670px;
+}
