@@ -205,3 +205,7 @@ a {
 .highlight {
 	color: #FF7777;
 }
+.error-para {
+	margin-left: 40px;
+	width: 100%;
+}
