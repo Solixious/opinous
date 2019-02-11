@@ -114,3 +114,34 @@
 	max-height: 400px;
 	margin-bottom: 20px;
 }
+.anon-list-dp {
+	max-width: 150px;
+	max-height: 150px;
+}
+.anon-table thead, .anon-table tr {
+	width: 100%;
+	background-color: black;
+	border-bottom: 1px solid #FFF;
+}
+.anon-table td, .anon-table th {
+	width: 33%;
+	padding-top: 24px;
+	padding-left: 0;
+	padding-right: 0;
+	font-size: 20px;
+}
+.anon-table td {
+	text-align: center;
+}
+.anon-table th {
+	background-color: #303030;
+}
+.anon-table tr:hover {
+	background-color: #ff0000;
+}
+.anon-table, .anon-table tbody {
+	width: 100%;
+}
+.anon-table-div {
+	margin: 35px;
+}
