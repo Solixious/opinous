@@ -34,3 +34,34 @@
 	left: 565px;
 	height: 670px;
 }
+.table-div {
+	position: absolute;
+	left: 40px;
+	right: 40px;
+	top: 150px;
+}
+.user-list-table thead, .user-list-table tr {
+	width: 100%;
+	background-color: black;
+}
+.user-list-table td, .user-list-table th {
+	width: 20%;
+	height: 50px;
+	padding-top: 24px;
+	padding-left: 0;
+	padding-right: 0;
+	font-size: 20px;
+	border-bottom: 1px solid #FFF;
+}
+.user-list-table td {
+	text-align: center;
+}
+.user-list-table th {
+	background-color: #303030;
+}
+.user-list-table tr:hover {
+	background-color: #ff0000;
+}
+.user-list-table, .user-list-table tbody {
+	width: 100%;
+}
