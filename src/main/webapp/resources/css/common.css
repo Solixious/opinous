@@ -41,6 +41,15 @@ a {
 	border-radius: 5px;
 }
 
+.form .form-content .form-textarea {
+	border: none;
+	height: 108px;
+	padding: 3px 15px;
+	margin-bottom: 16px;
+	border-radius: 5px;
+	padding-top: 10px;
+}
+
 .form .form-content .form-extra-links {
 	width: 100%;
 	margin-top: 25px;
@@ -85,6 +94,11 @@ a {
 	color: #fff;
 }
 
+.room-card a {
+	width: 80%;
+	height: 100%;
+}
+
 .navbar-header a {
 	display: inline-block;
 	padding: 15px;
@@ -106,7 +120,11 @@ a {
     height: 200px;
     margin: 20px;
     padding: 20px;
-    background-color: red;
+    background-color: black;
+}
+
+.room-card:hover {
+	background-image: linear-gradient(black, black, black, black, black, black, red);
 }
 
 .form-login {
@@ -120,6 +138,12 @@ a {
 	left: 500px;
 	top: 200px;
 	height: 450px;
+}
+.form-new-room {
+	position: absolute;
+	left: 500px;
+	top: 230px;
+	height: 370px;	
 }
 .float-right {
 	float: right;
