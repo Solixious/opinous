@@ -31,12 +31,19 @@ a {
 	width: 90%;
 }
 
-.form .form-heading, .form .form-content, .form .form-content .form-input {
+.form .form-heading, .form .form-content .form-input {
 	border: none;
 	height: 36px;
 	padding: 3px 15px;
 	margin-bottom: 16px;
 	border-radius: 5px;
+}
+
+.form .form-content {
+    border: none;
+    padding: 3px 15px;
+    margin-bottom: 16px;
+    border-radius: 5px;
 }
 
 .form .form-content .form-textarea {
