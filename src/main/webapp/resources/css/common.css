@@ -158,6 +158,7 @@ a {
 	width: 98%;
 	background: #000;
 	opacity: 0.8;
+	float: left;
 }
 .room-replies {
 	width: 100%;
@@ -166,21 +167,26 @@ a {
 	width: 120px;
 	padding: 30px;
 	border-right: 1px solid #101010;
+	float: left;
 }
 .media-heading {
 	width: 100%;
+	float: left;
 }
 .media-body {
 	width: 80%;
     margin-left: 25px;
+	float: left;
 }
 .media-object {
 	width: 120px;
+	float: left;
 }
 .user-name {
     text-align: center;
     width: 100%;
     margin-top: 15px;
+	float: left;
 }
 .post-reply {
 	width: 100%;
@@ -190,7 +196,7 @@ a {
 	margin-top: 20px;
 	margin-bottom: 50px;
 	padding: 30px;
-	height: 200px;
+	float: left;
 }
 
 .form-room-reply  textarea{
