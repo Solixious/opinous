@@ -19,7 +19,7 @@ a {
 	max-width: 350px;
 	background: #000;	
 	opacity: 0.8;
-	padding: 0 32px;
+	padding: 32px;
 }
 
 .form .form-heading {
@@ -36,13 +36,13 @@ a {
 	height: 36px;
 	padding: 3px 15px;
 	margin-bottom: 16px;
+	margin-top: 0;
 	border-radius: 5px;
 }
 
 .form .form-content {
     border: none;
     padding: 3px 15px;
-    margin-bottom: 16px;
     border-radius: 5px;
 }
 
@@ -143,20 +143,11 @@ a {
 	background-image: linear-gradient(black, black, black, black, black, black, red);
 }
 
-.form-login {
-	margin-left: 500px;
-	margin-top: 200px;
-	height: 330px;
-}
-.form-register {
-	margin-left: 500px;
-	margin-top: 200px;
-	height: 450px;
-}
-.form-new-room {
-	margin-left: 500px;
-	margin-top: 230px;
-	height: 370px;	
+.form-login, .form-register, .form-new-room {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+	margin-left: -175px;
 }
 .float-right {
 	float: right;
