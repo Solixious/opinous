@@ -61,8 +61,8 @@
 				<div class="media-body">
 		          		<form:form method="POST" modelAttribute="postForm" class="form form-room-reply">
 		       				<spring:bind path="text">
-				                <form:textarea path="text" class="form-control" placeholder="Post your reply here"
-				                            autofocus="true"></form:textarea>
+				                <form:textarea path="text" class="form-control"
+				                placeholder="Post your reply here"></form:textarea>
 				                <form:errors path="text"></form:errors>
 				                <button class="form-button-primary" type="submit">Submit</button>
 					        </spring:bind>

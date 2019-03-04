@@ -18,6 +18,7 @@ import com.opinous.service.UserService;
 
 import java.util.List;
 
+import com.opinous.validator.PostValidator;
 import com.opinous.validator.RoomValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller @RequestMapping(URLMapping.ROOM)
 public class RoomController {
@@ -54,6 +58,9 @@ public class RoomController {
     @Autowired
     private RoomValidator roomValidator;
 
+    @Autowired
+    private PostValidator postValidator;
+
     @GetMapping(value = URLMapping.ROOM_NEW)
     public String newRoom(Model model) {
         if (securityService.isUser()) {
@@ -67,7 +74,6 @@ public class RoomController {
     @PostMapping(value = URLMapping.ROOM_NEW)
     public String newRoom(@ModelAttribute(AttributeName.ROOM_FORM) Room room, BindingResult bindingResult,
         Model model) {
-
         roomValidator.validate(room, bindingResult);
         if(bindingResult.hasErrors()) {
             return JSPMapping.CREATE_NEW_ROOM;
@@ -104,7 +110,14 @@ public class RoomController {
     }
     
     @RequestMapping(value = "/{roomId}", method = RequestMethod.POST)
-    public String postReply(@ModelAttribute(AttributeName.POST_FORM) Post post, @PathVariable("roomId") Long roomId, Model model) {
+    public String postReply(@ModelAttribute(AttributeName.POST_FORM) Post post, @PathVariable("roomId") Long roomId, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
+        postValidator.validate(post, bindingResult);
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.post", bindingResult);
+            redirectAttributes.addFlashAttribute("post", post);
+            return "redirect:" + URLMapping.ROOM + "/" + roomId;
+        }
+
         User user = userService.findByUsername(securityService.findLoggedInUsername());
         Room room = roomService.getRoomById(roomId);
         AnonMap anonMap = anonMapRepository.findByRoomAndUser(room, user);
