@@ -24,7 +24,7 @@ a {
 
 .form .form-heading {
 	font-weight: 700;
-	font-size: 32px;
+	font-size: 24px;
 }
 
 .form .form-heading, .form .form-content, .form .form-content .form-element {
@@ -38,6 +38,9 @@ a {
 	margin-bottom: 16px;
 	margin-top: 0;
 	border-radius: 5px;
+}
+.form .form-content .form-input, .form .form-content .form-textarea {
+    font-size: 16px;
 }
 
 .form .form-content {
@@ -147,7 +150,7 @@ a {
 .form-login, .form-register, .form-new-room {
     position: absolute;
     left: 50%;
-    top: 25%;
+    top: 120px;
 	margin-left: -175px;
 }
 .float-right {
@@ -174,7 +177,7 @@ a {
 	width: 100%;
 	float: left;
     line-height: 3;
-    background: #505050;
+    background: #272727;
 }
 .media-body {
 	width: 80%;
@@ -229,4 +232,10 @@ a {
     font-size: 12px;
     margin-top: 14px;
     margin-bottom: 10px;
+}
+.title {
+    margin-left: 30px;
+}
+.navbar .nav-button-primary {
+    margin-left: 15px;
 }

@@ -20,7 +20,7 @@
 	<div class="container">
 			<div class="media">
 				<div class="media-heading">
-					${room.title}
+					<span class="title">${room.title}</span>
 				</div>
 				<div class="media-left">
 					<img src="${room.creator.anonymousUser.displayPicture}" class="media-object">
