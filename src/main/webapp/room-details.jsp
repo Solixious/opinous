@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,8 +23,12 @@
 					<img src="${room.creator.anonymousUser.displayPicture}" class="media-object">
 					<span class="user-name">${room.creator.anonymousUser.name}</span>
 				</div>
-				<div class="media-body">
-					<h4 class="media-heading">${room.title}</h4>
+				<div class="media-body">	
+					<h4 class="media-heading">
+						<fmt:formatDate value="${room.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
+						<br/>
+						${room.title}
+					</h4>
 					<p>${room.description}</p>
 				</div>
 			</div>
@@ -35,6 +40,9 @@
 							<span class="user-name">${post.anonMap.anonymousUser.name}</span>
 						</div>
 						<div class="media-body">
+							<h4 class="media-heading">
+								<fmt:formatDate value="${post.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
+							</h4>
 							<p>${post.text}</p>
 						</div>
 					</div>
