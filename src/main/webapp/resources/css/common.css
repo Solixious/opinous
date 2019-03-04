@@ -154,8 +154,9 @@ a {
 	float: right;
 }
 .media {
-	margin: 10px;
-	width: 98%;
+	margin-left: 52px;
+	margin-top: 20px;
+	width: 93%;
 	background: #000;
 	opacity: 0.8;
 	float: left;
@@ -175,8 +176,10 @@ a {
 }
 .media-body {
 	width: 80%;
-    margin-left: 25px;
+    padding-left: 25px;
 	float: left;
+	border-left: 1px solid #101010;
+    margin-left: -1px;
 }
 .media-object {
 	width: 120px;
@@ -189,19 +192,20 @@ a {
 	float: left;
 }
 .post-reply {
-	width: 100%;
-}
-.form-room-reply {
-	margin-left: 500px;
+	margin-left: 52px;
 	margin-top: 20px;
 	margin-bottom: 50px;
-	padding: 30px;
+	width: 93%;
 	float: left;
+}
+.form-room-reply {
+	max-width: 100%;
+    padding-left: 10px;
 }
 
 .form-room-reply  textarea{
-	height: 100px;
-	width: 315px;
+	height: 150px;
+	width: 100%;
 }
 .posting-as {
 	margin-bottom: 20px;
@@ -212,4 +216,7 @@ a {
 .error-para {
 	margin-left: 40px;
 	width: 100%;
+}
+.reply-media {
+	margin-bottom: 32px;
 }

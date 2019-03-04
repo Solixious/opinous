@@ -42,21 +42,25 @@
 			</div>
           
           <c:if test='${isUser == true }'>
-          	<div class="post-reply">
-          		<form:form method="POST" modelAttribute="postForm" class="form form-room-reply">
-          			<div class="form-content">
-	          			<spring:bind path="text">
-	          				<c:if test='${postingAs != null}'>
-	          					<div class="form-element posting-as"><span>Posting As &nbsp</span><span class="highlight">${postingAs.anonymousUser.name}</span></div>
-	          				</c:if>
-			                <form:textarea path="text" class="form-control" placeholder="Post your reply here"
-			                            autofocus="true"></form:textarea>
-			                <form:errors path="text"></form:errors>
-			                <button class="form-button-primary" type="submit">Submit</button>
-				        </spring:bind>
-				    </div>
-          		</form:form>
-          	</div>
+          	<div class="media reply-media">
+				<div class="media-left">
+					<c:if test='${postingAs != null}'>
+						<img src="${postingAs.anonymousUser.displayPicture}" class="media-object">
+						<span class="user-name">${postingAs.anonymousUser.name}</span>
+					</c:if>
+				</div>
+				<div class="media-body">
+		          		<form:form method="POST" modelAttribute="postForm" class="form form-room-reply">
+		       				<spring:bind path="text">
+				                <form:textarea path="text" class="form-control" placeholder="Post your reply here"
+				                            autofocus="true"></form:textarea>
+				                <form:errors path="text"></form:errors>
+				                <button class="form-button-primary" type="submit">Submit</button>
+					        </spring:bind>
+		          		</form:form>
+				</div>
+			</div>
+          	
           </c:if>
         </div>
 
