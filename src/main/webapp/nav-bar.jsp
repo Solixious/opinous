@@ -35,9 +35,14 @@
 <form id="logoutForm" method="POST" action="${contextPath}/logout">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
+<div id="notification" style="display:none">
+    <span class="dismiss"><a title="dismiss this notification">x</a></span>
+</div>
 <c:if test="${not empty notif}">
-    <div class="alert alert-${notifType} fade in" id="notification">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        ${notif}
-    </div>
+    <script>
+        $("#notification").fadeIn("slow").append('${notif}');
+        $(".dismiss").click(function(){
+               $("#notification").fadeOut("slow");
+        });
+    </script>
 </c:if>
