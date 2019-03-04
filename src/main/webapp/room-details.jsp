@@ -19,16 +19,17 @@
 	<jsp:include page="nav-bar.jsp" />
 	<div class="container">
 			<div class="media">
+				<div class="media-heading">
+					${room.title}
+				</div>
 				<div class="media-left">
 					<img src="${room.creator.anonymousUser.displayPicture}" class="media-object">
 					<span class="user-name">${room.creator.anonymousUser.name}</span>
 				</div>
 				<div class="media-body">	
-					<h4 class="media-heading">
+					<div class="media-date">
 						<fmt:formatDate value="${room.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
-						<br/>
-						${room.title}
-					</h4>
+					</div>
 					<p>${room.description}</p>
 				</div>
 			</div>
@@ -40,9 +41,9 @@
 							<span class="user-name">${post.anonMap.anonymousUser.name}</span>
 						</div>
 						<div class="media-body">
-							<h4 class="media-heading">
+							<div class="media-date">
 								<fmt:formatDate value="${post.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
-							</h4>
+							</div>
 							<p>${post.text}</p>
 						</div>
 					</div>

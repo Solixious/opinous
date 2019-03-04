@@ -173,6 +173,8 @@ a {
 .media-heading {
 	width: 100%;
 	float: left;
+    line-height: 3;
+    background: #505050;
 }
 .media-body {
 	width: 80%;
@@ -219,4 +221,12 @@ a {
 }
 .reply-media {
 	margin-bottom: 32px;
+}
+.media-date {
+	float: left;
+	width: 100%;
+	color: #505050;
+    font-size: 12px;
+    margin-top: 14px;
+    margin-bottom: 10px;
 }
