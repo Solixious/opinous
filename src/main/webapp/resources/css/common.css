@@ -239,3 +239,8 @@ a {
 .navbar .nav-button-primary {
     margin-left: 15px;
 }
+.form-error {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}

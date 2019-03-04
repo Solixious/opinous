@@ -18,6 +18,7 @@ import com.opinous.service.UserService;
 
 import java.util.List;
 
+import com.opinous.validator.RoomValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,6 +51,9 @@ public class RoomController {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private RoomValidator roomValidator;
+
     @GetMapping(value = URLMapping.ROOM_NEW)
     public String newRoom(Model model) {
         if (securityService.isUser()) {
@@ -63,6 +67,12 @@ public class RoomController {
     @PostMapping(value = URLMapping.ROOM_NEW)
     public String newRoom(@ModelAttribute(AttributeName.ROOM_FORM) Room room, BindingResult bindingResult,
         Model model) {
+
+        roomValidator.validate(room, bindingResult);
+        if(bindingResult.hasErrors()) {
+            return JSPMapping.CREATE_NEW_ROOM;
+        }
+
         if (securityService.isUser()) {
             roomService.createRoom(room);
             model.addAttribute(AttributeName.ROOM_FORM, new Room());

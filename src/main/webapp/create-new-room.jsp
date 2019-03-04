@@ -25,13 +25,13 @@
 	            <spring:bind path="title">
                     <form:input type="text" path="title" class="form-element form-input" placeholder="Title"
 						autofocus="true"></form:input>
-                    <form:errors path="title"></form:errors>
+                    <form:errors class="form-error" path="title"></form:errors>
 	            </spring:bind>
 	
 	            <spring:bind path="description">
 					<form:textarea path="description" class="form-element form-textarea" placeholder="Description"
 						rows="5"></form:textarea>
-					<form:errors path="description"></form:errors>
+					<form:errors class="form-error" path="description"></form:errors>
 	            </spring:bind>
 	            <button class="form-button-primary" type="submit">Submit</button>
 	        </div>
