@@ -157,6 +157,7 @@ a {
 	float: right;
 }
 .media {
+	position: relative;
 	margin-left: 52px;
 	margin-top: 20px;
 	width: 93%;
@@ -243,4 +244,16 @@ a {
     float: left;
     width: 100%;
     margin-bottom: 10px;
+}
+.media-react {
+	width: 70px;
+	float: left;
+	margin: 15px 0;
+	position: absolute;
+    bottom: 0;
+}
+.react-icon {
+	height: 24px;
+	width: 24px;
+	margin-right: 8px;
 }

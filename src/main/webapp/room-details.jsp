@@ -44,6 +44,10 @@
 							<div class="media-date">
 								<fmt:formatDate value="${post.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
 							</div>
+							<div class="media-react">
+								<img class="react-icon" src="/resources/img/tu.png"></img>
+								<img class="react-icon" src="/resources/img/td.png"></img>
+							</div>
 							<p>${post.text}</p>
 						</div>
 					</div>
