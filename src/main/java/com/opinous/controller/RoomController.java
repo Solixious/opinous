@@ -32,99 +32,102 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller @RequestMapping(URLMapping.ROOM)
+@Controller
+@RequestMapping(URLMapping.ROOM)
 public class RoomController {
 
-    @Autowired
-    private SecurityService securityService;
+	@Autowired
+	private SecurityService securityService;
 
-    @Autowired
-    private RoomService roomService;
-    
-    @Autowired
-    private UserService userService;
-    
-    @Autowired
-    private AnonymousUserService anonymousUserService;
-    
-    @Autowired
-    private PostService postService;
-    
-    @Autowired
-    private AnonMapService anonMapService;
+	@Autowired
+	private RoomService roomService;
 
-    @Autowired
-    private RoomValidator roomValidator;
+	@Autowired
+	private UserService userService;
 
-    @Autowired
-    private PostValidator postValidator;
+	@Autowired
+	private AnonymousUserService anonymousUserService;
 
-    @GetMapping(value = URLMapping.ROOM_NEW)
-    public String newRoom(Model model) {
-        if (securityService.isUser()) {
-            model.addAttribute(AttributeName.ROOM_FORM, new Room());
-            return JSPMapping.CREATE_NEW_ROOM;
-        } else {
-            return JSPMapping.LOGIN;
-        }
-    }
+	@Autowired
+	private PostService postService;
 
-    @PostMapping(value = URLMapping.ROOM_NEW)
-    public String newRoom(@ModelAttribute(AttributeName.ROOM_FORM) Room room, BindingResult bindingResult,
-        Model model) {
-        roomValidator.validate(room, bindingResult);
-        if(bindingResult.hasErrors()) {
-            return JSPMapping.CREATE_NEW_ROOM;
-        }
+	@Autowired
+	private AnonMapService anonMapService;
 
-        if (securityService.isUser()) {
-            roomService.createRoom(room);
-            model.addAttribute(AttributeName.ROOM_FORM, new Room());
-            return "redirect:" + URLMapping.ROOM + "/" + room.getId();
-        } else {
-            return JSPMapping.LOGIN;
-        }
-    }
+	@Autowired
+	private RoomValidator roomValidator;
 
-    @GetMapping(value = "/{roomId}")
-    public String viewRoom(@PathVariable("roomId") Long roomId, Model model) {
-        Room room = roomService.getRoomById(roomId);
-        model.addAttribute(AttributeName.ROOM, room);
-        
-        model.addAttribute(AttributeName.POSTS, postService.getPostsByRoom(room));
-        
-        model.addAttribute(AttributeName.IS_USER, securityService.isUser());
-        if(securityService.isUser()) {
-        	User user = userService.findByUsername(securityService.findLoggedInUsername());
-        	model.addAttribute(AttributeName.POST_FORM, new Post());
-        	AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
-        	if(anonMap != null) {
-        		model.addAttribute(AttributeName.POSTING_AS, anonMap);
-        	}
-        }
-        return JSPMapping.ROOM_DETAILS;
-    }
-    
-    @PostMapping(value = "/{roomId}")
-    public String postReply(@ModelAttribute(AttributeName.POST_FORM) Post post, @PathVariable("roomId") Long roomId, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
-        postValidator.validate(post, bindingResult);
-        if(bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.post", bindingResult);
-            redirectAttributes.addFlashAttribute("post", post);
-            return "redirect:" + URLMapping.ROOM + "/" + roomId;
-        }
+	@Autowired
+	private PostValidator postValidator;
 
-        User user = userService.findByUsername(securityService.findLoggedInUsername());
-        Room room = roomService.getRoomById(roomId);
-        AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
-        
-        if(anonMap == null) {
-        	AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
-        	anonMap = anonMapService.saveAnonMap(anonymousUser, user, room);
-        }
-        
-        post.setAnonMap(anonMap);
-        postService.savePost(post);
-        return Misc.REDIRECT + URLMapping.ROOM + "/" + room.getId();
-    }
+	@GetMapping(value = URLMapping.ROOM_NEW)
+	public String newRoom(Model model) {
+		if (securityService.isUser()) {
+			model.addAttribute(AttributeName.ROOM_FORM, new Room());
+			return JSPMapping.CREATE_NEW_ROOM;
+		} else {
+			return JSPMapping.LOGIN;
+		}
+	}
+
+	@PostMapping(value = URLMapping.ROOM_NEW)
+	public String newRoom(@ModelAttribute(AttributeName.ROOM_FORM) Room room, BindingResult bindingResult,
+			Model model) {
+		roomValidator.validate(room, bindingResult);
+		if (bindingResult.hasErrors()) {
+			return JSPMapping.CREATE_NEW_ROOM;
+		}
+
+		if (securityService.isUser()) {
+			roomService.createRoom(room);
+			model.addAttribute(AttributeName.ROOM_FORM, new Room());
+			return "redirect:" + URLMapping.ROOM + "/" + room.getId();
+		} else {
+			return JSPMapping.LOGIN;
+		}
+	}
+
+	@GetMapping(value = "/{roomId}")
+	public String viewRoom(@PathVariable("roomId") Long roomId, Model model) {
+		Room room = roomService.getRoomById(roomId);
+		model.addAttribute(AttributeName.ROOM, room);
+
+		model.addAttribute(AttributeName.POSTS, postService.getPostsByRoom(room));
+
+		model.addAttribute(AttributeName.IS_USER, securityService.isUser());
+		if (securityService.isUser()) {
+			User user = userService.findByUsername(securityService.findLoggedInUsername());
+			model.addAttribute(AttributeName.POST_FORM, new Post());
+			AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
+			if (anonMap != null) {
+				model.addAttribute(AttributeName.POSTING_AS, anonMap);
+			}
+		}
+		return JSPMapping.ROOM_DETAILS;
+	}
+
+	@PostMapping(value = "/{roomId}")
+	public String postReply(@ModelAttribute(AttributeName.POST_FORM) Post post, @PathVariable("roomId") Long roomId,
+			BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model,
+			HttpServletRequest request) {
+		postValidator.validate(post, bindingResult);
+		if (bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.post", bindingResult);
+			redirectAttributes.addFlashAttribute("post", post);
+			return "redirect:" + URLMapping.ROOM + "/" + roomId;
+		}
+
+		User user = userService.findByUsername(securityService.findLoggedInUsername());
+		Room room = roomService.getRoomById(roomId);
+		AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
+
+		if (anonMap == null) {
+			AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
+			anonMap = anonMapService.saveAnonMap(anonymousUser, user, room);
+		}
+
+		post.setAnonMap(anonMap);
+		postService.savePost(post);
+		return Misc.REDIRECT + URLMapping.ROOM + "/" + room.getId();
+	}
 }

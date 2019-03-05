@@ -17,7 +17,7 @@ public class PostServiceImpl implements PostService {
 
 	@Autowired
 	private AnonMapRepository anonMapRepository;
-	
+
 	@Autowired
 	private PostRepository postRepository;
 
@@ -25,10 +25,10 @@ public class PostServiceImpl implements PostService {
 	public void savePost(Post post) {
 		postRepository.save(post);
 	}
-	
+
 	@Override
 	public List<Post> getPostsByRoom(Room room) {
 		List<AnonMap> anonMaps = anonMapRepository.findByRoom(room);
-        return postRepository.findByAnonMapIn(anonMaps);
+		return postRepository.findByAnonMapIn(anonMaps);
 	}
 }

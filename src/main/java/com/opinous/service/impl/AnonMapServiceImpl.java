@@ -15,7 +15,7 @@ public class AnonMapServiceImpl implements AnonMapService {
 
 	@Autowired
 	private AnonMapRepository anonMapRepository;
-	
+
 	@Override
 	public AnonMap getAnonMapByRoomAndUser(Room room, User user) {
 		return anonMapRepository.findByRoomAndUser(room, user);

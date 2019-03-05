@@ -12,62 +12,64 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity public class AnonMap {
+@Entity
+public class AnonMap {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "roomId")
-    private Room room;
+	@ManyToOne
+	@JoinColumn(name = "roomId")
+	private Room room;
 
-    @ManyToOne
-    @JoinColumn(name = "anonymousUserId")
-    private AnonymousUser anonymousUser;
+	@ManyToOne
+	@JoinColumn(name = "anonymousUserId")
+	private AnonymousUser anonymousUser;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
-    
-    @CreationTimestamp
-    private Date createDate;
-    
-    @UpdateTimestamp
-    private Date updateDate;
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private User user;
 
-    public Long getId() {
-        return id;
-    }
+	@CreationTimestamp
+	private Date createDate;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@UpdateTimestamp
+	private Date updateDate;
 
-    public Room getRoom() {
-        return room;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setRoom(Room room) {
-        this.room = room;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public AnonymousUser getAnonymousUser() {
-        return anonymousUser;
-    }
+	public Room getRoom() {
+		return room;
+	}
 
-    public void setAnonymousUser(AnonymousUser anonymousUser) {
-        this.anonymousUser = anonymousUser;
-    }
+	public void setRoom(Room room) {
+		this.room = room;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public AnonymousUser getAnonymousUser() {
+		return anonymousUser;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setAnonymousUser(AnonymousUser anonymousUser) {
+		this.anonymousUser = anonymousUser;
+	}
 
-    public Date getCreateDate() {
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Date getCreateDate() {
 		return createDate;
 	}
 

@@ -23,59 +23,59 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @Autowired
-    private SecurityService securityService;
-    
-    @Autowired
-    private RoomService roomService;
+	@Autowired
+	private SecurityService securityService;
 
-    @Autowired
-    private UserValidator userValidator;
+	@Autowired
+	private RoomService roomService;
 
-    @GetMapping(value = URLMapping.USER_REGISTRATION)
-    public String registration(Model model) {
-        model.addAttribute(AttributeName.USER_FORM, new User());
-        return JSPMapping.REGISTRATION;
-    }
+	@Autowired
+	private UserValidator userValidator;
 
-    @PostMapping(value = URLMapping.USER_REGISTRATION)
-    public String registration(@ModelAttribute(AttributeName.USER_FORM) User userForm,
-        BindingResult bindingResult, Model model) {
-        userValidator.validate(userForm, bindingResult);
+	@GetMapping(value = URLMapping.USER_REGISTRATION)
+	public String registration(Model model) {
+		model.addAttribute(AttributeName.USER_FORM, new User());
+		return JSPMapping.REGISTRATION;
+	}
 
-        if (bindingResult.hasErrors()) {
-            return JSPMapping.REGISTRATION;
-        }
+	@PostMapping(value = URLMapping.USER_REGISTRATION)
+	public String registration(@ModelAttribute(AttributeName.USER_FORM) User userForm, BindingResult bindingResult,
+			Model model) {
+		userValidator.validate(userForm, bindingResult);
 
-        userService.saveUser(userForm);
+		if (bindingResult.hasErrors()) {
+			return JSPMapping.REGISTRATION;
+		}
 
-        securityService.autologin(userForm.getUsername(), userForm.getPassword());
+		userService.saveUser(userForm);
 
-        return JSPMapping.HOME;
-    }
+		securityService.autologin(userForm.getUsername(), userForm.getPassword());
 
-    @GetMapping(value = URLMapping.USER_LOGIN)
-    public String login(Model model, String error, String logout) {
+		return JSPMapping.HOME;
+	}
 
-        if (error != null) {
-            model.addAttribute("error", "Your username and password is invalid");
-        }
+	@GetMapping(value = URLMapping.USER_LOGIN)
+	public String login(Model model, String error, String logout) {
 
-        if (logout != null) {
-            model.addAttribute("message", "You have been logged out successfully");
-        }
+		if (error != null) {
+			model.addAttribute("error", "Your username and password is invalid");
+		}
 
-        return JSPMapping.LOGIN;
-    }
+		if (logout != null) {
+			model.addAttribute("message", "You have been logged out successfully");
+		}
 
-    @GetMapping(value = URLMapping.USER_HOME)
-    public String welcome(Model model) {
-        List<Room> rooms = new ArrayList<>();
-        rooms = roomService.getAllRooms();
-        model.addAttribute(AttributeName.ROOMS, rooms);
-        return JSPMapping.HOME;
-    }
+		return JSPMapping.LOGIN;
+	}
+
+	@GetMapping(value = URLMapping.USER_HOME)
+	public String welcome(Model model) {
+		List<Room> rooms = new ArrayList<>();
+		rooms = roomService.getAllRooms();
+		model.addAttribute(AttributeName.ROOMS, rooms);
+		return JSPMapping.HOME;
+	}
 }

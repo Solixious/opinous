@@ -8,12 +8,13 @@ import org.springframework.validation.Validator;
 
 @Component
 public class PostValidator implements Validator {
-    @Override public boolean supports(Class<?> aClass) {
-        return Post.class.equals(aClass);
-    }
+	@Override
+	public boolean supports(Class<?> aClass) {
+		return Post.class.equals(aClass);
+	}
 
-    @Override public void validate(Object o, Errors errors) {
-        Post post = (Post) o;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text", "NotEmpty");
-    }
+	@Override
+	public void validate(Object o, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text", "NotEmpty");
+	}
 }

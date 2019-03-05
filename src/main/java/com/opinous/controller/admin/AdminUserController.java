@@ -31,153 +31,150 @@ import java.util.List;
 @Controller
 @RequestMapping(URLMapping.ADMIN)
 public class AdminUserController {
-    private Logger logger = LoggerFactory.getLogger(AdminUserController.class);
+	private Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 
-    @Autowired
-    private SecurityService securityService;
+	@Autowired
+	private SecurityService securityService;
 
-    @Autowired
-    private UserValidator userValidator;
+	@Autowired
+	private UserValidator userValidator;
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    private NotificationService notificationService;
+	@Autowired
+	private NotificationService notificationService;
 
-    @GetMapping(value = URLMapping.USER_HOME)
-    public String adminHome(HttpServletRequest request) {
-        if (securityService.isAdmin()) {
-            logger.debug("Going to admin control panel page.");
-            return JSPMapping.ADMIN_CONTROL_PANEL;
-        } else {
-            logger.error("Illegal attempt to access admin page");
-            return JSPMapping.ERROR;
-        }
-    }
+	@GetMapping(value = URLMapping.USER_HOME)
+	public String adminHome(HttpServletRequest request) {
+		if (securityService.isAdmin()) {
+			logger.debug("Going to admin control panel page.");
+			return JSPMapping.ADMIN_CONTROL_PANEL;
+		} else {
+			logger.error("Illegal attempt to access admin page");
+			return JSPMapping.ERROR;
+		}
+	}
 
-    @GetMapping(value = URLMapping.NEW_USER)
-    public String newUser(Model model) {
-        if (securityService.isAdmin()) {
-            model.addAttribute(AttributeName.USER_FORM, new User());
-            return JSPMapping.ADMIN_NEW_USER;
-        } else {
-            logger.error("Illegal attempt to access admin page");
-            return JSPMapping.ERROR;
-        }
-    }
+	@GetMapping(value = URLMapping.NEW_USER)
+	public String newUser(Model model) {
+		if (securityService.isAdmin()) {
+			model.addAttribute(AttributeName.USER_FORM, new User());
+			return JSPMapping.ADMIN_NEW_USER;
+		} else {
+			logger.error("Illegal attempt to access admin page");
+			return JSPMapping.ERROR;
+		}
+	}
 
-    @PostMapping(value = URLMapping.NEW_USER)
-    public String newUser(@ModelAttribute(AttributeName.USER_FORM) User userForm, BindingResult bindingResult,
-        Model model) {
-        if (securityService.isAdmin()) {
+	@PostMapping(value = URLMapping.NEW_USER)
+	public String newUser(@ModelAttribute(AttributeName.USER_FORM) User userForm, BindingResult bindingResult,
+			Model model) {
+		if (securityService.isAdmin()) {
 
-            userValidator.validate(userForm, bindingResult);
+			userValidator.validate(userForm, bindingResult);
 
-            if (bindingResult.hasErrors()) {
-                return JSPMapping.ADMIN_NEW_USER;
-            }
+			if (bindingResult.hasErrors()) {
+				return JSPMapping.ADMIN_NEW_USER;
+			}
 
-            userService.saveUser(userForm);
-            model.addAttribute(AttributeName.USER_FORM, new User());
-            notificationService
-                .notify(model, NotificationType.success, "Created new user successfully!");
-            return JSPMapping.ADMIN_NEW_USER;
-        } else {
-            logger.error("Illegal attempt to access admin page");
-            return JSPMapping.ERROR;
-        }
-    }
+			userService.saveUser(userForm);
+			model.addAttribute(AttributeName.USER_FORM, new User());
+			notificationService.notify(model, NotificationType.success, "Created new user successfully!");
+			return JSPMapping.ADMIN_NEW_USER;
+		} else {
+			logger.error("Illegal attempt to access admin page");
+			return JSPMapping.ERROR;
+		}
+	}
 
-    @GetMapping(value = URLMapping.UPDATE_USER)
-    public String updateDeleteUser(Model model) {
-        if (securityService.isAdmin())
-            return JSPMapping.ADMIN_UPDATE_DELETE_USER;
-        else {
-            logger.error("Illegal attempt to access admin page");
-            return JSPMapping.ERROR;
-        }
-    }
+	@GetMapping(value = URLMapping.UPDATE_USER)
+	public String updateDeleteUser(Model model) {
+		if (securityService.isAdmin())
+			return JSPMapping.ADMIN_UPDATE_DELETE_USER;
+		else {
+			logger.error("Illegal attempt to access admin page");
+			return JSPMapping.ERROR;
+		}
+	}
 
-    @GetMapping(value = URLMapping.UPDATE_USER + "/{username}")
-    public String updateDeleteUser(@PathVariable("username") String username, Model model) {
-        if (securityService.isAdmin()) {
-            User user = userRepository.findByUsername(username);
+	@GetMapping(value = URLMapping.UPDATE_USER + "/{username}")
+	public String updateDeleteUser(@PathVariable("username") String username, Model model) {
+		if (securityService.isAdmin()) {
+			User user = userRepository.findByUsername(username);
 
-            if (user != null) {
-                user = user.getCopy();
-                user.setPassword("");
-                user.setConfirmPassword("");
-                model.addAttribute(AttributeName.USER_FORM, user);
-                return JSPMapping.ADMIN_UPDATE_DELETE_USER;
-            } else {
-                return Misc.REDIRECT + URLMapping.ADMIN + URLMapping.LIST_USER + username;
-            }
-        } else {
-            logger.error("Illegal attempt to access admin page");
-            return JSPMapping.ERROR;
-        }
-    }
+			if (user != null) {
+				user = user.getCopy();
+				user.setPassword("");
+				user.setConfirmPassword("");
+				model.addAttribute(AttributeName.USER_FORM, user);
+				return JSPMapping.ADMIN_UPDATE_DELETE_USER;
+			} else {
+				return Misc.REDIRECT + URLMapping.ADMIN + URLMapping.LIST_USER + username;
+			}
+		} else {
+			logger.error("Illegal attempt to access admin page");
+			return JSPMapping.ERROR;
+		}
+	}
 
-    @PostMapping(value = URLMapping.UPDATE_USER + "/{username}")
-    public String updateDeleteUser(@ModelAttribute(AttributeName.USER_FORM) User updateUser,
-        BindingResult bindingResult, Model model) {
-        if (securityService.isAdmin()) {
-            if (bindingResult.hasErrors()) {
-                return JSPMapping.ADMIN_UPDATE_DELETE_USER;
-            }
+	@PostMapping(value = URLMapping.UPDATE_USER + "/{username}")
+	public String updateDeleteUser(@ModelAttribute(AttributeName.USER_FORM) User updateUser,
+			BindingResult bindingResult, Model model) {
+		if (securityService.isAdmin()) {
+			if (bindingResult.hasErrors()) {
+				return JSPMapping.ADMIN_UPDATE_DELETE_USER;
+			}
 
-            User user = userRepository.findById(updateUser.getId()).get();
-            userService.copyNecessaryUpdates(updateUser, user);
-            userService.updateUser(user);
-            notificationService
-                .notify(model, NotificationType.success, "User details updated successfully!");
-            return JSPMapping.ADMIN_UPDATE_DELETE_USER;
-        } else {
-            logger.error("Illegal attempt to access admin page");
-            return JSPMapping.ERROR;
-        }
-    }
+			User user = userRepository.findById(updateUser.getId()).get();
+			userService.copyNecessaryUpdates(updateUser, user);
+			userService.updateUser(user);
+			notificationService.notify(model, NotificationType.success, "User details updated successfully!");
+			return JSPMapping.ADMIN_UPDATE_DELETE_USER;
+		} else {
+			logger.error("Illegal attempt to access admin page");
+			return JSPMapping.ERROR;
+		}
+	}
 
-    @DeleteMapping(value = URLMapping.UPDATE_USER + "/{username}")
-    public String deleteUser(@ModelAttribute(AttributeName.USER_FORM) User updateUser,
-        BindingResult bindingResult, Model model) {
-        if (securityService.isAdmin()) {
-            User user = userRepository.findById(updateUser.getId()).get();
-            userRepository.delete(user);
-            notificationService.notify(model, NotificationType.success,
-                "The user concerned deleted successfully!");
-            return "redirect:" + URLMapping.ADMIN + URLMapping.LIST_USER;
-        } else {
-            logger.error("Illegal attempt to access admin page");
-            return JSPMapping.ERROR;
-        }
-    }
+	@DeleteMapping(value = URLMapping.UPDATE_USER + "/{username}")
+	public String deleteUser(@ModelAttribute(AttributeName.USER_FORM) User updateUser, BindingResult bindingResult,
+			Model model) {
+		if (securityService.isAdmin()) {
+			User user = userRepository.findById(updateUser.getId()).get();
+			userRepository.delete(user);
+			notificationService.notify(model, NotificationType.success, "The user concerned deleted successfully!");
+			return "redirect:" + URLMapping.ADMIN + URLMapping.LIST_USER;
+		} else {
+			logger.error("Illegal attempt to access admin page");
+			return JSPMapping.ERROR;
+		}
+	}
 
-    @RequestMapping(value = URLMapping.LIST_USER, method = RequestMethod.GET)
-    public String listUsers(Model model) {
-        if (securityService.isAdmin()) {
-            List<User> users = userRepository.findAll();
-            model.addAttribute(AttributeName.USER_LIST, users);
-            return JSPMapping.ADMIN_LIST_USER;
-        } else {
-            logger.error("Illegal attempt to access admin page");
-            return JSPMapping.ERROR;
-        }
-    }
+	@RequestMapping(value = URLMapping.LIST_USER, method = RequestMethod.GET)
+	public String listUsers(Model model) {
+		if (securityService.isAdmin()) {
+			List<User> users = userRepository.findAll();
+			model.addAttribute(AttributeName.USER_LIST, users);
+			return JSPMapping.ADMIN_LIST_USER;
+		} else {
+			logger.error("Illegal attempt to access admin page");
+			return JSPMapping.ERROR;
+		}
+	}
 
-    @GetMapping(value = URLMapping.LIST_USER + "/{username}")
-    public String listUsers(Model model, @PathVariable("username") String username) {
-        if (securityService.isAdmin()) {
-            List<User> users = userRepository.findByUsernameIgnoreCaseContaining(username);
-            model.addAttribute(AttributeName.USER_LIST, users);
-            return JSPMapping.ADMIN_LIST_USER;
-        } else {
-            logger.error("Illegal attempt to access admin page");
-            return JSPMapping.ERROR;
-        }
-    }
+	@GetMapping(value = URLMapping.LIST_USER + "/{username}")
+	public String listUsers(Model model, @PathVariable("username") String username) {
+		if (securityService.isAdmin()) {
+			List<User> users = userRepository.findByUsernameIgnoreCaseContaining(username);
+			model.addAttribute(AttributeName.USER_LIST, users);
+			return JSPMapping.ADMIN_LIST_USER;
+		} else {
+			logger.error("Illegal attempt to access admin page");
+			return JSPMapping.ERROR;
+		}
+	}
 }

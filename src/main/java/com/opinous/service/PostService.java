@@ -10,5 +10,6 @@ import com.opinous.model.Room;
 @Service
 public interface PostService {
 	public void savePost(Post post);
+
 	public List<Post> getPostsByRoom(Room room);
 }

@@ -8,14 +8,14 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+	User findByUsername(String username);
 
-    List<User> findByUsernameIgnoreCaseContaining(String username);
+	List<User> findByUsernameIgnoreCaseContaining(String username);
 
-    User findByEmail(String email);
+	User findByEmail(String email);
 
-    List<User> findByEmailIgnoreCaseContaining(String email);
+	List<User> findByEmailIgnoreCaseContaining(String email);
 
-    @Query("select u from User u inner join u.roles r where r.name in :roles")
-    List<User> findBySpecificRoles(@Param("roles") List<String> roles);
+	@Query("select u from User u inner join u.roles r where r.name in :roles")
+	List<User> findBySpecificRoles(@Param("roles") List<String> roles);
 }

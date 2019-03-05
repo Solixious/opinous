@@ -16,41 +16,39 @@ import java.util.Random;
 @Service
 public class AnonymousUserServiceImpl implements AnonymousUserService {
 
-    @Autowired
-    private AnonymousUserRepository anonymousUserRepository;
+	@Autowired
+	private AnonymousUserRepository anonymousUserRepository;
 
-    @Autowired
-    private AnonMapRepository anonMapRepository;
+	@Autowired
+	private AnonMapRepository anonMapRepository;
 
-    @Override
-    public AnonymousUser getAnonymousUser(User user, Room room) {
-        return anonMapRepository.findByRoomAndUser(room, user)
-                .getAnonymousUser();
-    }
-    
-    @Override
-    public AnonMap getAnonMap(User user, Room room) {
-        return anonMapRepository.findByRoomAndUser(room, user);
-    }
+	@Override
+	public AnonymousUser getAnonymousUser(User user, Room room) {
+		return anonMapRepository.findByRoomAndUser(room, user).getAnonymousUser();
+	}
 
-    @Override
-    public AnonymousUser generateAnonymousUser(Room room) {
-        List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
-        if (room.getId() != null) {
-            List<AnonMap> anonMaps = anonMapRepository.findByRoom(room);
-            for (AnonMap anonMap : anonMaps) {
-                AnonymousUser anonUser = anonMap.getAnonymousUser();
-                for (AnonymousUser anonymousUser : anonymousUsers) {
-                    if (anonymousUser.equals(anonUser)) {
-                        anonymousUsers.remove(anonymousUser);
-                        break;
-                    }
-                }
-            }
-        }
-        AnonymousUser randomAnonymosUser =
-            anonymousUsers.get(new Random().nextInt(anonymousUsers.size()));
+	@Override
+	public AnonMap getAnonMap(User user, Room room) {
+		return anonMapRepository.findByRoomAndUser(room, user);
+	}
 
-        return randomAnonymosUser;
-    }
+	@Override
+	public AnonymousUser generateAnonymousUser(Room room) {
+		List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
+		if (room.getId() != null) {
+			List<AnonMap> anonMaps = anonMapRepository.findByRoom(room);
+			for (AnonMap anonMap : anonMaps) {
+				AnonymousUser anonUser = anonMap.getAnonymousUser();
+				for (AnonymousUser anonymousUser : anonymousUsers) {
+					if (anonymousUser.equals(anonUser)) {
+						anonymousUsers.remove(anonymousUser);
+						break;
+					}
+				}
+			}
+		}
+		AnonymousUser randomAnonymosUser = anonymousUsers.get(new Random().nextInt(anonymousUsers.size()));
+
+		return randomAnonymosUser;
+	}
 }
