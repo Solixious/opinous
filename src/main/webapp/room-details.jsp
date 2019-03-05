@@ -44,6 +44,10 @@
 							<div class="media-date">
 								<fmt:formatDate value="${post.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
 							</div>
+							<div class="media-react">
+								<img class="react-icon" src="/resources/img/tu.png"></img>
+								<img class="react-icon" src="/resources/img/td.png"></img>
+							</div>
 							<p>${post.text}</p>
 						</div>
 					</div>
@@ -61,8 +65,8 @@
 				<div class="media-body">
 		          		<form:form method="POST" modelAttribute="postForm" class="form form-room-reply">
 		       				<spring:bind path="text">
-				                <form:textarea path="text" class="form-control" placeholder="Post your reply here"
-				                            autofocus="true"></form:textarea>
+				                <form:textarea path="text" class="form-control"
+				                placeholder="Post your reply here"></form:textarea>
 				                <form:errors path="text"></form:errors>
 				                <button class="form-button-primary" type="submit">Submit</button>
 					        </spring:bind>

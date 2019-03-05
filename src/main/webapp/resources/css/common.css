@@ -157,6 +157,7 @@ a {
 	float: right;
 }
 .media {
+	position: relative;
 	margin-left: 52px;
 	margin-top: 20px;
 	width: 93%;
@@ -177,7 +178,7 @@ a {
 	width: 100%;
 	float: left;
     line-height: 3;
-    background: #272727;
+    background: #101010;
 }
 .media-body {
 	width: 80%;
@@ -239,28 +240,20 @@ a {
 .navbar .nav-button-primary {
     margin-left: 15px;
 }
-#notification {
-    position:fixed;
-    top:0px;
-    width:100%;
-    z-index:105;
-    text-align:center;
-    font-weight:normal;
-    font-size:14px;
-    font-weight:bold;
-    color:white;
-    background-color:#FF7800;
-    padding:5px;
+.form-error {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
 }
-#notification span.dismiss {
-    border:2px solid #FFF;
-    padding:0 5px;
-    cursor:pointer;
-    float:right;
-    margin-right:10px;
+.media-react {
+	width: 70px;
+	float: left;
+	margin: 15px 0;
+	position: absolute;
+    bottom: 0;
 }
-#notification a {
-    color:white;
-    text-decoration:none;
-    font-weight:bold
+.react-icon {
+	height: 24px;
+	width: 24px;
+	margin-right: 8px;
 }

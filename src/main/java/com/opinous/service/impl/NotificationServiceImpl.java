@@ -8,9 +8,9 @@ import org.springframework.ui.Model;
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
-    @Override
-    public void notify(Model model, NotificationType type, String message) {
-        model.addAttribute("notif", message);
-        model.addAttribute("notifType", type.toString());
-    }
+	@Override
+	public void notify(Model model, NotificationType type, String message) {
+		model.addAttribute("notif", message);
+		model.addAttribute("notifType", type.toString());
+	}
 }

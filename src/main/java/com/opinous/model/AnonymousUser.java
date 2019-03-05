@@ -14,41 +14,46 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity @Getter @Setter @ToString
+@Entity
+@Getter
+@Setter
+@ToString
 public class AnonymousUser {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    private String name;
-    private String displayPicture;
-   
-    @CreationTimestamp
-    private Date createDate;
-    
-    @UpdateTimestamp
-    private Date updateDate;
+	private String name;
+	private String displayPicture;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@CreationTimestamp
+	private Date createDate;
 
-    public String getName() {
-        return name;
-    }
+	@UpdateTimestamp
+	private Date updateDate;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getDisplayPicture() {
-        return displayPicture;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setDisplayPicture(String displayPicture) {
-        this.displayPicture = displayPicture;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Date getCreateDate() {
+	public String getDisplayPicture() {
+		return displayPicture;
+	}
+
+	public void setDisplayPicture(String displayPicture) {
+		this.displayPicture = displayPicture;
+	}
+
+	public Date getCreateDate() {
 		return createDate;
 	}
 
@@ -56,7 +61,7 @@ public class AnonymousUser {
 		this.createDate = createDate;
 	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 }

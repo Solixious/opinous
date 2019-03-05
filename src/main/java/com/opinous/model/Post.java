@@ -16,23 +16,27 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity @Getter @Setter @ToString
+@Entity
+@Getter
+@Setter
+@ToString
 public class Post {
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
 	@ManyToOne
-    @JoinColumn(name = "anonMapId")
-    private AnonMap anonMap;
-	
+	@JoinColumn(name = "anonMapId")
+	private AnonMap anonMap;
+
 	private String text;
 
 	@CreationTimestamp
-    private Date createDate;
-    
-    @UpdateTimestamp
-    private Date updateDate;
+	private Date createDate;
+
+	@UpdateTimestamp
+	private Date updateDate;
 
 	public Long getId() {
 		return id;
@@ -58,7 +62,7 @@ public class Post {
 		this.text = text;
 	}
 
-    public Date getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 

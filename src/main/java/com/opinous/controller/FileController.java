@@ -18,27 +18,26 @@ import java.io.IOException;
 @Controller
 public class FileController {
 
-    @Autowired
-    private FileStorageService fileStorageService;
+	@Autowired
+	private FileStorageService fileStorageService;
 
-    @GetMapping(URLMapping.DOWNLOAD_FILE)
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName,
-        HttpServletRequest request) throws MyFileNotFoundException {
-        Resource resource = fileStorageService.loadFileAsResource(fileName);
-        String contentType = null;
+	@GetMapping(URLMapping.DOWNLOAD_FILE)
+	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request)
+			throws MyFileNotFoundException {
+		Resource resource = fileStorageService.loadFileAsResource(fileName);
+		String contentType = null;
 
-        try {
-            contentType =
-                request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException e) {
-            //could not determine content type
-        }
+		try {
+			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+		} catch (IOException e) {
+			// could not determine content type
+		}
 
-        if (contentType == null)
-            contentType = "application/octet-stream";
+		if (contentType == null)
+			contentType = "application/octet-stream";
 
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-            .header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
-    }
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
 }

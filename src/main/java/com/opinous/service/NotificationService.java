@@ -6,5 +6,5 @@ import org.springframework.ui.Model;
 
 @Service
 public interface NotificationService {
-    public void notify(Model model, NotificationType type, String message);
+	public void notify(Model model, NotificationType type, String message);
 }

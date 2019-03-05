@@ -8,8 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface FileStorageService {
-    public String storeFile(MultipartFile file, String suggestedFileName)
-        throws FileStorageException;
+	public String storeFile(MultipartFile file, String suggestedFileName) throws FileStorageException;
 
-    public Resource loadFileAsResource(String fileName) throws MyFileNotFoundException;
+	public Resource loadFileAsResource(String fileName) throws MyFileNotFoundException;
 }

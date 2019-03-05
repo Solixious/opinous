@@ -16,59 +16,63 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity @Getter @Setter @ToString
+@Entity
+@Getter
+@Setter
+@ToString
 public class Room {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "creatorId")
-    private AnonMap creator;
+	@ManyToOne
+	@JoinColumn(name = "creatorId")
+	private AnonMap creator;
 
-    private String title;
+	private String title;
 
-    private String description;
-    
-    @CreationTimestamp
-    private Date createDate;
-    
-    @UpdateTimestamp
-    private Date updateDate;
+	private String description;
 
-    public Long getId() {
-        return id;
-    }
+	@CreationTimestamp
+	private Date createDate;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@UpdateTimestamp
+	private Date updateDate;
 
-    public AnonMap getCreator() {
-        return creator;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setCreator(AnonMap creator) {
-        this.creator = creator;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public AnonMap getCreator() {
+		return creator;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setCreator(AnonMap creator) {
+		this.creator = creator;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public Date getCreateDate() {
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getCreateDate() {
 		return createDate;
 	}
 
