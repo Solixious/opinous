@@ -9,14 +9,12 @@ import com.opinous.model.AnonymousUser;
 import com.opinous.model.Post;
 import com.opinous.model.Room;
 import com.opinous.model.User;
-import com.opinous.repository.AnonMapRepository;
-import com.opinous.repository.PostRepository;
+import com.opinous.service.AnonMapService;
 import com.opinous.service.AnonymousUserService;
+import com.opinous.service.PostService;
 import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
-
-import java.util.List;
 
 import com.opinous.validator.PostValidator;
 import com.opinous.validator.RoomValidator;
@@ -50,10 +48,10 @@ public class RoomController {
     private AnonymousUserService anonymousUserService;
     
     @Autowired
-    private AnonMapRepository anonMapRepository;
+    private PostService postService;
     
     @Autowired
-    private PostRepository postRepository;
+    private AnonMapService anonMapService;
 
     @Autowired
     private RoomValidator roomValidator;
@@ -88,20 +86,18 @@ public class RoomController {
         }
     }
 
-    @RequestMapping(value = "/{roomId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{roomId}")
     public String viewRoom(@PathVariable("roomId") Long roomId, Model model) {
         Room room = roomService.getRoomById(roomId);
         model.addAttribute(AttributeName.ROOM, room);
         
-        List<AnonMap> anonMaps = anonMapRepository.findByRoom(room);
-        List<Post> posts = postRepository.findByAnonMapIn(anonMaps);
-        model.addAttribute(AttributeName.POSTS, posts);
+        model.addAttribute(AttributeName.POSTS, postService.getPostsByRoom(room));
         
         model.addAttribute(AttributeName.IS_USER, securityService.isUser());
         if(securityService.isUser()) {
         	User user = userService.findByUsername(securityService.findLoggedInUsername());
         	model.addAttribute(AttributeName.POST_FORM, new Post());
-        	AnonMap anonMap = anonMapRepository.findByRoomAndUser(room, user);
+        	AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
         	if(anonMap != null) {
         		model.addAttribute(AttributeName.POSTING_AS, anonMap);
         	}
@@ -109,7 +105,7 @@ public class RoomController {
         return JSPMapping.ROOM_DETAILS;
     }
     
-    @RequestMapping(value = "/{roomId}", method = RequestMethod.POST)
+    @PostMapping(value = "/{roomId}")
     public String postReply(@ModelAttribute(AttributeName.POST_FORM) Post post, @PathVariable("roomId") Long roomId, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
         postValidator.validate(post, bindingResult);
         if(bindingResult.hasErrors()) {
@@ -120,19 +116,15 @@ public class RoomController {
 
         User user = userService.findByUsername(securityService.findLoggedInUsername());
         Room room = roomService.getRoomById(roomId);
-        AnonMap anonMap = anonMapRepository.findByRoomAndUser(room, user);
+        AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
         
         if(anonMap == null) {
         	AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
-        	anonMap = new AnonMap();
-        	anonMap.setAnonymousUser(anonymousUser);
-        	anonMap.setUser(user);
-        	anonMap.setRoom(room);
-        	anonMapRepository.save(anonMap);
+        	anonMap = anonMapService.saveAnonMap(anonymousUser, user, room);
         }
         
         post.setAnonMap(anonMap);
-        postRepository.save(post);
+        postService.savePost(post);
         return Misc.REDIRECT + URLMapping.ROOM + "/" + room.getId();
     }
 }

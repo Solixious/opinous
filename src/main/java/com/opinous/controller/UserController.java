@@ -5,12 +5,11 @@ import com.opinous.constants.JSPMapping;
 import com.opinous.constants.URLMapping;
 import com.opinous.model.Room;
 import com.opinous.model.User;
-import com.opinous.repository.RoomRepository;
+import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import com.opinous.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,12 +28,12 @@ public class UserController {
 
     @Autowired
     private SecurityService securityService;
+    
+    @Autowired
+    private RoomService roomService;
 
     @Autowired
     private UserValidator userValidator;
-
-    @Autowired
-    private RoomRepository roomRepository;
 
     @GetMapping(value = URLMapping.USER_REGISTRATION)
     public String registration(Model model) {
@@ -75,7 +74,7 @@ public class UserController {
     @GetMapping(value = URLMapping.USER_HOME)
     public String welcome(Model model) {
         List<Room> rooms = new ArrayList<>();
-        rooms = roomRepository.findAll(Sort.by(Sort.Order.desc("id")));
+        rooms = roomService.getAllRooms();
         model.addAttribute(AttributeName.ROOMS, rooms);
         return JSPMapping.HOME;
     }

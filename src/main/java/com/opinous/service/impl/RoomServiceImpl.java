@@ -10,7 +10,11 @@ import com.opinous.repository.UserRepository;
 import com.opinous.service.AnonymousUserService;
 import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -49,5 +53,10 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room getRoomById(Long roomId) {
         return roomRepository.getOne(roomId);
+    }
+    
+    @Override
+    public List<Room> getAllRooms() {
+    	return roomRepository.findAll(Sort.by(Sort.Order.desc("id")));
     }
 }
