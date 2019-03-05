@@ -13,4 +13,6 @@ public interface RoomService {
 	public Room getRoomById(Long roomId);
 
 	public List<Room> getAllRooms();
+	
+	public List<Room> getRooms(int page);
 }

@@ -9,6 +9,7 @@ public class URLMapping {
 	public static final String USER_REGISTRATION = "/registration";
 	public static final String USER_LOGIN = "/login";
 	public static final String USER_HOME = "/";
+	public static final String USER_HOME_PAGINATED = "/home/page/{page}";
 
 	// Room mappings
 	public static final String ROOM = "/room";

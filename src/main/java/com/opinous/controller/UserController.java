@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
@@ -74,8 +75,20 @@ public class UserController {
 	@GetMapping(value = URLMapping.USER_HOME)
 	public String welcome(Model model) {
 		List<Room> rooms = new ArrayList<>();
-		rooms = roomService.getAllRooms();
+		rooms = roomService.getRooms(0);
 		model.addAttribute(AttributeName.ROOMS, rooms);
+		return JSPMapping.HOME;
+	}
+
+	@GetMapping(value = URLMapping.USER_HOME_PAGINATED)
+	public String homePaginated(@PathVariable String page, Model model) {
+		try {
+			int pageNo = Integer.parseInt(page) - 1;
+			List<Room> rooms = new ArrayList<>();
+			rooms = roomService.getRooms(pageNo);
+			model.addAttribute(AttributeName.ROOMS, rooms);
+		} catch(NumberFormatException e) {
+		}
 		return JSPMapping.HOME;
 	}
 }
