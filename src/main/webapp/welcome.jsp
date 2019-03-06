@@ -25,5 +25,16 @@
 			</div>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		var processing = false;
+		$(document).scroll(function(e){
+			if(processing)
+				return false;
+			if($(window).scrollTop() >= ($(document).height() - $(window).height())*0.7) {
+				processing = true;
+				//make post call, append to the div and set processing to false again
+			}
+		});
+		</script>
 	</body>
 </html>
