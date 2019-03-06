@@ -71,6 +71,6 @@ public class RoomServiceImpl implements RoomService {
 	public List<Room> getRooms(int page) {
 		int size = Integer.parseInt(appConfigService.getAppConfig(AppConfigKeys.HOME_PAGE_ROOM_COUNT,
 				AppConfigDefaultValues.HOME_PAGE_ROOM_COUNT_DEFAULT_VALUE));
-		return roomRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")))).getContent();
+		return roomRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Order.desc("updateDate")))).getContent();
 	}
 }
