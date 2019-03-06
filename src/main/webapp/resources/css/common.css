@@ -256,4 +256,8 @@ a {
 	height: 16px;
 	width: 16px;
 	margin-right: 8px;
+	float: left;
+}
+.dislike {
+    margin-top: 6px;
 }

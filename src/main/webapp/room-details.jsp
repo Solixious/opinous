@@ -46,7 +46,7 @@
 							</div>
 							<div class="media-react">
 								<img class="react-icon" src="/resources/img/tu.png"></img>
-								<img class="react-icon" src="/resources/img/td.png"></img>
+								<img class="react-icon dislike" src="/resources/img/td.png"></img>
 							</div>
 							<p>${post.text}</p>
 						</div>
