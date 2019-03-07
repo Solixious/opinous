@@ -4,6 +4,7 @@ import com.opinous.model.Room;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,5 +15,5 @@ public interface RoomService {
 
 	public List<Room> getAllRooms();
 	
-	public List<Room> getRooms(int page);
+	public Page<Room> getRooms(int page);
 }

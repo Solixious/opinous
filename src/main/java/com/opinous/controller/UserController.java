@@ -10,6 +10,7 @@ import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import com.opinous.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -74,9 +75,10 @@ public class UserController {
 
 	@GetMapping(value = URLMapping.USER_HOME)
 	public String welcome(Model model) {
-		List<Room> rooms = new ArrayList<>();
-		rooms = roomService.getRooms(0);
-		model.addAttribute(AttributeName.ROOMS, rooms);
+		Page<Room> rooms = roomService.getRooms(0);
+		model.addAttribute(AttributeName.ROOMS, rooms.getContent());
+		model.addAttribute(AttributeName.PAGE_NUMBER, 0);
+		model.addAttribute(AttributeName.MAX_PAGE_NUMBER, rooms.getTotalPages());
 		return JSPMapping.HOME;
 	}
 
@@ -84,9 +86,10 @@ public class UserController {
 	public String homePaginated(@PathVariable String page, Model model) {
 		try {
 			int pageNo = Integer.parseInt(page) - 1;
-			List<Room> rooms = new ArrayList<>();
-			rooms = roomService.getRooms(pageNo);
-			model.addAttribute(AttributeName.ROOMS, rooms);
+			Page<Room> rooms = roomService.getRooms(pageNo);
+			model.addAttribute(AttributeName.ROOMS, rooms.getContent());
+			model.addAttribute(AttributeName.PAGE_NUMBER, pageNo);
+			model.addAttribute(AttributeName.MAX_PAGE_NUMBER, rooms.getTotalPages());
 		} catch(NumberFormatException e) {
 		}
 		return JSPMapping.HOME;

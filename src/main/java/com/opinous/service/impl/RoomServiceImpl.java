@@ -17,6 +17,7 @@ import com.opinous.service.SecurityService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -64,13 +65,13 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public List<Room> getAllRooms() {
-		return roomRepository.findAll(Sort.by(Sort.Order.desc("id")));
+		return roomRepository.findAll(Sort.by(Sort.Order.desc("updateDate")));
 	}
 
 	@Override
-	public List<Room> getRooms(int page) {
+	public Page<Room> getRooms(int page) {
 		int size = Integer.parseInt(appConfigService.getAppConfig(AppConfigKeys.HOME_PAGE_ROOM_COUNT,
 				AppConfigDefaultValues.HOME_PAGE_ROOM_COUNT_DEFAULT_VALUE));
-		return roomRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Order.desc("updateDate")))).getContent();
+		return roomRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Order.desc("updateDate"))));
 	}
 }

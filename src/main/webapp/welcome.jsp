@@ -22,19 +22,20 @@
 						<a href="${contextPath}/room/${room.id}">${room.title}</a>
 					</div>
 				</c:forEach>
+				<div class="page-nav-div">
+					<c:choose>
+						<c:when test="${pageNumber > 0}">
+							<a href="/home/page/${pageNumber}" class="page-nav">Previous</a>
+						</c:when>
+					</c:choose>
+					<c:choose>
+						<c:when test="${pageNumber < maxPageNumber - 1}">
+							<a href="/home/page/${pageNumber + 2}" class="page-nav">Next</a>
+						</c:when>
+					</c:choose>
+				</div>
 			</div>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script type="text/javascript">
-		var processing = false;
-		$(document).scroll(function(e){
-			if(processing)
-				return false;
-			if($(window).scrollTop() >= ($(document).height() - $(window).height())*0.7) {
-				processing = true;
-				//make post call, append to the div and set processing to false again
-			}
-		});
-		</script>
 	</body>
 </html>
