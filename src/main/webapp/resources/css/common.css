@@ -274,3 +274,15 @@ a {
 	width: 100%;
 	float: left;
 }
+.like {
+    content: url('/resources/img/tu.png');
+}
+.dislike {
+    content: url('/resources/img/td.png');
+}
+.like:hover {
+    content: url('/resources/img/tu_lg.png');
+}
+.dislike:hover {
+    content: url('/resources/img/td_lg.png');
+}
