@@ -45,8 +45,8 @@
 								<fmt:formatDate value="${post.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
 							</div>
 							<div class="media-react">
-								<span class="react-icon like" src="/resources/img/tu.png"></span>
-								<span class="react-icon dislike" src="/resources/img/td.png"></span>
+								<span class="react-icon like" data-id="${post.id}"></span>
+								<span class="react-icon dislike" data-id="${post.id}"></span>
 							</div>
 							<p>${post.text}</p>
 						</div>
@@ -79,5 +79,20 @@
 
 <!-- /container -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+    $('span.like').click(function() {
+        var id = $(this).data('id');
+        $(this).attr({style: "content:url('/resources/img/tu_w.png')"});
+        $.ajax({
+            type: 'POST',
+            url: '/post/like/' + id
+        });
+    });
+    $('span.dislike').click(function() {
+        var id = $(this).data('id');
+        $(this).attr({style: "content:url('/resources/img/td_w.png')"});
+        //send post request to dislike the post
+    });
+</script>
 </body>
 </html>
