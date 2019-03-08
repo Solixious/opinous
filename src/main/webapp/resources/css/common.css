@@ -255,7 +255,7 @@ a {
 .react-icon {
 	height: 16px;
 	width: 16px;
-	margin-right: 8px;
+	padding: 5px;
 	float: left;
 }
 .dislike {
