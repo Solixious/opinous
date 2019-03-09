@@ -39,4 +39,9 @@ public class PostServiceImpl implements PostService {
 		List<AnonMap> anonMaps = anonMapRepository.findByRoom(room);
 		return postRepository.findByAnonMapIn(anonMaps);
 	}
+
+	@Override
+	public Post getPost(Long id) {
+		return postRepository.getOne(id);
+	}
 }

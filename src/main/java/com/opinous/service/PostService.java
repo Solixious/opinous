@@ -12,4 +12,6 @@ public interface PostService {
 	public void savePost(Post post);
 
 	public List<Post> getPostsByRoom(Room room);
+	
+	public Post getPost(Long id);
 }

@@ -91,7 +91,10 @@
     $('span.dislike').click(function() {
         var id = $(this).data('id');
         $(this).attr({style: "content:url('/resources/img/td_w.png')"});
-        //send post request to dislike the post
+        $.ajax({
+            type: 'POST',
+            url: '/post/dislike/' + id
+        });
     });
 </script>
 </body>
