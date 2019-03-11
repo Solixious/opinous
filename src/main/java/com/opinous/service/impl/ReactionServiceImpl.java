@@ -44,8 +44,12 @@ public class ReactionServiceImpl implements ReactionService {
 		
 	@Override
 	public void addReaction(ReactionType reactionType, String postId) {
-		Reaction reaction = new Reaction();
 		Post post = postService.getPost(Long.parseLong(postId));
+		if(exists(post, reactionType)) {
+			return;
+		}
+
+		Reaction reaction = new Reaction();
 		Room room = post.getAnonMap().getRoom();
 		User user = userService.findByUsername(securityService.findLoggedInUsername());
 		AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
