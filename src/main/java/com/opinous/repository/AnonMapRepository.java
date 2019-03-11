@@ -1,6 +1,7 @@
 package com.opinous.repository;
 
 import com.opinous.model.AnonMap;
+import com.opinous.model.AnonymousUser;
 import com.opinous.model.Room;
 import com.opinous.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

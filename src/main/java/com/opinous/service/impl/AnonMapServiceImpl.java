@@ -11,6 +11,9 @@ import com.opinous.model.User;
 import com.opinous.repository.AnonMapRepository;
 import com.opinous.service.AnonMapService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 public class AnonMapServiceImpl implements AnonMapService {
@@ -56,4 +59,33 @@ public class AnonMapServiceImpl implements AnonMapService {
 		return anonMap;
 	}
 
+	@Override
+	public List<AnonMap> getAnonMapsInRoom(Room room) {
+		if(room == null) {
+			log.error("The room should not be null in getAnonMapsInRoom.");
+			return null;
+		}
+		List<AnonMap> anonMaps = anonMapRepository.findByRoom(room);
+		if(anonMaps == null || anonMaps.size() == 0) {
+			log.error("Failed to retrieve anonMap data from the data base."
+				+ "room: {}, anonMaps: {}", room, anonMaps);
+		}
+		return anonMaps;
+	}
+
+	@Override
+	public List<AnonymousUser> getAnonymousUsersInRoom(Room room) {
+		if(room == null) {
+			log.error("The room should not be null in getAnonMapsInRoom.");
+			return null;
+		}
+		List<AnonymousUser> anonymousUsers =
+			getAnonMapsInRoom(room).stream().map(r -> r.getAnonymousUser()).collect(Collectors.toList());
+
+		if(anonymousUsers == null || anonymousUsers.size() == 0) {
+			log.error("Failed to retrieve anonymousUsers' data from the data base."
+				+ "room: {}, anonymousUsers: {}", room, anonymousUsers);
+		}
+		return anonymousUsers;
+	}
 }

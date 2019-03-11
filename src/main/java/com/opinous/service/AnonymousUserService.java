@@ -11,7 +11,5 @@ public interface AnonymousUserService {
 
 	AnonymousUser getAnonymousUser(User user, Room room);
 
-	AnonMap getAnonMap(User user, Room room);
-
 	AnonymousUser generateAnonymousUser(Room room);
 }
