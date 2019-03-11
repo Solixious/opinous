@@ -1,5 +1,6 @@
 package com.opinous.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import com.opinous.model.User;
 import com.opinous.repository.AnonMapRepository;
 import com.opinous.service.AnonMapService;
 
+@Slf4j
 @Service
 public class AnonMapServiceImpl implements AnonMapService {
 
@@ -17,17 +19,40 @@ public class AnonMapServiceImpl implements AnonMapService {
 	private AnonMapRepository anonMapRepository;
 
 	@Override
-	public AnonMap getAnonMapByRoomAndUser(Room room, User user) {
-		return anonMapRepository.findByRoomAndUser(room, user);
+	public AnonMap getAnonMapByRoomAndUser(final Room room, final User user) {
+
+		if(room == null || user == null) {
+			log.error("The value of Room and User should not be null to getAnonMapByRoomAndUser. "
+				+ "room: {}, user: {}", room, user);
+			return null;
+		}
+
+		final AnonMap anonMap = anonMapRepository.findByRoomAndUser(room, user);
+		if(anonMap == null) {
+			log.error("Could not find anonMap entry for room: {} and user: {}", room, user);
+		}
+		return anonMap;
 	}
 
 	@Override
-	public AnonMap saveAnonMap(AnonymousUser anonymousUser, User user, Room room) {
+	public AnonMap saveAnonMap(final AnonymousUser anonymousUser, final User user, final Room room) {
+
+		if(anonymousUser == null || user == null || room == null) {
+			log.error("The value of AnonymousUser, User and Room cannot be null to saveAnonMap. "
+				+ "anonymousUser: {}, user: {}, room: {}", anonymousUser, user, room);
+			return null;
+		}
+
 		AnonMap anonMap = new AnonMap();
 		anonMap.setAnonymousUser(anonymousUser);
 		anonMap.setUser(user);
 		anonMap.setRoom(room);
-		anonMapRepository.save(anonMap);
+		anonMap = anonMapRepository.save(anonMap);
+
+		if(anonMap == null) {
+			log.error("Failed to save the anoMap to the database. "
+				+ "anonymousUser: {}, user: {}, room: {}", anonymousUser, user, room);
+		}
 		return anonMap;
 	}
 
