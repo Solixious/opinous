@@ -19,7 +19,7 @@
 			<div class="rooms">
 				<c:forEach items="${rooms}" var="room">
 					<div class="room-card">
-						<a href="${contextPath}/room/${room.id}">${room.title}</a>
+						<a href="${contextPath}/room/${room.id}"><c:out value="${room.title}"/></a>
 					</div>
 				</c:forEach>
 				<div class="page-nav-div">

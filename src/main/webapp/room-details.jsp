@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>${room.title}</title>
+    <title><c:out value="${room.title}"/></title>
     <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
 </head>
 <body>
@@ -20,25 +20,25 @@
 	<div class="container">
 			<div class="media">
 				<div class="media-heading">
-					<span class="title">${room.title}</span>
+					<span class="title"><c:out value="${room.title}"/></span>
 				</div>
 				<div class="media-left">
 					<img src="${room.creator.anonymousUser.displayPicture}" class="media-object">
-					<span class="user-name">${room.creator.anonymousUser.name}</span>
+					<span class="user-name"><c:out value="${room.creator.anonymousUser.name}"/></span>
 				</div>
 				<div class="media-body">	
 					<div class="media-date">
 						<fmt:formatDate value="${room.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
 					</div>
-					<p>${room.description}</p>
+					<p><c:out value="${room.description}"/></p>
 				</div>
 			</div>
 			<div class="room-replies">
 	          	<c:forEach items="${posts}" var="post">
-					<div class="media">
+				<div class="media">
 						<div class="media-left">
 							<img src="${post.anonMap.anonymousUser.displayPicture}" class="media-object">
-							<span class="user-name">${post.anonMap.anonymousUser.name}</span>
+							<span class="user-name"><c:out value="${post.anonMap.anonymousUser.name}"/></span>
 						</div>
 						<div class="media-body">
 							<div class="media-date">
@@ -64,7 +64,7 @@
                                 </c:choose>
 								<span class="react-count">${post.reactionCounts['DISLIKE']}</span>
 							</div>
-							<p>${post.text}</p>
+							<p><c:out value="${post.text}"/></p>
 						</div>
 					</div>
 				</c:forEach>
@@ -75,7 +75,7 @@
 				<div class="media-left">
 					<c:if test='${postingAs != null}'>
 						<img src="${postingAs.anonymousUser.displayPicture}" class="media-object">
-						<span class="user-name">${postingAs.anonymousUser.name}</span>
+						<span class="user-name"><c:out value="${postingAs.anonymousUser.name}"/></span>
 					</c:if>
 				</div>
 				<div class="media-body">
