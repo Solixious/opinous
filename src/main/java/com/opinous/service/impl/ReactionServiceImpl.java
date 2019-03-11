@@ -18,6 +18,9 @@ import com.opinous.service.ReactionService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class ReactionServiceImpl implements ReactionService {
 
@@ -65,5 +68,17 @@ public class ReactionServiceImpl implements ReactionService {
 	@Override
 	public long getReactionCount(Post post, ReactionType reactionType) {
 		return reactionRepository.countByPostAndReactionType(post, reactionType.name());
+	}
+
+	@Override
+	public Map<String, Long> getReactionMap(Post post) {
+		Map<String, Long> reactionMap = new HashMap<>();
+
+		for(ReactionType reactionType : ReactionType.values()) {
+			long count = getReactionCount(post, reactionType);
+			reactionMap.put(reactionType.name(), count);
+		}
+
+		return reactionMap;
 	}
 }

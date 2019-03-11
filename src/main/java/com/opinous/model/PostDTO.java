@@ -1,7 +1,9 @@
 package com.opinous.model;
 
 import java.util.Date;
+import java.util.Map;
 
+import com.opinous.enums.ReactionType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,7 +22,7 @@ public class PostDTO {
 
 	private Date updateDate;
 
-	private Long likes;
+	private Map<String, Long> reactionCounts;
 	
 	private Boolean liked;
 
@@ -64,12 +66,12 @@ public class PostDTO {
 		this.updateDate = updateDate;
 	}
 
-	public Long getLikes() {
-		return likes;
+	public Map<String, Long> getReactionCounts() {
+		return reactionCounts;
 	}
 
-	public void setLikes(Long likes) {
-		this.likes = likes;
+	public void setReactionCounts(Map<String, Long> reactionCounts) {
+		this.reactionCounts = reactionCounts;
 	}
 
 	public Boolean getLiked() {
