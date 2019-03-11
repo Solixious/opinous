@@ -64,9 +64,24 @@ public class ReactionServiceImpl implements ReactionService {
 	}
 
 	@Override
+	public void removeReaction(ReactionType reactionType, String postId) {
+		Post post = postService.getPost(Long.parseLong(postId));
+		if(!exists(post, reactionType)) {
+			return;
+		}
+		reactionRepository.delete(getReaction(post, reactionType));
+	}
+
+	@Override
 	public boolean exists(Post post, ReactionType reactionType) {
 		return reactionRepository.countByPostAndReactionTypeAndAnonMap_User_Username(post,
 			reactionType.name(), securityService.findLoggedInUsername()) > 0;
+	}
+
+	@Override
+	public Reaction getReaction(Post post, ReactionType reactionType) {
+		return reactionRepository.findByPostAndReactionTypeAndAnonMap_User_Username(post,
+			reactionType.name(), securityService.findLoggedInUsername());
 	}
 
 	@Override

@@ -21,20 +21,36 @@ public class PostController {
 	
 	@Autowired
 	private SecurityService securityService;
-	
-	@PostMapping("/like/{id}")
+
+    @PostMapping("/like/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void likePost(@PathVariable String id) {
         if(securityService.isUser()) {
-        	reactionService.addReaction(ReactionType.LIKE, id);
+            reactionService.addReaction(ReactionType.LIKE, id);
         }
     }
-	
-	@PostMapping("/dislike/{id}")
+
+    @PostMapping("/dislike/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void dislikePost(@PathVariable String id) {
         if(securityService.isUser()) {
-        	reactionService.addReaction(ReactionType.DISLIKE, id);
+            reactionService.addReaction(ReactionType.DISLIKE, id);
+        }
+    }
+
+    @PostMapping("/unlike/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void unlikePost(@PathVariable String id) {
+        if(securityService.isUser()) {
+            reactionService.removeReaction(ReactionType.LIKE, id);
+        }
+    }
+
+    @PostMapping("/undislike/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void undislikePost(@PathVariable String id) {
+        if(securityService.isUser()) {
+            reactionService.removeReaction(ReactionType.DISLIKE, id);
         }
     }
 }
