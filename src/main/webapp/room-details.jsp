@@ -45,8 +45,17 @@
 								<fmt:formatDate value="${post.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
 							</div>
 							<div class="media-react">
-								<span class="react-icon like" data-id="${post.id}"></span>
+								<span class="react-count">${post.likes}</span>
+								<c:choose>
+									<c:when test="${post.liked}">
+										<span class="react-icon liked" data-id="${post.id}"></span>
+									</c:when>
+									<c:otherwise>
+										<span class="react-icon like" data-id="${post.id}"></span>
+									</c:otherwise>
+								</c:choose>
 								<span class="react-icon dislike" data-id="${post.id}"></span>
+								<span class="react-count">${post.likes}</span>
 							</div>
 							<p>${post.text}</p>
 						</div>
@@ -82,7 +91,10 @@
 <script>
     $('span.like').click(function() {
         var id = $(this).data('id');
-        $(this).attr({style: "content:url('/resources/img/tu_w.png')"});
+        var likes = parseInt($(this).prev('.react-count').text());
+        likes = likes + 1;
+        $(this).prev('.react-count').html(likes);
+    	$(this).removeClass('like').addClass('liked');
         $.ajax({
             type: 'POST',
             url: '/post/like/' + id

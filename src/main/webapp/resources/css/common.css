@@ -246,7 +246,7 @@ a {
     margin-bottom: 10px;
 }
 .media-react {
-	width: 70px;
+	width: auto;
 	float: left;
 	margin: 15px 0;
 	position: absolute;
@@ -257,6 +257,11 @@ a {
 	width: 16px;
 	padding: 5px;
 	float: left;
+}
+.react-count {
+	float:left;
+	margin-top: 3px;
+	color: #505050;
 }
 .dislike {
     margin-top: 6px;
@@ -276,6 +281,9 @@ a {
 }
 .like {
     content: url('/resources/img/tu.png');
+}
+.liked {
+    content: url('/resources/img/tu_w.png');
 }
 .dislike {
     content: url('/resources/img/td.png');

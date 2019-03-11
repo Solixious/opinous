@@ -2,41 +2,27 @@ package com.opinous.model;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
 @Getter
 @Setter
 @ToString
-public class Post {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+public class PostDTO {
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "anonMapId")
 	private AnonMap anonMap;
 
 	private String text;
 
-	@CreationTimestamp
 	private Date createDate;
 
-	@UpdateTimestamp
 	private Date updateDate;
+
+	private Long likes;
+	
+	private Boolean liked;
 
 	public Long getId() {
 		return id;
@@ -76,5 +62,21 @@ public class Post {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public Long getLikes() {
+		return likes;
+	}
+
+	public void setLikes(Long likes) {
+		this.likes = likes;
+	}
+
+	public Boolean getLiked() {
+		return liked;
+	}
+
+	public void setLiked(Boolean liked) {
+		this.liked = liked;
 	}
 }
