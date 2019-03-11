@@ -55,8 +55,8 @@ public class PostServiceImpl implements PostService {
 			postDto.setCreateDate(post.getCreateDate());
 			postDto.setText(post.getText());
 			postDto.setUpdateDate(post.getUpdateDate());
-			postDto.setReactionCounts(reactionService.getReactionMap(post));
-			postDto.setLiked(reactionService.exists(post, ReactionType.LIKE));
+			postDto.setReactionCounts(reactionService.getReactionCountMap(post));
+			postDto.setLiked(reactionService.getReactionList(post));
 			postsDto.add(postDto);
 		}
 		return postsDto;

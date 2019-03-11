@@ -47,14 +47,21 @@
 							<div class="media-react">
 								<span class="react-count">${post.reactionCounts['LIKE']}</span>
 								<c:choose>
-									<c:when test="${post.liked}">
+									<c:when test="${post.reactions['LIKE'] == 1}">
 										<span class="react-icon liked" data-id="${post.id}"></span>
 									</c:when>
 									<c:otherwise>
 										<span class="react-icon like" data-id="${post.id}"></span>
 									</c:otherwise>
 								</c:choose>
-								<span class="react-icon dislike" data-id="${post.id}"></span>
+								<c:choose>
+                                    <c:when test="${post.reactions['DISLIKE'] == 1}">
+                                        <span class="react-icon disliked" data-id="${post.id}"></span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="react-icon dislike" data-id="${post.id}"></span>
+                                    </c:otherwise>
+                                </c:choose>
 								<span class="react-count">${post.reactionCounts['DISLIKE']}</span>
 							</div>
 							<p>${post.text}</p>

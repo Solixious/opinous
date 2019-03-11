@@ -1,6 +1,7 @@
 package com.opinous.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.opinous.enums.ReactionType;
@@ -24,7 +25,7 @@ public class PostDTO {
 
 	private Map<String, Long> reactionCounts;
 	
-	private Boolean liked;
+	private Map<String, Long> reactions;
 
 	public Long getId() {
 		return id;
@@ -74,11 +75,11 @@ public class PostDTO {
 		this.reactionCounts = reactionCounts;
 	}
 
-	public Boolean getLiked() {
-		return liked;
+	public Map<String, Long> getReactions() {
+		return reactions;
 	}
 
-	public void setLiked(Boolean liked) {
-		this.liked = liked;
+	public void setLiked(Map<String, Long> reactions) {
+		this.reactions = reactions;
 	}
 }

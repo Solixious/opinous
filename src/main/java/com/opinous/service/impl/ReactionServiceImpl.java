@@ -71,14 +71,22 @@ public class ReactionServiceImpl implements ReactionService {
 	}
 
 	@Override
-	public Map<String, Long> getReactionMap(Post post) {
+	public Map<String, Long> getReactionCountMap(Post post) {
 		Map<String, Long> reactionMap = new HashMap<>();
-
 		for(ReactionType reactionType : ReactionType.values()) {
 			long count = getReactionCount(post, reactionType);
 			reactionMap.put(reactionType.name(), count);
 		}
-
 		return reactionMap;
+	}
+
+	@Override
+	public Map<String, Long> getReactionList(Post post) {
+		Map<String, Long> reactions = new HashMap<>();
+		for(ReactionType reactionType : ReactionType.values()) {
+			if(exists(post, reactionType))
+				reactions.put(reactionType.name(), 1L);
+		}
+		return reactions;
 	}
 }

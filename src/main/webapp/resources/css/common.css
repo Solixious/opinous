@@ -288,6 +288,9 @@ a {
 .dislike {
     content: url('/resources/img/td.png');
 }
+.disliked {
+     content: url('/resources/img/td_w.png');
+ }
 .like:hover {
     content: url('/resources/img/tu_lg.png');
 }

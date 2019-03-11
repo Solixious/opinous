@@ -12,5 +12,6 @@ public interface ReactionService {
 	public void addReaction(ReactionType reactionType, String postId);
 	public boolean exists(Post post, ReactionType reactionType);
 	public long getReactionCount(Post post, ReactionType reactionType);
-	public Map<String, Long> getReactionMap(Post post);
+	public Map<String, Long> getReactionCountMap(Post post);
+	public Map<String, Long> getReactionList(Post post);
 }
