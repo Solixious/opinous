@@ -10,9 +10,10 @@ import com.opinous.model.Room;
 
 @Service
 public interface PostService {
-	public void savePost(Post post);
 
-	public List<PostDTO> getPostsByRoom(Room room);
+	void savePost(Post post);
+
+	List<PostDTO> getPostsByRoom(Room room);
 	
-	public Post getPost(Long id);
+	Post getPost(Long id);
 }

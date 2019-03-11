@@ -9,11 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface RoomService {
-	public void createRoom(Room room);
 
-	public Room getRoomById(Long roomId);
+	void createRoom(Room room);
 
-	public List<Room> getAllRooms();
+	Room getRoomById(Long roomId);
+
+	List<Room> getAllRooms();
 	
-	public Page<Room> getRooms(int page);
+	Page<Room> getRooms(int page);
 }

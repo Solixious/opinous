@@ -9,7 +9,8 @@ import com.opinous.model.User;
 
 @Service
 public interface AnonMapService {
-	public AnonMap saveAnonMap(AnonymousUser anonymousUser, User user, Room room);
 
-	public AnonMap getAnonMapByRoomAndUser(Room room, User user);
+	AnonMap saveAnonMap(AnonymousUser anonymousUser, User user, Room room);
+
+	AnonMap getAnonMapByRoomAndUser(Room room, User user);
 }

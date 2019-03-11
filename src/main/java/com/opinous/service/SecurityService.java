@@ -4,15 +4,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface SecurityService {
-	public String findLoggedInUsername();
 
-	public void autologin(String username, String password);
+	String findLoggedInUsername();
 
-	public boolean hasRole(String name);
+	void autologin(String username, String password);
 
-	public boolean isAdmin();
+	boolean hasRole(String name);
 
-	public boolean isUser();
+	boolean isAdmin();
 
-	public boolean isModerator();
+	boolean isUser();
+
+	boolean isModerator();
 }

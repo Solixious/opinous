@@ -6,15 +6,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
-	public void saveUser(User user);
 
-	public void updateUser(User user);
+	void saveUser(User user);
 
-	public void saveUser(User user, RoleConst[] roles);
+	void updateUser(User user);
 
-	public void copyNecessaryUpdates(User from, User to);
+	void saveUser(User user, RoleConst[] roles);
 
-	public User findByUsername(String username);
+	void copyNecessaryUpdates(User from, User to);
 
-	public User findByEmail(String email);
+	User findByUsername(String username);
+
+	User findByEmail(String email);
 }

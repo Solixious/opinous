@@ -10,11 +10,18 @@ import java.util.Map;
 
 @Service
 public interface ReactionService {
-	public void addReaction(ReactionType reactionType, String postId);
-	public void removeReaction(ReactionType reactionType, String postId);
-	public boolean exists(Post post, ReactionType reactionType);
-	public Reaction getReaction(Post post, ReactionType reactionType);
-	public long getReactionCount(Post post, ReactionType reactionType);
-	public Map<String, Long> getReactionCountMap(Post post);
-	public Map<String, Long> getReactionList(Post post);
+
+	void addReaction(ReactionType reactionType, String postId);
+
+	void removeReaction(ReactionType reactionType, String postId);
+
+	boolean exists(Post post, ReactionType reactionType);
+
+	Reaction getReaction(Post post, ReactionType reactionType);
+
+	long getReactionCount(Post post, ReactionType reactionType);
+
+	Map<String, Long> getReactionCountMap(Post post);
+
+	Map<String, Long> getReactionList(Post post);
 }
