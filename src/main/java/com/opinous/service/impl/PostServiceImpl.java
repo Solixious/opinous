@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.opinous.service.ReactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,6 @@ import com.opinous.model.Post;
 import com.opinous.model.PostDTO;
 import com.opinous.model.Room;
 import com.opinous.repository.PostRepository;
-import com.opinous.repository.ReactionRepository;
 import com.opinous.repository.RoomRepository;
 import com.opinous.service.PostService;
 import com.opinous.service.SecurityService;
@@ -25,12 +25,12 @@ public class PostServiceImpl implements PostService {
 
 	@Autowired
 	private RoomRepository roomRepository;
-	
-	@Autowired
-	private ReactionRepository reactionRepository;
-	
+
 	@Autowired
 	private SecurityService securityService;
+
+	@Autowired
+	private ReactionService reactionService;
 	
 	@Override
 	public void savePost(Post post) {
@@ -55,9 +55,8 @@ public class PostServiceImpl implements PostService {
 			postDto.setCreateDate(post.getCreateDate());
 			postDto.setText(post.getText());
 			postDto.setUpdateDate(post.getUpdateDate());
-			postDto.setLikes(reactionRepository.countByPostAndReactionType(post, ReactionType.LIKE.name()));
-			postDto.setLiked(reactionRepository.countByPostAndReactionTypeAndAnonMap_User_Username(post,
-					ReactionType.LIKE.name(), securityService.findLoggedInUsername()) > 0);
+			postDto.setLikes(reactionService.getReactionCount(post, ReactionType.LIKE));
+			postDto.setLiked(reactionService.exists(post, ReactionType.LIKE));
 			postsDto.add(postDto);
 		}
 		return postsDto;

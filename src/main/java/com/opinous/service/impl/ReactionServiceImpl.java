@@ -56,4 +56,14 @@ public class ReactionServiceImpl implements ReactionService {
 		reactionRepository.save(reaction);
 	}
 
+	@Override
+	public boolean exists(Post post, ReactionType reactionType) {
+		return reactionRepository.countByPostAndReactionTypeAndAnonMap_User_Username(post,
+			reactionType.name(), securityService.findLoggedInUsername()) > 0;
+	}
+
+	@Override
+	public long getReactionCount(Post post, ReactionType reactionType) {
+		return reactionRepository.countByPostAndReactionType(post, reactionType.name());
+	}
 }
