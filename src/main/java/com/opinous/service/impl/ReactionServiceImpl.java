@@ -1,5 +1,6 @@
 package com.opinous.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import com.opinous.service.UserService;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class ReactionServiceImpl implements ReactionService {
 
@@ -43,8 +45,14 @@ public class ReactionServiceImpl implements ReactionService {
 	private AnonymousUserService anonymousUserService;
 		
 	@Override
-	public void addReaction(ReactionType reactionType, String postId) {
-		Post post = postService.getPost(Long.parseLong(postId));
+	public void addReaction(final ReactionType reactionType, final String postId) {
+		if(reactionType == null || postId == null) {
+			log.error("ReactionType and post id cannot be null. reactionType: {}, postId: [}",
+				reactionType, postId);
+			return;
+		}
+
+		final Post post = postService.getPost(Long.parseLong(postId));
 		if(exists(post, reactionType)) {
 			return;
 		}
@@ -52,6 +60,7 @@ public class ReactionServiceImpl implements ReactionService {
 		Reaction reaction = new Reaction();
 		Room room = post.getAnonMap().getRoom();
 		User user = userService.findByUsername(securityService.findLoggedInUsername());
+
 		AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
 		if (anonMap == null) {
 			AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
@@ -64,33 +73,61 @@ public class ReactionServiceImpl implements ReactionService {
 	}
 
 	@Override
-	public void removeReaction(ReactionType reactionType, String postId) {
-		Post post = postService.getPost(Long.parseLong(postId));
-		if(!exists(post, reactionType)) {
+	public void removeReaction(final ReactionType reactionType, final String postId) {
+		if(reactionType == null || postId == null) {
+			log.error("ReactionType and post id cannot be null. reactionType: {}, postId: [}",
+				reactionType, postId);
 			return;
 		}
-		reactionRepository.delete(getReaction(post, reactionType));
+
+		Post post = postService.getPost(Long.parseLong(postId));
+		if(exists(post, reactionType)) {
+			reactionRepository.delete(getReaction(post, reactionType));;
+		}
 	}
 
 	@Override
-	public boolean exists(Post post, ReactionType reactionType) {
+	public boolean exists(final Post post, final ReactionType reactionType) {
+		if(reactionType == null || post == null) {
+			log.error("Post and reactionType cannot be null. post: {}, reactionType: [}",
+				post, reactionType);
+			return false;
+		}
+
 		return reactionRepository.countByPostAndReactionTypeAndAnonMap_User_Username(post,
 			reactionType.name(), securityService.findLoggedInUsername()) > 0;
 	}
 
 	@Override
-	public Reaction getReaction(Post post, ReactionType reactionType) {
+	public Reaction getReaction(final Post post, final ReactionType reactionType) {
+		if(reactionType == null || post == null) {
+			log.error("Post and reactionType cannot be null. post: {}, reactionType: [}",
+				post, reactionType);
+			return null;
+		}
+
 		return reactionRepository.findByPostAndReactionTypeAndAnonMap_User_Username(post,
 			reactionType.name(), securityService.findLoggedInUsername());
 	}
 
 	@Override
-	public long getReactionCount(Post post, ReactionType reactionType) {
+	public long getReactionCount(final Post post, final ReactionType reactionType) {
+		if(reactionType == null || post == null) {
+			log.error("Post and reactionType cannot be null. post: {}, reactionType: [}",
+				post, reactionType);
+			return 0L;
+		}
+
 		return reactionRepository.countByPostAndReactionType(post, reactionType.name());
 	}
 
 	@Override
-	public Map<String, Long> getReactionCountMap(Post post) {
+	public Map<String, Long> getReactionCountMap(final Post post) {
+		if(post == null) {
+			log.error("Post cannot be null.");
+			return null;
+		}
+
 		Map<String, Long> reactionMap = new HashMap<>();
 		for(ReactionType reactionType : ReactionType.values()) {
 			long count = getReactionCount(post, reactionType);
@@ -100,7 +137,12 @@ public class ReactionServiceImpl implements ReactionService {
 	}
 
 	@Override
-	public Map<String, Long> getReactionList(Post post) {
+	public Map<String, Long> getReactionList(final Post post) {
+		if(post == null) {
+			log.error("Post cannot be null.");
+			return null;
+		}
+
 		Map<String, Long> reactions = new HashMap<>();
 		for(ReactionType reactionType : ReactionType.values()) {
 			if(exists(post, reactionType))

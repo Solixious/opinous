@@ -3,6 +3,7 @@ package com.opinous.service.impl;
 import com.opinous.exception.FileStorageException;
 import com.opinous.exception.MyFileNotFoundException;
 import com.opinous.service.FileStorageService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+@Slf4j
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
 
@@ -27,33 +29,39 @@ public class FileStorageServiceImpl implements FileStorageService {
 		try {
 			Files.createDirectories(this.fileStorageLocation);
 		} catch (Exception e) {
-			throw new FileStorageException("Could not create the directory where " + "file will be stored", e);
+			log.error("Could not create the directory where file will be stored.");
+			throw new FileStorageException("Could not create the directory where file will be stored.", e);
 		}
 	}
 
-	public String storeFile(MultipartFile file, String suggestedFileName) throws FileStorageException {
+	public String storeFile(final MultipartFile file, final String suggestedFileName) throws FileStorageException {
 		String fileName = StringUtils.cleanPath(suggestedFileName);
 		try {
 			if (fileName.contains("..")) {
+				log.error("File name contains invalid path sequence {}", fileName);
 				throw new FileStorageException("File name contains invalid path sequence " + fileName);
 			}
 			Path targetLocation = this.fileStorageLocation.resolve(fileName);
 			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 			return fileName;
 		} catch (IOException e) {
+			log.error("Could not store file {}.", fileName);
 			throw new FileStorageException("Could not store file " + fileName + ". Please try again!", e);
 		}
 	}
 
-	public Resource loadFileAsResource(String fileName) throws MyFileNotFoundException {
+	public Resource loadFileAsResource(final String fileName) throws MyFileNotFoundException {
 		try {
 			Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
 			Resource resource = new UrlResource(filePath.toUri());
 			if (resource.exists())
 				return resource;
-			else
+			else {
+				log.error("File not found: {}", fileName);
 				throw new MyFileNotFoundException("File not found " + fileName);
+			}
 		} catch (MalformedURLException e) {
+			log.error("File not found: {}", fileName);
 			throw new MyFileNotFoundException("File not found " + fileName, e);
 		}
 	}

@@ -79,7 +79,7 @@ public class PostDTO {
 		return reactions;
 	}
 
-	public void setLiked(Map<String, Long> reactions) {
+	public void setReactionList(Map<String, Long> reactions) {
 		this.reactions = reactions;
 	}
 }
