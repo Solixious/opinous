@@ -150,7 +150,7 @@ a {
 }
 
 .room-card:hover {
-	box-shadow: 0 0 32px rgba(255, 0, 0, 1);
+	box-shadow: 0 0 32px rgba(255, 0, 0, 0.4);
 }
 
 .form-login, .form-register, .form-new-room {
