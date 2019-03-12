@@ -291,9 +291,9 @@ a {
 .disliked {
      content: url('/resources/img/td_w.png');
  }
-.like:hover {
+.react-icon-login-true.like:hover {
     content: url('/resources/img/tu_lg.png');
 }
-.dislike:hover {
+.react-icon-login-true.dislike:hover {
     content: url('/resources/img/td_lg.png');
 }

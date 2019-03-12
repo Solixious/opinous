@@ -51,7 +51,7 @@
 										<span class="react-icon liked unlike" data-id="${post.id}"></span>
 									</c:when>
 									<c:otherwise>
-										<span class="react-icon like" data-id="${post.id}"></span>
+										<span class="react-icon react-icon-login-${isUser} like" data-id="${post.id}"></span>
 									</c:otherwise>
 								</c:choose>
 								<c:choose>
@@ -59,7 +59,7 @@
                                         <span class="react-icon disliked undislike" data-id="${post.id}"></span>
                                     </c:when>
                                     <c:otherwise>
-                                        <span class="react-icon dislike" data-id="${post.id}"></span>
+                                        <span class="react-icon react-icon-login-${isUser} dislike" data-id="${post.id}"></span>
                                     </c:otherwise>
                                 </c:choose>
 								<span class="react-count">${post.reactionCounts['DISLIKE']}</span>
