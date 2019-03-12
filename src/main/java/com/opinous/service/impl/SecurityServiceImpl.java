@@ -2,6 +2,7 @@ package com.opinous.service.impl;
 
 import com.opinous.enums.RoleConst;
 import com.opinous.service.SecurityService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class SecurityServiceImpl implements SecurityService {
 
@@ -28,20 +30,25 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 
 	@Override
-	public void autologin(String username, String password) {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+	public void autologin(final String username, final String password) {
+		if(username == null || password == null) {
+			log.error("Username and password should not be null for autologin. Username: {}", username);
+			return;
+		}
+
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+		final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				userDetails, password, userDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 	}
 
 	@Override
-	public boolean hasRole(String role) {
-		SecurityContext context = SecurityContextHolder.getContext();
+	public boolean hasRole(final String role) {
+		final SecurityContext context = SecurityContextHolder.getContext();
 		if (context == null)
 			return false;
 
-		Authentication authentication = context.getAuthentication();
+		final Authentication authentication = context.getAuthentication();
 		if (authentication == null)
 			return false;
 

@@ -16,12 +16,14 @@ import com.opinous.service.SecurityService;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class RoomServiceImpl implements RoomService {
 
@@ -44,10 +46,15 @@ public class RoomServiceImpl implements RoomService {
 	private AppConfigService appConfigService;
 
 	@Override
-	public void createRoom(Room room) {
-		AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
-		User user = userRepository.findByUsername(securityService.findLoggedInUsername());
-		AnonMap anonMap = new AnonMap();
+	public void createRoom(final Room room) {
+		if(room == null) {
+			log.error("Cannot create a room with null value.");
+			return;
+		}
+
+		final AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
+		final User user = userRepository.findByUsername(securityService.findLoggedInUsername());
+		final AnonMap anonMap = new AnonMap();
 		anonMap.setAnonymousUser(anonymousUser);
 		anonMap.setUser(user);
 		anonMap.setRoom(room);
@@ -59,7 +66,12 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public Room getRoomById(Long roomId) {
+	public Room getRoomById(final Long roomId) {
+		if(roomId == null) {
+			log.error("RoomId is required to get the room details.");
+			return null;
+		}
+
 		return roomRepository.getOne(roomId);
 	}
 
@@ -69,7 +81,12 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public Page<Room> getRooms(int page) {
+	public Page<Room> getRooms(final int page) {
+		if(page < 0) {
+			log.error("A positive page number is required to fetch the page of rooms.");
+			return null;
+		}
+
 		int size = Integer.parseInt(appConfigService.getAppConfig(AppConfigKeys.HOME_PAGE_ROOM_COUNT,
 				AppConfigDefaultValues.HOME_PAGE_ROOM_COUNT_DEFAULT_VALUE));
 		return roomRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Order.desc("updateDate"))));
