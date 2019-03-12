@@ -263,7 +263,7 @@ a {
 	margin-top: 3px;
 	color: #505050;
 }
-.dislike {
+.dislike, .disliked {
     margin-top: 6px;
 }
 .page-nav {
