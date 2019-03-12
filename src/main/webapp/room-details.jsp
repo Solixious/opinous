@@ -48,7 +48,7 @@
 								<span class="react-count">${post.reactionCounts['LIKE']}</span>
 								<c:choose>
 									<c:when test="${post.reactions['LIKE'] == 1}">
-										<span class="react-icon liked" data-id="${post.id}"></span>
+										<span class="react-icon liked unlike" data-id="${post.id}"></span>
 									</c:when>
 									<c:otherwise>
 										<span class="react-icon like" data-id="${post.id}"></span>
@@ -56,7 +56,7 @@
 								</c:choose>
 								<c:choose>
                                     <c:when test="${post.reactions['DISLIKE'] == 1}">
-                                        <span class="react-icon disliked" data-id="${post.id}"></span>
+                                        <span class="react-icon disliked undislike" data-id="${post.id}"></span>
                                     </c:when>
                                     <c:otherwise>
                                         <span class="react-icon dislike" data-id="${post.id}"></span>
@@ -97,10 +97,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
     $(document).on("click", "span.like", function() {
-        likeFunc($(this));
+		if($(this).next('.react-icon').hasClass('disliked')) {
+			unDislikeFunc($(this).next('.react-icon'));
+		} else {
+    		likeFunc($(this));
+		}
     });
     $(document).on("click", "span.dislike", function() {
-        dislikeFunc($(this));
+    	if($(this).prev('.react-icon').hasClass('liked')) {
+			unlikeFunc($(this).prev('.react-icon'));
+		} else {
+			dislikeFunc($(this));
+		}
     });
     $(document).on("click", "span.liked", function() {
         unlikeFunc($(this));
