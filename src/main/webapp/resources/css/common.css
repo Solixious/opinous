@@ -360,3 +360,9 @@ a {
 .left-nav-menu a:hover {
     color: #c0c0c0;
 }
+.edit-profile-button {
+    float: left;
+    width: 600px;
+    margin-left: 104px;
+    margin-top: 20px;
+}

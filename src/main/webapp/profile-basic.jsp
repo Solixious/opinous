@@ -43,7 +43,7 @@
             <span class="profile-detail profile-detail-type">Email</span>
             <span class="profile-detail profile-detail-value"><c:out value="${userDetail.email}"/></span>
         </div>
-        <div class="edit-profile-button"></div>
+        <div class="edit-profile-button"><button class="form-button-primary">Edit</button></div>
         <div class="left-nav">
             <span class="left-nav-menu"><a href="#">Basic</a></span>
             <span class="left-nav-menu"><a href="#">My Posts</a></span>
