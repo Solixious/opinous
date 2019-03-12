@@ -21,7 +21,7 @@
     <ul class="nav navbar-nav float-right">
     <c:choose>
         <c:when test="${pageContext.request.userPrincipal.name != null}">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome ${pageContext.request.userPrincipal.name}</a></li>
+            <li><a href="${contextPath}/profile/basic"><span class="glyphicon glyphicon-user"></span>Welcome <c:out value="${pageContext.request.userPrincipal.name}"/></a></li>
             <li><a onclick="document.forms['logoutForm'].submit()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         </c:when>
         <c:otherwise>
