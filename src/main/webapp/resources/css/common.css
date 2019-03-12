@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Vollkorn');
 
 body {
+  background-color: #000;
   background: url('/resources/img/bg.png') repeat;
   color: #f0f0f0;
   margin: 0;
@@ -107,15 +108,21 @@ a {
 	padding: 0;
 }
 
-.navbar-nav li a, .room-card a {
+.navbar-nav li a {
 	display: inline-block;
 	padding: 15px;
 	color: #fff;
 }
 
 .room-card a {
-	width: 80%;
-	height: 100%;
+	display: inline-block;
+	padding: 25px;
+	color: #fff;
+}
+
+.room-card a {
+	width: 170px;
+	height: 170px;
 }
 
 .navbar-header a {
@@ -135,16 +142,15 @@ a {
 }
 
 .room-card {
-    width: 200px;
-    height: 200px;
+    width: 240px;
+    height: 240px;
     margin: 20px;
-    padding: 20px;
     background-color: black;
     float: left;
 }
 
 .room-card:hover {
-	background-image: linear-gradient(black, black, black, black, black, black, red);
+	box-shadow: 0 0 32px rgba(255, 0, 0, 1);
 }
 
 .form-login, .form-register, .form-new-room {
