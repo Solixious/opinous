@@ -255,7 +255,7 @@ a {
 .react-icon {
 	height: 16px;
 	width: 16px;
-	padding: 5px;
+	margin: 5px;
 	float: left;
 }
 .react-count {
@@ -264,7 +264,7 @@ a {
 	color: #505050;
 }
 .dislike, .disliked {
-    margin-top: 6px;
+    margin-top: 12px;
 }
 .page-nav {
 	padding: 10px;
@@ -280,20 +280,20 @@ a {
 	float: left;
 }
 .like {
-    content: url('/resources/img/tu.png');
+    background: url('/resources/img/reactions.png') 16px -16px;
 }
 .liked {
-    content: url('/resources/img/tu_w.png');
+    background: url('/resources/img/reactions.png') 16px 16px;
 }
 .dislike {
-    content: url('/resources/img/td.png');
+    background: url('/resources/img/reactions.png') 0 0 ;
 }
 .disliked {
-     content: url('/resources/img/td_w.png');
+    background: url('/resources/img/reactions.png') 0px -16px;
  }
 .react-icon-login-true.like:hover {
-    content: url('/resources/img/tu_lg.png');
+    background: url('/resources/img/reactions.png') 0px 16px;
 }
 .react-icon-login-true.dislike:hover {
-    content: url('/resources/img/td_lg.png');
+    background: url('/resources/img/reactions.png') 16px 0px;
 }
