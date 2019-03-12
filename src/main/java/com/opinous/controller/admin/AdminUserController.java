@@ -154,7 +154,7 @@ public class AdminUserController {
 		}
 	}
 
-	@RequestMapping(value = URLMapping.LIST_USER, method = RequestMethod.GET)
+	@GetMapping(value = URLMapping.LIST_USER)
 	public String listUsers(Model model) {
 		if (securityService.isAdmin()) {
 			List<User> users = userRepository.findAll();

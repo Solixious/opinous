@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class UserController {
+public class UserRegistrationController {
 
 	@Autowired
 	private UserService userService;
@@ -41,25 +41,19 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			return JSPMapping.REGISTRATION;
 		}
-
 		userService.saveUser(userForm);
-
 		securityService.autologin(userForm.getUsername(), userForm.getPassword());
-
 		return JSPMapping.HOME;
 	}
 
 	@GetMapping(value = URLMapping.USER_LOGIN)
 	public String login(Model model, String error, String logout) {
-
 		if (error != null) {
 			model.addAttribute("error", "Your username and password is invalid");
 		}
-
 		if (logout != null) {
 			model.addAttribute("message", "You have been logged out successfully");
 		}
-
 		return JSPMapping.LOGIN;
 	}
 }
