@@ -70,7 +70,7 @@
 				</c:forEach>
 			</div>
           
-          <c:if test='${isUser == true }'>
+          <c:if test='${isUser}'>
           	<div class="media reply-media">
 				<div class="media-left">
 					<c:if test='${postingAs != null}'>
