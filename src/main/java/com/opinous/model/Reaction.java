@@ -30,36 +30,4 @@ public class Reaction {
 	private Post post;
 
 	private String reactionType;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public AnonMap getAnonMap() {
-		return anonMap;
-	}
-
-	public void setAnonMap(AnonMap anonMap) {
-		this.anonMap = anonMap;
-	}
-	
-	public Post getPost() {
-		return post;
-	}
-
-	public void setPost(Post post) {
-		this.post = post;
-	}
-	
-	public String getReactionType() {
-		return reactionType;
-	}
-
-	public void setReactionType(String reactionType) {
-		this.reactionType = reactionType;
-	}
 }
