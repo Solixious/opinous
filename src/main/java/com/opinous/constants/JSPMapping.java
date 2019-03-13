@@ -18,4 +18,5 @@ public class JSPMapping {
 	public static final String ADMIN_NEW_USER = "admin-new-user";
 	public static final String ADMIN_UPDATE_DELETE_USER = "admin-update-delete-user";
 	public static final String ADMIN_LIST_USER = "admin-list-user";
+	public static final String USER_PROFILE_BASIC = "profile-basic";
 }

@@ -31,4 +31,8 @@ public class URLMapping {
 	// Post mappings
 	public static final String POST = "/post";
 	public static final String POST_NEW = "/new";
+	
+	// Profile mappings
+	public static final String USER_PROFILE_BASIC = "/basic";
+	public static final String PROFILE = "/profile";
 }

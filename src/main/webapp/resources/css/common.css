@@ -321,6 +321,12 @@ a {
     margin-top: 20px;
     float: left;
 }
+.profile-details-basic-update {
+    width: 600px;
+    margin-left: 104px;
+    margin-top: 20px;
+    float: left;
+}
 .profile-detail-type {
     width: 170px;
     float: left;
@@ -371,4 +377,7 @@ a {
     width: 600px;
     margin-left: 104px;
     margin-top: 20px;
+}
+.hide {
+    display:none;
 }

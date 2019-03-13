@@ -11,8 +11,9 @@ import com.opinous.service.NotificationService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import com.opinous.validator.UserValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,15 +24,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping(URLMapping.ADMIN)
 public class AdminUserController {
-	private Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 
 	@Autowired
 	private SecurityService securityService;
@@ -51,10 +51,10 @@ public class AdminUserController {
 	@GetMapping(value = URLMapping.USER_HOME)
 	public String adminHome(HttpServletRequest request) {
 		if (securityService.isAdmin()) {
-			logger.debug("Going to admin control panel page.");
+			log.debug("Going to admin control panel page.");
 			return JSPMapping.ADMIN_CONTROL_PANEL;
 		} else {
-			logger.error("Illegal attempt to access admin page");
+			log.error("Illegal attempt to access admin page");
 			return JSPMapping.ERROR;
 		}
 	}
@@ -65,7 +65,7 @@ public class AdminUserController {
 			model.addAttribute(AttributeName.USER_FORM, new User());
 			return JSPMapping.ADMIN_NEW_USER;
 		} else {
-			logger.error("Illegal attempt to access admin page");
+			log.error("Illegal attempt to access admin page");
 			return JSPMapping.ERROR;
 		}
 	}
@@ -86,7 +86,7 @@ public class AdminUserController {
 			notificationService.notify(model, NotificationType.success, "Created new user successfully!");
 			return JSPMapping.ADMIN_NEW_USER;
 		} else {
-			logger.error("Illegal attempt to access admin page");
+			log.error("Illegal attempt to access admin page");
 			return JSPMapping.ERROR;
 		}
 	}
@@ -96,7 +96,7 @@ public class AdminUserController {
 		if (securityService.isAdmin())
 			return JSPMapping.ADMIN_UPDATE_DELETE_USER;
 		else {
-			logger.error("Illegal attempt to access admin page");
+			log.error("Illegal attempt to access admin page");
 			return JSPMapping.ERROR;
 		}
 	}
@@ -116,7 +116,7 @@ public class AdminUserController {
 				return Misc.REDIRECT + URLMapping.ADMIN + URLMapping.LIST_USER + username;
 			}
 		} else {
-			logger.error("Illegal attempt to access admin page");
+			log.error("Illegal attempt to access admin page");
 			return JSPMapping.ERROR;
 		}
 	}
@@ -135,7 +135,7 @@ public class AdminUserController {
 			notificationService.notify(model, NotificationType.success, "User details updated successfully!");
 			return JSPMapping.ADMIN_UPDATE_DELETE_USER;
 		} else {
-			logger.error("Illegal attempt to access admin page");
+			log.error("Illegal attempt to access admin page");
 			return JSPMapping.ERROR;
 		}
 	}
@@ -149,7 +149,7 @@ public class AdminUserController {
 			notificationService.notify(model, NotificationType.success, "The user concerned deleted successfully!");
 			return "redirect:" + URLMapping.ADMIN + URLMapping.LIST_USER;
 		} else {
-			logger.error("Illegal attempt to access admin page");
+			log.error("Illegal attempt to access admin page");
 			return JSPMapping.ERROR;
 		}
 	}
@@ -161,7 +161,7 @@ public class AdminUserController {
 			model.addAttribute(AttributeName.USER_LIST, users);
 			return JSPMapping.ADMIN_LIST_USER;
 		} else {
-			logger.error("Illegal attempt to access admin page");
+			log.error("Illegal attempt to access admin page");
 			return JSPMapping.ERROR;
 		}
 	}
@@ -173,7 +173,7 @@ public class AdminUserController {
 			model.addAttribute(AttributeName.USER_LIST, users);
 			return JSPMapping.ADMIN_LIST_USER;
 		} else {
-			logger.error("Illegal attempt to access admin page");
+			log.error("Illegal attempt to access admin page");
 			return JSPMapping.ERROR;
 		}
 	}
