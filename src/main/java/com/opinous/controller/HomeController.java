@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class HomeController {
 
     @Autowired
-    RoomService roomService;
+    private RoomService roomService;
 
     @GetMapping(value = URLMapping.USER_HOME)
     public String welcome(Model model) {

@@ -34,5 +34,6 @@ public class URLMapping {
 	
 	// Profile mappings
 	public static final String USER_PROFILE_BASIC = "/basic";
+	public static final String MY_POSTS = "/my-posts";
 	public static final String PROFILE = "/profile";
 }

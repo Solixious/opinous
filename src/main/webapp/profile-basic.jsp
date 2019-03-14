@@ -20,24 +20,7 @@
 	<jsp:include page="nav-bar.jsp" />
 	<div class="container">
 
-        <div class="left-nav">
-            <div class="profile-picture">
-                <c:choose>
-                    <c:when test="${userDetail.profilePicture != null}">
-                        <img src="${userDetail.profilePicture}" class="profile-picture-img"/>
-                    </c:when>
-                    <c:otherwise>
-                        <img src="${contextPath}/resources/img/defaultdp.jpg" class="profile-picture-img"/>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-            <span class="left-nav-menu"><a href="#">Basic</a></span>
-            <span class="left-nav-menu"><a href="#">My Posts</a></span>
-            <span class="left-nav-menu"><a href="#">My Threads</a></span>
-            <span class="left-nav-menu"><a href="#">Followers</a></span>
-            <span class="left-nav-menu"><a href="#">Following</a></span>
-            <span class="left-nav-menu"><a href="#">Advanced Settings</a></span>
-        </div>
+	    <jsp:include page="profile-nav-bar.jsp" />
         <div class="profile-details-title">
             Basic Info
         </div>

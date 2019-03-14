@@ -320,6 +320,12 @@ a {
     margin-top: 20px;
     float: left;
 }
+.profile-my-posts {
+    width: 900px;
+    margin-left: 104px;
+    margin-top: 20px;
+    float: left;
+}
 .profile-details-basic-update {
     width: 600px;
     margin-left: 104px;
@@ -349,6 +355,7 @@ a {
 }
 .left-nav {
     margin-left: 52px;
+    margin-top: 20px;
     float: left;
     width: 250px;
     background: #000;
