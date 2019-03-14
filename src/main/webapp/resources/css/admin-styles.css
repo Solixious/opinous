@@ -57,27 +57,6 @@
 	max-width: 600px;
 	max-height: 500px;
 }
-#dpInput::-webkit-file-upload-button {
-  visibility: hidden;
-}
-#dpInput::before {
-  content: 'Select Display Picture';
-  display: inline-block;
-  background: #ff0000;
-  padding: 15px 18px;
-  margin-bottom: 15px;
-  outline: none;
-  white-space: nowrap;
-  -webkit-user-select: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-#dpInput:hover::before {
-  border-color: black;
-}
-#dpInput:active::before {
-  background: #ff0000;
-}
 #preview {
 	display: none;
 }

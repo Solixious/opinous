@@ -20,15 +20,23 @@
 	<jsp:include page="nav-bar.jsp" />
 	<div class="container">
 
-        <div class="profile-picture">
-            <c:choose>
-                <c:when test="${userDetail.profilePicture}">
-                    <img src="${userDetail.profilePicture}" class="profile-picture-img"/>
-                </c:when>
-                <c:otherwise>
-                    <img src="${contextPath}/resources/img/defaultdp.jpg" class="profile-picture-img"/>
-                </c:otherwise>
-            </c:choose>
+        <div class="left-nav">
+            <div class="profile-picture">
+                <c:choose>
+                    <c:when test="${userDetail.profilePicture != null}">
+                        <img src="${userDetail.profilePicture}" class="profile-picture-img"/>
+                    </c:when>
+                    <c:otherwise>
+                        <img src="${contextPath}/resources/img/defaultdp.jpg" class="profile-picture-img"/>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <span class="left-nav-menu"><a href="#">Basic</a></span>
+            <span class="left-nav-menu"><a href="#">My Posts</a></span>
+            <span class="left-nav-menu"><a href="#">My Threads</a></span>
+            <span class="left-nav-menu"><a href="#">Followers</a></span>
+            <span class="left-nav-menu"><a href="#">Following</a></span>
+            <span class="left-nav-menu"><a href="#">Advanced Settings</a></span>
         </div>
         <div class="profile-details-title">
             Basic Info
@@ -45,7 +53,7 @@
         </div>
         <div class="edit-profile-button"><button class="form-button-primary">Edit</button></div>
         
-        <form:form method="POST" modelAttribute="userDetail" class="form profile-details-basic-update hide">
+        <form:form method="POST" modelAttribute="userDetail" class="form profile-details-basic-update hide" enctype="multipart/form-data">
 			<h3 class="form-heading">Edit Basic Info</h3>
 			<div class="form-content">
 				<spring:bind path="id">
@@ -86,17 +94,11 @@
 	                                placeholder="Last Name"></form:input>
 					<form:errors path="lastName"></form:errors>
 	            </spring:bind>
+	            <input type="file" name="file" id="dpInput">
 				<button class="form-button-primary" type="submit">Update</button>
+	            <img src="" class="anon-dp" id="preview"/>
 			</div>
 		</form:form>
-        <div class="left-nav">
-            <span class="left-nav-menu"><a href="#">Basic</a></span>
-            <span class="left-nav-menu"><a href="#">My Posts</a></span>
-            <span class="left-nav-menu"><a href="#">My Threads</a></span>
-            <span class="left-nav-menu"><a href="#">Followers</a></span>
-            <span class="left-nav-menu"><a href="#">Following</a></span>
-            <span class="left-nav-menu"><a href="#">Advanced Settings</a></span>
-        </div>
     </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
@@ -112,6 +114,18 @@
 		$('.profile-details-title').removeClass('hide');
 		$('.profile-details-basic').removeClass('hide');
 	});
+	function readURL(input) {
+         if (input.files && input.files[0]) {
+           var reader = new FileReader();
+           reader.onload = function(e) {
+             $('#preview').attr('src', e.target.result);
+           }
+           reader.readAsDataURL(input.files[0]);
+         }
+    }
+    $("#dpInput").change(function() {
+     readURL(this);
+    });
 </script>
 </body>
 </html>

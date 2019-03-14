@@ -304,10 +304,9 @@ a {
     background: url('/resources/img/reactions.png') 16px 0px;
 }
 .profile-picture {
-    width: 250px;
-    height: 250px;
-    margin-left: 52px;
-    margin-top: 20px;
+    max-width: 250px;
+    max-height: 250px;
+    margin: 20px;
     float: left;
 }
 .profile-picture-img {
@@ -349,9 +348,8 @@ a {
     margin-top: 20px;
 }
 .left-nav {
-    position: absolute;
-    left: 52px;
-    top: 400px;
+    margin-left: 52px;
+    float: left;
     width: 250px;
     background: #000;
 }
@@ -380,4 +378,32 @@ a {
 }
 .hide {
     display:none;
+}
+#dpInput::-webkit-file-upload-button {
+  visibility: hidden;
+}
+#dpInput::before {
+  content: 'Select Display Picture';
+  display: inline-block;
+  background: #ff0000;
+  padding: 15px 18px;
+  margin-bottom: 15px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+#dpInput:hover::before {
+  border-color: black;
+}
+#dpInput:active::before {
+  background: #ff0000;
+}
+#preview {
+    max-width: 250px;
+    max-height: 250px;
+    position: absolute;
+    left: 900px;
+    top: 400px;
 }
