@@ -20,4 +20,5 @@ public class JSPMapping {
 	public static final String ADMIN_LIST_USER = "admin-list-user";
 	public static final String USER_PROFILE_BASIC = "profile-basic";
 	public static final String PROFILE_MY_POSTS = "profile-my-posts";
+    public static final String PROFILE_MY_ROOMS = "profile-my-rooms";
 }

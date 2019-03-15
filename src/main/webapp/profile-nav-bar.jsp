@@ -12,7 +12,7 @@
     </div>
     <span class="left-nav-menu"><a href="${contextPath}/profile/basic">Basic</a></span>
     <span class="left-nav-menu"><a href="${contextPath}/profile/my-posts">My Posts</a></span>
-    <span class="left-nav-menu"><a href="#">My Threads</a></span>
+    <span class="left-nav-menu"><a href="${contextPath}/profile/my-rooms">My Rooms</a></span>
     <span class="left-nav-menu"><a href="#">Followers</a></span>
     <span class="left-nav-menu"><a href="#">Following</a></span>
     <span class="left-nav-menu"><a href="#">Advanced Settings</a></span>

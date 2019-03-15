@@ -99,4 +99,13 @@ public class RoomServiceImpl implements RoomService {
 		}
 		return  posts.stream().map(p -> p.getAnonMap().getRoom()).collect(Collectors.toSet());
 	}
+
+	@Override
+	public List<Room> getRoomsForUser(User user) {
+		if(user == null) {
+			log.error("User object is null");
+			return null;
+		}
+		return roomRepository.findByCreator_User(user);
+	}
 }

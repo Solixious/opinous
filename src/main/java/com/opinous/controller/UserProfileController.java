@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -92,10 +93,18 @@ public class UserProfileController {
 
 	@GetMapping(URLMapping.MY_POSTS)
 	public String myPosts(Model model) {
-		final Set<Room> rooms = roomService.getDistinctRoomsFromPosts(postService.getPostsByUser(
-			userService.getLoggedInUser()));
-		model.addAttribute(AttributeName.ROOMS, rooms);
-		model.addAttribute(AttributeName.USER_DETAIL, userService.getLoggedInUser());
+		final User user = userService.getLoggedInUser();
+		model.addAttribute(AttributeName.ROOMS, roomService.getDistinctRoomsFromPosts
+			(postService.getPostsByUser(user)));
+		model.addAttribute(AttributeName.USER_DETAIL, user);
 		return JSPMapping.PROFILE_MY_POSTS;
+	}
+
+	@GetMapping(URLMapping.MY_ROOMS)
+	public String myRooms(Model model) {
+    final User user = userService.getLoggedInUser();
+		model.addAttribute(AttributeName.ROOMS, roomService.getRoomsForUser(user));
+		model.addAttribute(AttributeName.USER_DETAIL, user);
+		return JSPMapping.PROFILE_MY_ROOMS;
 	}
 }
