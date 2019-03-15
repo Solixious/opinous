@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -129,5 +130,38 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getLoggedInUser() {
 		return findByUsername(securityService.findLoggedInUsername());
+	}
+
+	@Override
+	public List<User> findBySpecificRoles(List<String> roles) {
+		if(roles == null) {
+			log.error("List of roles cannot be null while performing this operation.");
+			return null;
+		}
+		return userRepository.findBySpecificRoles(roles);
+	}
+
+	@Override
+	public User findById(Long id) {
+		if(id == null) {
+			log.error("Id cannot be null");
+			return null;
+		}
+		return userRepository.findById(id).get();
+	}
+
+	@Override
+	public void delete(User user) {
+		userRepository.delete(user);
+	}
+
+	@Override
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
+
+	@Override
+	public List<User> search(String query) {
+		return userRepository.findByUsernameIgnoreCaseContaining(query);
 	}
 }

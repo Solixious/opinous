@@ -54,4 +54,37 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 
 		return anonymousUsers.get(new Random().nextInt(anonymousUsers.size()));
 	}
+
+	@Override
+	public AnonymousUser findByName(String name) {
+		if(name == null) {
+			log.error("Cannot find entry for null value");
+		}
+
+		return anonymousUserRepository.findByName(name);
+	}
+
+
+	@Override
+	public AnonymousUser findById(Long id) {
+		if(id == null) {
+			log.error("Cannot find entry for null value");
+		}
+
+		return anonymousUserRepository.findById(id).get();
+	}
+
+	@Override
+	public List<AnonymousUser> findAll() {
+		return anonymousUserRepository.findAll();
+	}
+
+	@Override
+	public void saveAnonymousUser(AnonymousUser anonymousUser) {
+		if(anonymousUser == null) {
+			log.error("Cannot save null anonymous user value to database.");
+			return;
+		}
+		anonymousUserRepository.save(anonymousUser);
+	}
 }

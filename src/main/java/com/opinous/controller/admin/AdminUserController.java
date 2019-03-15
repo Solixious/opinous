@@ -6,7 +6,6 @@ import com.opinous.constants.Misc;
 import com.opinous.constants.URLMapping;
 import com.opinous.enums.NotificationType;
 import com.opinous.model.User;
-import com.opinous.repository.UserRepository;
 import com.opinous.service.NotificationService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
@@ -43,9 +42,6 @@ public class AdminUserController {
 	private UserService userService;
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	private NotificationService notificationService;
 
 	@GetMapping(value = URLMapping.USER_HOME)
@@ -74,9 +70,7 @@ public class AdminUserController {
 	public String newUser(@ModelAttribute(AttributeName.USER_FORM) User userForm, BindingResult bindingResult,
 			Model model) {
 		if (securityService.isAdmin()) {
-
 			userValidator.validate(userForm, bindingResult);
-
 			if (bindingResult.hasErrors()) {
 				return JSPMapping.ADMIN_NEW_USER;
 			}
@@ -104,7 +98,7 @@ public class AdminUserController {
 	@GetMapping(value = URLMapping.UPDATE_USER + "/{username}")
 	public String updateDeleteUser(@PathVariable("username") String username, Model model) {
 		if (securityService.isAdmin()) {
-			User user = userRepository.findByUsername(username);
+			User user = userService.findByUsername(username);
 
 			if (user != null) {
 				user = user.getCopy();
@@ -129,7 +123,7 @@ public class AdminUserController {
 				return JSPMapping.ADMIN_UPDATE_DELETE_USER;
 			}
 
-			User user = userRepository.findById(updateUser.getId()).get();
+			final User user = userService.findById(updateUser.getId());
 			userService.copyNecessaryUpdates(updateUser, user);
 			userService.updateUser(user);
 			notificationService.notify(model, NotificationType.success, "User details updated successfully!");
@@ -144,8 +138,7 @@ public class AdminUserController {
 	public String deleteUser(@ModelAttribute(AttributeName.USER_FORM) User updateUser, BindingResult bindingResult,
 			Model model) {
 		if (securityService.isAdmin()) {
-			User user = userRepository.findById(updateUser.getId()).get();
-			userRepository.delete(user);
+			userService.delete(userService.findById(updateUser.getId()));
 			notificationService.notify(model, NotificationType.success, "The user concerned deleted successfully!");
 			return "redirect:" + URLMapping.ADMIN + URLMapping.LIST_USER;
 		} else {
@@ -157,8 +150,7 @@ public class AdminUserController {
 	@GetMapping(value = URLMapping.LIST_USER)
 	public String listUsers(Model model) {
 		if (securityService.isAdmin()) {
-			List<User> users = userRepository.findAll();
-			model.addAttribute(AttributeName.USER_LIST, users);
+			model.addAttribute(AttributeName.USER_LIST, userService.findAll());
 			return JSPMapping.ADMIN_LIST_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -169,8 +161,7 @@ public class AdminUserController {
 	@GetMapping(value = URLMapping.LIST_USER + "/{username}")
 	public String listUsers(Model model, @PathVariable("username") String username) {
 		if (securityService.isAdmin()) {
-			List<User> users = userRepository.findByUsernameIgnoreCaseContaining(username);
-			model.addAttribute(AttributeName.USER_LIST, users);
+			model.addAttribute(AttributeName.USER_LIST, userService.search(username));
 			return JSPMapping.ADMIN_LIST_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");
