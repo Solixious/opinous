@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.opinous.service.UserService;
+import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,11 +47,7 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public void createRoom(final Room room) {
-		if(room == null) {
-			log.error("Cannot create a room with null value.");
-			return;
-		}
-
+		PreCondition.checkNotNull(room, "room");
 		final AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
 		final User user = userService.getLoggedInUser();
 		final AnonMap anonMap = new AnonMap();
@@ -66,11 +63,7 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public Room getRoomById(final Long roomId) {
-		if(roomId == null) {
-			log.error("RoomId is required to get the room details.");
-			return null;
-		}
-
+		PreCondition.checkNotNull(roomId, "roomId");
 		return roomRepository.getOne(roomId);
 	}
 
@@ -94,18 +87,13 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public Set<Room> getDistinctRoomsFromPosts(List<Post> posts) {
-		if(posts == null) {
-			log.error("Need a list of posts to continue extracting rooms");
-		}
+		PreCondition.checkNotNull(posts, "posts");
 		return  posts.stream().map(p -> p.getAnonMap().getRoom()).collect(Collectors.toSet());
 	}
 
 	@Override
 	public List<Room> getRoomsForUser(User user) {
-		if(user == null) {
-			log.error("User object is null");
-			return null;
-		}
+		PreCondition.checkNotNull(user, "user");
 		return roomRepository.findByCreator_User(user);
 	}
 }

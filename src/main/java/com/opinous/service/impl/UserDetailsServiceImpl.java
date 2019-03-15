@@ -3,6 +3,7 @@ package com.opinous.service.impl;
 import com.opinous.model.Role;
 import com.opinous.model.User;
 import com.opinous.repository.UserRepository;
+import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,11 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		if(username == null) {
-			log.error("Username should not be null while loading UserDetails object.");
-			return null;
-		}
-
+		PreCondition.checkNotNull(username, "username");
 		final User user = userRepository.findByUsername(username);
 		final Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		for (Role role : user.getRoles()) {

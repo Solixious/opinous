@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.opinous.model.User;
 import com.opinous.service.ReactionService;
+import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +33,7 @@ public class PostServiceImpl implements PostService {
 	
 	@Override
 	public void savePost(final Post post) {
-		if(post == null) {
-			log.error("Cannot save a post with null value");
-			return;
-		}
-
+		PreCondition.checkNotNull(post, "post");
 		final Room room = post.getAnonMap().getRoom();
 		room.setUpdateDate(new Date());
 		roomRepository.save(room);
@@ -45,31 +42,24 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<PostDTO> getPostsByRoom(final Room room) {
-		if(room == null) {
-			log.error("The value room cannot be null while retrieving posts");
-			return null;
-		}
+		PreCondition.checkNotNull(room, "room");
 		return convertToPostDto(postRepository.findByAnonMap_Room(room));
 	}
 
 	@Override
 	public List<Post> getPostsByUser(final User user) {
-		if(user == null) {
-			log.error("The value user cannot be null while retrieving posts");
-			return null;
-		}
+		PreCondition.checkNotNull(user, "user");
 		return postRepository.findByAnonMap_User(user);
 	}
 
 	@Override
 	public Post getPost(final Long id) {
-		if(id == null) {
-			log.error("Cannot get post for a null id");
-		}
+		PreCondition.checkNotNull(id, "id");
 		return postRepository.getOne(id);
 	}
 
 	private List<PostDTO> convertToPostDto(final List<Post> posts) {
+		PreCondition.checkNotNull(posts, "posts");
 		List<PostDTO> postsDto = new LinkedList<>();
 		for(Post post : posts) {
 			PostDTO postDto = new PostDTO();

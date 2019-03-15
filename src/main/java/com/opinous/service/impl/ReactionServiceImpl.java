@@ -1,5 +1,6 @@
 package com.opinous.service.impl;
 
+import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,21 +47,15 @@ public class ReactionServiceImpl implements ReactionService {
 		
 	@Override
 	public void addReaction(final ReactionType reactionType, final String postId) {
-		if(reactionType == null || postId == null) {
-			log.error("ReactionType and post id cannot be null. reactionType: {}, postId: [}",
-				reactionType, postId);
-			return;
-		}
-
+		PreCondition.checkNotNull(postId, "postId");
+		PreCondition.checkNotNull(reactionType, "reactionType");
 		final Post post = postService.getPost(Long.parseLong(postId));
 		if(exists(post, reactionType)) {
 			return;
 		}
-
 		final Reaction reaction = new Reaction();
 		final Room room = post.getAnonMap().getRoom();
 		final User user = userService.getLoggedInUser();
-
 		AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
 		if (anonMap == null) {
 			AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
@@ -74,11 +69,8 @@ public class ReactionServiceImpl implements ReactionService {
 
 	@Override
 	public void removeReaction(final ReactionType reactionType, final String postId) {
-		if(reactionType == null || postId == null) {
-			log.error("ReactionType and post id cannot be null. reactionType: {}, postId: [}",
-				reactionType, postId);
-			return;
-		}
+		PreCondition.checkNotNull(postId, "postId");
+		PreCondition.checkNotNull(reactionType, "reactionType");
 		final Post post = postService.getPost(Long.parseLong(postId));
 		if(exists(post, reactionType)) {
 			reactionRepository.delete(getReaction(post, reactionType));;
@@ -87,42 +79,30 @@ public class ReactionServiceImpl implements ReactionService {
 
 	@Override
 	public boolean exists(final Post post, final ReactionType reactionType) {
-		if(reactionType == null || post == null) {
-			log.error("Post and reactionType cannot be null. post: {}, reactionType: [}",
-				post, reactionType);
-			return false;
-		}
+		PreCondition.checkNotNull(post, "post");
+		PreCondition.checkNotNull(reactionType, "reactionType");
 		return reactionRepository.countByPostAndReactionTypeAndAnonMap_User_Username(post,
 			reactionType.name(), securityService.findLoggedInUsername()) > 0;
 	}
 
 	@Override
 	public Reaction getReaction(final Post post, final ReactionType reactionType) {
-		if(reactionType == null || post == null) {
-			log.error("Post and reactionType cannot be null. post: {}, reactionType: [}",
-				post, reactionType);
-			return null;
-		}
+		PreCondition.checkNotNull(post, "post");
+		PreCondition.checkNotNull(reactionType, "reactionType");
 		return reactionRepository.findByPostAndReactionTypeAndAnonMap_User_Username(post,
 			reactionType.name(), securityService.findLoggedInUsername());
 	}
 
 	@Override
 	public long getReactionCount(final Post post, final ReactionType reactionType) {
-		if(reactionType == null || post == null) {
-			log.error("Post and reactionType cannot be null. post: {}, reactionType: [}",
-				post, reactionType);
-			return 0L;
-		}
+		PreCondition.checkNotNull(post, "post");
+		PreCondition.checkNotNull(reactionType, "reactionType");
 		return reactionRepository.countByPostAndReactionType(post, reactionType.name());
 	}
 
 	@Override
 	public Map<String, Long> getReactionCountMap(final Post post) {
-		if(post == null) {
-			log.error("Post cannot be null.");
-			return null;
-		}
+		PreCondition.checkNotNull(post, "post");
 		final Map<String, Long> reactionMap = new HashMap<>();
 		for(ReactionType reactionType : ReactionType.values()) {
 			final long count = getReactionCount(post, reactionType);
@@ -133,11 +113,7 @@ public class ReactionServiceImpl implements ReactionService {
 
 	@Override
 	public Map<String, Long> getReactionList(final Post post) {
-		if(post == null) {
-			log.error("Post cannot be null.");
-			return null;
-		}
-
+		PreCondition.checkNotNull(post, "post");
 		final Map<String, Long> reactions = new HashMap<>();
 		for(ReactionType reactionType : ReactionType.values()) {
 			if(exists(post, reactionType))

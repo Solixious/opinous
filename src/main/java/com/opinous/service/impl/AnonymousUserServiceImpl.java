@@ -6,6 +6,7 @@ import com.opinous.model.User;
 import com.opinous.repository.AnonymousUserRepository;
 import com.opinous.service.AnonMapService;
 import com.opinous.service.AnonymousUserService;
+import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,22 +26,14 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 
 	@Override
 	public AnonymousUser getAnonymousUser(final User user, final Room room) {
-		if(user == null || room == null) {
-			log.error("The value of user and room should not be null. "
-				+ "user: {}, room: {}", user, room);
-			return null;
-		}
-
+		PreCondition.checkNotNull(user, "user");
+		PreCondition.checkNotNull(room, "room");
 		return anonMapService.getAnonMapByRoomAndUser(room, user).getAnonymousUser();
 	}
 
 	@Override
 	public AnonymousUser generateAnonymousUser(final Room room) {
-		if(room == null) {
-			log.error("The room should not be null in generateAnonymousUser.");
-			return null;
-		}
-
+		PreCondition.checkNotNull(room, "room");
 		final List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
 		if(room.getId() != null) {
 			final List<AnonymousUser> anonymousUsersTaken = anonMapService.getAnonymousUsersInRoom(room);
@@ -57,18 +50,14 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 
 	@Override
 	public AnonymousUser findByName(final String name) {
-		if(name == null) {
-			log.error("Cannot find entry for null value");
-		}
+		PreCondition.checkNotNull(name, "name");
 		return anonymousUserRepository.findByName(name);
 	}
 
 
 	@Override
 	public AnonymousUser findById(final Long id) {
-		if(id == null) {
-			log.error("Cannot find entry for null value");
-		}
+		PreCondition.checkNotNull(id, "id");
 		return anonymousUserRepository.findById(id).get();
 	}
 
@@ -79,10 +68,7 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 
 	@Override
 	public void saveAnonymousUser(final AnonymousUser anonymousUser) {
-		if(anonymousUser == null) {
-			log.error("Cannot save null anonymous user value to database.");
-			return;
-		}
+		PreCondition.checkNotNull(anonymousUser, "anonymousUser");
 		anonymousUserRepository.save(anonymousUser);
 	}
 }
