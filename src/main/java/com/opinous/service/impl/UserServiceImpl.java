@@ -113,7 +113,6 @@ public class UserServiceImpl implements UserService {
 			log.error("Username cannot be null while querying the database.");
 			return null;
 		}
-
 		return userRepository.findByUsername(username);
 	}
 
@@ -123,7 +122,6 @@ public class UserServiceImpl implements UserService {
 			log.error("Username cannot be null while querying the database.");
 			return null;
 		}
-
 		return userRepository.findByEmail(email);
 	}
 
@@ -133,7 +131,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findBySpecificRoles(List<String> roles) {
+	public List<User> findBySpecificRoles(final List<String> roles) {
 		if(roles == null) {
 			log.error("List of roles cannot be null while performing this operation.");
 			return null;
@@ -142,7 +140,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findById(Long id) {
+	public User findById(final Long id) {
 		if(id == null) {
 			log.error("Id cannot be null");
 			return null;
@@ -151,7 +149,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void delete(User user) {
+	public void delete(final User user) {
 		userRepository.delete(user);
 	}
 
@@ -161,7 +159,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> search(String query) {
+	public List<User> search(final String query) {
 		return userRepository.findByUsernameIgnoreCaseContaining(query);
 	}
 }

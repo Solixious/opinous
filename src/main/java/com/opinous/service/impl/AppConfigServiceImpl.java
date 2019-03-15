@@ -16,12 +16,11 @@ public class AppConfigServiceImpl implements AppConfigService {
 	private AppConfigRepository appConfigRepository;
 	
 	@Override
-	public String getAppConfig(String key, String defaultValue) {
+	public String getAppConfig(final String key, final String defaultValue) {
 		if(key == null) {
 			log.error("Cannot retrieve app configuration for a null key value.");
 			return null;
 		}
-
 		AppConfiguration appConfig = appConfigRepository.findByKey(key);
 		if(appConfig == null) {
 

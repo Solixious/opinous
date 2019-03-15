@@ -6,7 +6,6 @@ import com.opinous.constants.URLMapping;
 import com.opinous.exception.FileStorageException;
 import com.opinous.model.Room;
 import com.opinous.model.User;
-import com.opinous.repository.UserRepository;
 import com.opinous.service.FileStorageService;
 import com.opinous.service.PostService;
 import com.opinous.service.RoomService;
@@ -42,9 +41,6 @@ public class UserProfileController {
 	private SecurityService securityService;
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	private FileStorageService fileStorageService;
 
 	@Autowired
@@ -55,7 +51,7 @@ public class UserProfileController {
 
     @GetMapping(URLMapping.USER_PROFILE_BASIC)
     public String basic(Model model) {
-    	User user = userService.getLoggedInUser();
+    	final User user = userService.getLoggedInUser();
     	user.setPassword("");
         model.addAttribute(AttributeName.USER_DETAIL, user);
         return JSPMapping.USER_PROFILE_BASIC;
@@ -70,15 +66,15 @@ public class UserProfileController {
 				return JSPMapping.USER_PROFILE_BASIC;
 			}
 
-			User user = userRepository.findById(updateUser.getId()).get();
+			final User user = userService.findById(updateUser.getId());
 			userService.copyNecessaryUpdates(updateUser, user);
 
 			if (file != null && file.getOriginalFilename().length() > 0) {
-				String suggestedFileName =
+				final String suggestedFileName =
 					user.getUsername() + " " + new Random().nextInt(9999) + " " + file.getOriginalFilename()
 						.substring(file.getOriginalFilename().lastIndexOf('.'));
-				String fileName = fileStorageService.storeFile(file, suggestedFileName);
-				String uri =
+				final String fileName = fileStorageService.storeFile(file, suggestedFileName);
+				final String uri =
 					ServletUriComponentsBuilder.fromCurrentContextPath().path("/file/").path(fileName)
 						.toUriString();
 				user.setProfilePicture(uri);
@@ -96,7 +92,7 @@ public class UserProfileController {
 
 	@GetMapping(URLMapping.MY_POSTS)
 	public String myPosts(Model model) {
-		Set<Room> rooms = roomService.getDistinctRoomsFromPosts(postService.getPostsByUser(
+		final Set<Room> rooms = roomService.getDistinctRoomsFromPosts(postService.getPostsByUser(
 			userService.getLoggedInUser()));
 		model.addAttribute(AttributeName.ROOMS, rooms);
 		model.addAttribute(AttributeName.USER_DETAIL, userService.getLoggedInUser());

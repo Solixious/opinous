@@ -57,9 +57,9 @@ public class ReactionServiceImpl implements ReactionService {
 			return;
 		}
 
-		Reaction reaction = new Reaction();
-		Room room = post.getAnonMap().getRoom();
-		User user = userService.getLoggedInUser();
+		final Reaction reaction = new Reaction();
+		final Room room = post.getAnonMap().getRoom();
+		final User user = userService.getLoggedInUser();
 
 		AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
 		if (anonMap == null) {
@@ -79,8 +79,7 @@ public class ReactionServiceImpl implements ReactionService {
 				reactionType, postId);
 			return;
 		}
-
-		Post post = postService.getPost(Long.parseLong(postId));
+		final Post post = postService.getPost(Long.parseLong(postId));
 		if(exists(post, reactionType)) {
 			reactionRepository.delete(getReaction(post, reactionType));;
 		}
@@ -93,7 +92,6 @@ public class ReactionServiceImpl implements ReactionService {
 				post, reactionType);
 			return false;
 		}
-
 		return reactionRepository.countByPostAndReactionTypeAndAnonMap_User_Username(post,
 			reactionType.name(), securityService.findLoggedInUsername()) > 0;
 	}
@@ -105,7 +103,6 @@ public class ReactionServiceImpl implements ReactionService {
 				post, reactionType);
 			return null;
 		}
-
 		return reactionRepository.findByPostAndReactionTypeAndAnonMap_User_Username(post,
 			reactionType.name(), securityService.findLoggedInUsername());
 	}
@@ -117,7 +114,6 @@ public class ReactionServiceImpl implements ReactionService {
 				post, reactionType);
 			return 0L;
 		}
-
 		return reactionRepository.countByPostAndReactionType(post, reactionType.name());
 	}
 
@@ -127,10 +123,9 @@ public class ReactionServiceImpl implements ReactionService {
 			log.error("Post cannot be null.");
 			return null;
 		}
-
-		Map<String, Long> reactionMap = new HashMap<>();
+		final Map<String, Long> reactionMap = new HashMap<>();
 		for(ReactionType reactionType : ReactionType.values()) {
-			long count = getReactionCount(post, reactionType);
+			final long count = getReactionCount(post, reactionType);
 			reactionMap.put(reactionType.name(), count);
 		}
 		return reactionMap;
@@ -143,7 +138,7 @@ public class ReactionServiceImpl implements ReactionService {
 			return null;
 		}
 
-		Map<String, Long> reactions = new HashMap<>();
+		final Map<String, Long> reactions = new HashMap<>();
 		for(ReactionType reactionType : ReactionType.values()) {
 			if(exists(post, reactionType))
 				reactions.put(reactionType.name(), 1L);

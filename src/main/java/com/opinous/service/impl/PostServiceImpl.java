@@ -31,44 +31,41 @@ public class PostServiceImpl implements PostService {
 	private ReactionService reactionService;
 	
 	@Override
-	public void savePost(Post post) {
+	public void savePost(final Post post) {
 		if(post == null) {
 			log.error("Cannot save a post with null value");
 			return;
 		}
 
-		Room room = post.getAnonMap().getRoom();
+		final Room room = post.getAnonMap().getRoom();
 		room.setUpdateDate(new Date());
 		roomRepository.save(room);
 		postRepository.save(post);
 	}
 
 	@Override
-	public List<PostDTO> getPostsByRoom(Room room) {
+	public List<PostDTO> getPostsByRoom(final Room room) {
 		if(room == null) {
 			log.error("The value room cannot be null while retrieving posts");
 			return null;
 		}
-
 		return convertToPostDto(postRepository.findByAnonMap_Room(room));
 	}
 
 	@Override
-	public List<Post> getPostsByUser(User user) {
+	public List<Post> getPostsByUser(final User user) {
 		if(user == null) {
 			log.error("The value user cannot be null while retrieving posts");
 			return null;
 		}
-
 		return postRepository.findByAnonMap_User(user);
 	}
 
 	@Override
-	public Post getPost(Long id) {
+	public Post getPost(final Long id) {
 		if(id == null) {
 			log.error("Cannot get post for a null id");
 		}
-
 		return postRepository.getOne(id);
 	}
 
@@ -82,7 +79,7 @@ public class PostServiceImpl implements PostService {
 		return postsDto;
 	}
 
-	private void copyFromPostToPostDto(final Post post, PostDTO postDto) {
+	private void copyFromPostToPostDto(final Post post, final PostDTO postDto) {
 		postDto.setId(post.getId());
 		postDto.setAnonMap(post.getAnonMap());
 		postDto.setCreateDate(post.getCreateDate());

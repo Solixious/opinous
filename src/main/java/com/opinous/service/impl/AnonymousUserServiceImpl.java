@@ -56,21 +56,19 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 	}
 
 	@Override
-	public AnonymousUser findByName(String name) {
+	public AnonymousUser findByName(final String name) {
 		if(name == null) {
 			log.error("Cannot find entry for null value");
 		}
-
 		return anonymousUserRepository.findByName(name);
 	}
 
 
 	@Override
-	public AnonymousUser findById(Long id) {
+	public AnonymousUser findById(final Long id) {
 		if(id == null) {
 			log.error("Cannot find entry for null value");
 		}
-
 		return anonymousUserRepository.findById(id).get();
 	}
 
@@ -80,7 +78,7 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 	}
 
 	@Override
-	public void saveAnonymousUser(AnonymousUser anonymousUser) {
+	public void saveAnonymousUser(final AnonymousUser anonymousUser) {
 		if(anonymousUser == null) {
 			log.error("Cannot save null anonymous user value to database.");
 			return;
