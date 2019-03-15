@@ -4,7 +4,6 @@ import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
 import com.opinous.constants.URLMapping;
 import com.opinous.exception.FileStorageException;
-import com.opinous.model.Room;
 import com.opinous.model.User;
 import com.opinous.service.FileStorageService;
 import com.opinous.service.PostService;
@@ -20,15 +19,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 @Slf4j
 @RequestMapping(URLMapping.PROFILE)
@@ -54,6 +52,7 @@ public class UserProfileController {
     public String basic(Model model) {
     	final User user = userService.getLoggedInUser();
     	user.setPassword("");
+			model.addAttribute(AttributeName.IS_USER_PROFILE, true);
         model.addAttribute(AttributeName.USER_DETAIL, user);
         return JSPMapping.USER_PROFILE_BASIC;
     }
@@ -106,5 +105,20 @@ public class UserProfileController {
 		model.addAttribute(AttributeName.ROOMS, roomService.getRoomsForUser(user));
 		model.addAttribute(AttributeName.USER_DETAIL, user);
 		return JSPMapping.PROFILE_MY_ROOMS;
+	}
+
+	@GetMapping("/{username}")
+	public String userProfile(@PathVariable("username") String userName, Model model) {
+    	final User user = userService.findByUsername(userName);
+    	if(userName.equalsIgnoreCase(securityService.findLoggedInUsername())) {
+    		model.addAttribute(AttributeName.IS_USER_PROFILE, true);
+			} else {
+    		model.addAttribute(AttributeName.IS_USER_PROFILE, false);
+			}
+    	if(user != null) {
+				model.addAttribute(AttributeName.USER_DETAIL, user);
+				return JSPMapping.USER_PROFILE_BASIC;
+			}
+    	return JSPMapping.ERROR;
 	}
 }

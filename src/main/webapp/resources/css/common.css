@@ -414,3 +414,7 @@ a {
     left: 900px;
     top: 400px;
 }
+.follow-button {
+    margin: 10px 0;
+    width: 100%;
+}
