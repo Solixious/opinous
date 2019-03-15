@@ -95,7 +95,7 @@ public class RoomController {
 
 		model.addAttribute(AttributeName.IS_USER, securityService.isUser());
 		if (securityService.isUser()) {
-			User user = userService.findByUsername(securityService.findLoggedInUsername());
+			User user = userService.getLoggedInUser();
 			model.addAttribute(AttributeName.POST_FORM, new Post());
 			AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
 			if (anonMap != null) {
@@ -116,7 +116,7 @@ public class RoomController {
 			return "redirect:" + URLMapping.ROOM + "/" + roomId;
 		}
 
-		User user = userService.findByUsername(securityService.findLoggedInUsername());
+		User user = userService.getLoggedInUser();
 		Room room = roomService.getRoomById(roomId);
 		AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
 

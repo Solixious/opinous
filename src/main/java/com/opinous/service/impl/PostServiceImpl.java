@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.opinous.model.User;
 import com.opinous.service.ReactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import com.opinous.model.Room;
 import com.opinous.repository.PostRepository;
 import com.opinous.repository.RoomRepository;
 import com.opinous.service.PostService;
-import com.opinous.service.SecurityService;
 
 @Slf4j
 @Service
@@ -26,9 +26,6 @@ public class PostServiceImpl implements PostService {
 
 	@Autowired
 	private RoomRepository roomRepository;
-
-	@Autowired
-	private SecurityService securityService;
 
 	@Autowired
 	private ReactionService reactionService;
@@ -54,6 +51,16 @@ public class PostServiceImpl implements PostService {
 		}
 
 		return convertToPostDto(postRepository.findByAnonMap_Room(room));
+	}
+
+	@Override
+	public List<Post> getPostsByUser(User user) {
+		if(user == null) {
+			log.error("The value user cannot be null while retrieving posts");
+			return null;
+		}
+
+		return postRepository.findByAnonMap_User(user);
 	}
 
 	@Override

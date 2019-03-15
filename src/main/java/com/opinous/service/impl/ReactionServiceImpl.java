@@ -59,7 +59,7 @@ public class ReactionServiceImpl implements ReactionService {
 
 		Reaction reaction = new Reaction();
 		Room room = post.getAnonMap().getRoom();
-		User user = userService.findByUsername(securityService.findLoggedInUsername());
+		User user = userService.getLoggedInUser();
 
 		AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
 		if (anonMap == null) {

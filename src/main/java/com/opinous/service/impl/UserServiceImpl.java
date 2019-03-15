@@ -5,6 +5,7 @@ import com.opinous.model.Role;
 import com.opinous.model.User;
 import com.opinous.repository.RoleRepository;
 import com.opinous.repository.UserRepository;
+import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	private SecurityService securityService;
 
 	@Override
 	public void saveUser(final User user) {
@@ -120,5 +124,10 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public User getLoggedInUser() {
+		return findByUsername(securityService.findLoggedInUsername());
 	}
 }

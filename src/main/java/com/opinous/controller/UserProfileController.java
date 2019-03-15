@@ -8,6 +8,7 @@ import com.opinous.model.Room;
 import com.opinous.model.User;
 import com.opinous.repository.UserRepository;
 import com.opinous.service.FileStorageService;
+import com.opinous.service.PostService;
 import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
@@ -15,7 +16,6 @@ import com.opinous.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Random;
+import java.util.Set;
 
 @Slf4j
 @RequestMapping(URLMapping.PROFILE)
@@ -49,9 +50,12 @@ public class UserProfileController {
 	@Autowired
 	private RoomService roomService;
 
+	@Autowired
+	private PostService postService;
+
     @GetMapping(URLMapping.USER_PROFILE_BASIC)
     public String basic(Model model) {
-    	User user = userService.findByUsername(securityService.findLoggedInUsername());
+    	User user = userService.getLoggedInUser();
     	user.setPassword("");
         model.addAttribute(AttributeName.USER_DETAIL, user);
         return JSPMapping.USER_PROFILE_BASIC;
@@ -92,12 +96,10 @@ public class UserProfileController {
 
 	@GetMapping(URLMapping.MY_POSTS)
 	public String myPosts(Model model) {
-		Page<Room> rooms = roomService.getRooms(0);
-		model.addAttribute(AttributeName.ROOMS, rooms.getContent());
-		model.addAttribute(AttributeName.PAGE_NUMBER, 0);
-		model.addAttribute(AttributeName.MAX_PAGE_NUMBER, rooms.getTotalPages());
-		model.addAttribute(AttributeName.USER_DETAIL,
-			userService.findByUsername(securityService.findLoggedInUsername()));
+		Set<Room> rooms = roomService.getDistinctRoomsFromPosts(postService.getPostsByUser(
+			userService.getLoggedInUser()));
+		model.addAttribute(AttributeName.ROOMS, rooms);
+		model.addAttribute(AttributeName.USER_DETAIL, userService.getLoggedInUser());
 		return JSPMapping.PROFILE_MY_POSTS;
 	}
 }
