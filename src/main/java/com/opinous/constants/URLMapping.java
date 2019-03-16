@@ -37,4 +37,6 @@ public class URLMapping {
 	public static final String MY_POSTS = "/my-posts";
 	public static final String PROFILE = "/profile";
 	public static final String MY_ROOMS = "/my-rooms";
+	public static final String FOLLOWERS = "/followers";
+	public static final String FOLLOWING = "/following";
 }

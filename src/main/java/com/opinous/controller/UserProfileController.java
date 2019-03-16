@@ -11,6 +11,7 @@ import com.opinous.service.PostService;
 import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
+import com.opinous.utils.PreCondition;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -97,34 +98,55 @@ public class UserProfileController {
 	@GetMapping(URLMapping.MY_POSTS)
 	public String myPosts(Model model) {
 		final User user = userService.getLoggedInUser();
+		PreCondition.checkNotNull(user, "user");
 		model.addAttribute(AttributeName.ROOMS, roomService.getDistinctRoomsFromPosts
 			(postService.getPostsByUser(user)));
 		model.addAttribute(AttributeName.USER_DETAIL, user);
+		model.addAttribute(AttributeName.IS_USER_PROFILE, true);
 		return JSPMapping.PROFILE_MY_POSTS;
 	}
 
 	@GetMapping(URLMapping.MY_ROOMS)
 	public String myRooms(Model model) {
-    final User user = userService.getLoggedInUser();
+		final User user = userService.getLoggedInUser();
+		PreCondition.checkNotNull(user, "user");
 		model.addAttribute(AttributeName.ROOMS, roomService.getRoomsForUser(user));
 		model.addAttribute(AttributeName.USER_DETAIL, user);
+		model.addAttribute(AttributeName.IS_USER_PROFILE, true);
 		return JSPMapping.PROFILE_MY_ROOMS;
 	}
 
 	@GetMapping("/{username}")
 	public String userProfile(@PathVariable("username") String userName, Model model) {
+		populateUserData(userService.findByUsername(userName), model);
+		return JSPMapping.USER_PROFILE_BASIC;
+	}
+
+	@GetMapping(URLMapping.FOLLOWERS + "/{username}")
+	public String userFollowers(@PathVariable("username") String userName, Model model) {
     	final User user = userService.findByUsername(userName);
-    	if(userName.equalsIgnoreCase(securityService.findLoggedInUsername())) {
+		populateUserData(user, model);
+		model.addAttribute(AttributeName.FOLLOWERS, followService.getFollowers(user));
+		return JSPMapping.PROFILE_FOLLOWERS;
+	}
+	
+	@GetMapping(URLMapping.FOLLOWING + "/{username}")
+	public String userFollowing(@PathVariable("username") String userName, Model model) {
+    	final User user = userService.findByUsername(userName);
+		populateUserData(user, model);
+		model.addAttribute(AttributeName.FOLLOWING, followService.getFollowing(user));
+		return JSPMapping.PROFILE_FOLLOWING;
+	}
+	
+	private void populateUserData(final User user, final Model model) {
+		PreCondition.checkNotNull(user, "user");
+		model.addAttribute(AttributeName.IS_FOLLOWING, followService.isFollowing(user));
+		model.addAttribute(AttributeName.IS_FOLLOWER, followService.isFollower(user));
+		model.addAttribute(AttributeName.USER_DETAIL, user);
+		if(user.getUsername().equalsIgnoreCase(securityService.findLoggedInUsername())) {
     		model.addAttribute(AttributeName.IS_USER_PROFILE, true);
-			} else {
+		} else {
     		model.addAttribute(AttributeName.IS_USER_PROFILE, false);
 		}
-    	if(user != null) {
-			model.addAttribute(AttributeName.IS_FOLLOWING, followService.isFollowing(user));
-			model.addAttribute(AttributeName.IS_FOLLOWER, followService.isFollower(user));
-			model.addAttribute(AttributeName.USER_DETAIL, user);
-			return JSPMapping.USER_PROFILE_BASIC;
-		}
-    	return JSPMapping.ERROR;
 	}
 }

@@ -23,13 +23,13 @@
         </c:otherwise>
         </c:choose>
     </c:if>
-    <span class="left-nav-menu"><a href="${contextPath}/profile/basic">Basic</a></span>
+    <span class="left-nav-menu"><a href="${contextPath}/profile/${userDetail.username}">Basic</a></span>
     <c:if test="${isUserProfile}">
         <span class="left-nav-menu"><a href="${contextPath}/profile/my-posts">My Posts</a></span>
         <span class="left-nav-menu"><a href="${contextPath}/profile/my-rooms">My Rooms</a></span>
     </c:if>
-    <span class="left-nav-menu"><a href="#">Followers</a></span>
-    <span class="left-nav-menu"><a href="#">Following</a></span>
+    <span class="left-nav-menu"><a href="${contextPath}/profile/followers/${userDetail.username}">Followers</a></span>
+    <span class="left-nav-menu"><a href="${contextPath}/profile/following/${userDetail.username}">Following</a></span>
     <c:if test="${isUserProfile}">
         <span class="left-nav-menu"><a href="#">Advanced Settings</a></span>
     </c:if>
