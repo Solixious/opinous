@@ -6,12 +6,16 @@ import com.opinous.repository.FollowRepository;
 import com.opinous.service.FollowService;
 import com.opinous.service.UserService;
 import com.opinous.utils.PreCondition;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class FollowServiceImpl implements FollowService {
 
@@ -26,6 +30,12 @@ public class FollowServiceImpl implements FollowService {
         PreCondition.checkNotNull(user, "user");
         final User currentUser = userService.getLoggedInUser();
         final Follow follow = new Follow();
+        
+        if(exists(currentUser, user)) {
+        	log.warn("The follow entry already exists. currentUser: {}, user: {}", currentUser, user);
+        	return;
+        }
+        
         follow.setFollower(currentUser);
         follow.setFollowing(user);
         followRepository.save(follow);
@@ -36,7 +46,9 @@ public class FollowServiceImpl implements FollowService {
         PreCondition.checkNotNull(user, "user");
         final Follow follow = followRepository.findByFollowerAndFollowing(
             userService.getLoggedInUser(), user);
-        followRepository.delete(follow);
+        if(follow != null) {
+        	followRepository.delete(follow);
+        }
     }
 
     @Override
@@ -52,4 +64,21 @@ public class FollowServiceImpl implements FollowService {
         return followRepository.findByFollowing(user).stream().map(
             u -> u.getFollowing()).collect(Collectors.toList());
     }
+    
+    @Override
+    public boolean exists(User follower, User following) {
+    	return followRepository.findByFollowerAndFollowing(follower, following) != null;
+    }
+
+	@Override
+	public boolean isFollowing(User user) {
+		PreCondition.checkNotNull(user, "user");
+		return exists(userService.getLoggedInUser(), user);
+	}
+
+	@Override
+	public boolean isFollower(User user) {
+		PreCondition.checkNotNull(user, "user");
+		return exists(user, userService.getLoggedInUser());
+	}
 }

@@ -6,6 +6,7 @@ import com.opinous.constants.URLMapping;
 import com.opinous.exception.FileStorageException;
 import com.opinous.model.User;
 import com.opinous.service.FileStorageService;
+import com.opinous.service.FollowService;
 import com.opinous.service.PostService;
 import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;
@@ -47,6 +48,9 @@ public class UserProfileController {
 
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private FollowService followService;
 
     @GetMapping(URLMapping.USER_PROFILE_BASIC)
     public String basic(Model model) {
@@ -114,11 +118,12 @@ public class UserProfileController {
     		model.addAttribute(AttributeName.IS_USER_PROFILE, true);
 			} else {
     		model.addAttribute(AttributeName.IS_USER_PROFILE, false);
-			}
+		}
     	if(user != null) {
-				model.addAttribute(AttributeName.USER_DETAIL, user);
-				return JSPMapping.USER_PROFILE_BASIC;
-			}
+			model.addAttribute(AttributeName.IS_FOLLOWING, followService.isFollowing(user));
+			model.addAttribute(AttributeName.USER_DETAIL, user);
+			return JSPMapping.USER_PROFILE_BASIC;
+		}
     	return JSPMapping.ERROR;
 	}
 }

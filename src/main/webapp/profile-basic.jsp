@@ -98,6 +98,22 @@
 		$('.profile-details-title').removeClass('hide');
 		$('.profile-details-basic').removeClass('hide');
 	});
+	$(document).on('click', '.follow-button', function() {
+		var username = $(this).data('username');
+		$(this).removeClass('follow-button').removeClass('nav-button-primary').addClass('unfollow-button').addClass('nav-button-secondary').text('Unfollow');
+		$.ajax({
+	        type: 'POST',
+	        url: '/follow/' + username
+	    });
+	});
+	$(document).on('click', '.unfollow-button', function() {
+		var username = $(this).data('username');
+		$(this).removeClass('unfollow-button').removeClass('nav-button-secondary').addClass('follow-button').addClass('nav-button-primary').text('Follow');
+		$.ajax({
+	        type: 'POST',
+	        url: '/unfollow/' + username
+	    });
+	});
 	function readURL(input) {
          if (input.files && input.files[0]) {
            var reader = new FileReader();

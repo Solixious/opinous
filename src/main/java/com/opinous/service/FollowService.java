@@ -11,4 +11,7 @@ public interface FollowService {
     void unfollow(User user);
     List<User> getFollowers(User user);
     List<User> getFollowing(User user);
+    boolean exists(User follower, User following);
+    boolean isFollowing(User user);
+    boolean isFollower(User user);
 }

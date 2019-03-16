@@ -64,7 +64,7 @@ a {
 	margin-top: 25px;
 }
 
-.form-button-primary, .nav-button-primary, .form-button-secondary {
+.form-button-primary, .nav-button-primary, .nav-button-secondary, .form-button-secondary {
 	background-color: #FF0000;
 	border: none;
 	color: white;
@@ -76,7 +76,7 @@ a {
 	margin-top: 8px;
 }
 
-.form-button-secondary {
+.form-button-secondary, .nav-button-secondary {
 	background-color: #000;
 	border: 1px solid #FF0000;
 	margin-left: 15px;
@@ -342,6 +342,7 @@ a {
 }
 .profile-detail {
     padding: 15px 15px 0 15px;
+    height: 24px;
 }
 .profile-detail:last-child {
     padding-bottom: 15px;
@@ -416,5 +417,9 @@ a {
 }
 .follow-button {
     margin: 10px 0;
+    width: 100%;
+}
+.unfollow-button {
+    margin: 9px 0;
     width: 100%;
 }

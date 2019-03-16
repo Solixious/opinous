@@ -11,7 +11,14 @@
         </c:choose>
     </div>
     <c:if test="${!isUserProfile}">
-        <button class="nav-button-primary follow-button">Follow</button>
+    	<c:choose>
+    	<c:when test="${isFollowing }">
+    		<button class="nav-button-secondary unfollow-button" data-username="${userDetail.username}">Unfollow</button>
+    	</c:when>
+    	<c:otherwise>
+        	<button class="nav-button-primary follow-button" data-username="${userDetail.username}">Follow</button>
+        </c:otherwise>
+        </c:choose>
     </c:if>
     <span class="left-nav-menu"><a href="${contextPath}/profile/basic">Basic</a></span>
     <c:if test="${isUserProfile}">

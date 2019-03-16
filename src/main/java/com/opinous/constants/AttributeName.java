@@ -14,4 +14,6 @@ public class AttributeName {
 	public static final String PAGE_NUMBER = "pageNumber";
 	public static final String MAX_PAGE_NUMBER = "maxPageNumber";
 	public static final String USER_DETAIL = "userDetail";
+	public static final String IS_FOLLOWING = "isFollowing";
+	public static final String IS_FOLLOWER = "isFollower";
 }
