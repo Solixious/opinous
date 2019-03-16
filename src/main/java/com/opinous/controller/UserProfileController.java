@@ -121,6 +121,7 @@ public class UserProfileController {
 		}
     	if(user != null) {
 			model.addAttribute(AttributeName.IS_FOLLOWING, followService.isFollowing(user));
+			model.addAttribute(AttributeName.IS_FOLLOWER, followService.isFollower(user));
 			model.addAttribute(AttributeName.USER_DETAIL, user);
 			return JSPMapping.USER_PROFILE_BASIC;
 		}
