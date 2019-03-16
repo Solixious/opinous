@@ -2,6 +2,7 @@ package com.opinous.service.impl;
 
 import com.opinous.enums.RoleConst;
 import com.opinous.service.SecurityService;
+import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +23,7 @@ public class SecurityServiceImpl implements SecurityService {
 
 	@Override
 	public String findLoggedInUsername() {
-		Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		final Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (userDetails instanceof UserDetails) {
 			return ((UserDetails) userDetails).getUsername();
 		}
@@ -31,11 +32,8 @@ public class SecurityServiceImpl implements SecurityService {
 
 	@Override
 	public void autologin(final String username, final String password) {
-		if(username == null || password == null) {
-			log.error("Username and password should not be null for autologin. Username: {}", username);
-			return;
-		}
-
+		PreCondition.checkNotNull(username, "username");
+		PreCondition.checkNotNull(password, "password");
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 		final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				userDetails, password, userDetails.getAuthorities());
@@ -44,6 +42,7 @@ public class SecurityServiceImpl implements SecurityService {
 
 	@Override
 	public boolean hasRole(final String role) {
+		PreCondition.checkNotNull(role, "role");
 		final SecurityContext context = SecurityContextHolder.getContext();
 		if (context == null)
 			return false;

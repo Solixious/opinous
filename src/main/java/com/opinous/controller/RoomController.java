@@ -88,16 +88,14 @@ public class RoomController {
 
 	@GetMapping(value = "/{roomId}")
 	public String viewRoom(@PathVariable("roomId") Long roomId, Model model) {
-		Room room = roomService.getRoomById(roomId);
+		final Room room = roomService.getRoomById(roomId);
 		model.addAttribute(AttributeName.ROOM, room);
-
 		model.addAttribute(AttributeName.POSTS, postService.getPostsByRoom(room));
-
 		model.addAttribute(AttributeName.IS_USER, securityService.isUser());
 		if (securityService.isUser()) {
-			User user = userService.findByUsername(securityService.findLoggedInUsername());
+			final User user = userService.getLoggedInUser();
 			model.addAttribute(AttributeName.POST_FORM, new Post());
-			AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
+			final AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
 			if (anonMap != null) {
 				model.addAttribute(AttributeName.POSTING_AS, anonMap);
 			}
@@ -116,13 +114,13 @@ public class RoomController {
 			return Misc.REDIRECT + URLMapping.ROOM + "/" + roomId;
 		}
 
-		User user = userService.findByUsername(securityService.findLoggedInUsername());
-		Room room = roomService.getRoomById(roomId);
+		final User user = userService.getLoggedInUser();
+		final Room room = roomService.getRoomById(roomId);
 		AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
 
 		if (anonMap == null) {
-			AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
-			anonMap = anonMapService.saveAnonMap(anonymousUser, user, room);
+			anonMap = anonMapService.saveAnonMap(anonymousUserService.generateAnonymousUser(room), user,
+				room);
 		}
 
 		post.setAnonMap(anonMap);

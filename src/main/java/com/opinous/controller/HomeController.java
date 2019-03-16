@@ -20,7 +20,7 @@ public class HomeController {
 
     @GetMapping(value = URLMapping.USER_HOME)
     public String welcome(Model model) {
-        Page<Room> rooms = roomService.getRooms(0);
+        final Page<Room> rooms = roomService.getRooms(0);
         model.addAttribute(AttributeName.ROOMS, rooms.getContent());
         model.addAttribute(AttributeName.PAGE_NUMBER, 0);
         model.addAttribute(AttributeName.MAX_PAGE_NUMBER, rooms.getTotalPages());
@@ -30,8 +30,8 @@ public class HomeController {
     @GetMapping(value = URLMapping.USER_HOME_PAGINATED)
     public String homePaginated(@PathVariable String page, Model model) {
         try {
-            int pageNo = Integer.parseInt(page) - 1;
-            Page<Room> rooms = roomService.getRooms(pageNo);
+            final int pageNo = Integer.parseInt(page) - 1;
+            final Page<Room> rooms = roomService.getRooms(pageNo);
             model.addAttribute(AttributeName.ROOMS, rooms.getContent());
             model.addAttribute(AttributeName.PAGE_NUMBER, pageNo);
             model.addAttribute(AttributeName.MAX_PAGE_NUMBER, rooms.getTotalPages());

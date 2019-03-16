@@ -1,5 +1,6 @@
 package com.opinous.service.impl;
 
+import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,8 @@ public class AppConfigServiceImpl implements AppConfigService {
 	private AppConfigRepository appConfigRepository;
 	
 	@Override
-	public String getAppConfig(String key, String defaultValue) {
-		if(key == null) {
-			log.error("Cannot retrieve app configuration for a null key value.");
-			return null;
-		}
-
+	public String getAppConfig(final String key, final String defaultValue) {
+		PreCondition.checkNotNull(key, "key");
 		AppConfiguration appConfig = appConfigRepository.findByKey(key);
 		if(appConfig == null) {
 

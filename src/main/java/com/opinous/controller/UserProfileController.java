@@ -4,10 +4,9 @@ import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
 import com.opinous.constants.URLMapping;
 import com.opinous.exception.FileStorageException;
-import com.opinous.model.Room;
 import com.opinous.model.User;
-import com.opinous.repository.UserRepository;
 import com.opinous.service.FileStorageService;
+import com.opinous.service.PostService;
 import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
@@ -15,12 +14,12 @@ import com.opinous.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,18 +40,19 @@ public class UserProfileController {
 	private SecurityService securityService;
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	private FileStorageService fileStorageService;
 
 	@Autowired
 	private RoomService roomService;
 
+	@Autowired
+	private PostService postService;
+
     @GetMapping(URLMapping.USER_PROFILE_BASIC)
     public String basic(Model model) {
-    	User user = userService.findByUsername(securityService.findLoggedInUsername());
+    	final User user = userService.getLoggedInUser();
     	user.setPassword("");
+			model.addAttribute(AttributeName.IS_USER_PROFILE, true);
         model.addAttribute(AttributeName.USER_DETAIL, user);
         return JSPMapping.USER_PROFILE_BASIC;
     }
@@ -66,15 +66,15 @@ public class UserProfileController {
 				return JSPMapping.USER_PROFILE_BASIC;
 			}
 
-			User user = userRepository.findById(updateUser.getId()).get();
+			final User user = userService.findById(updateUser.getId());
 			userService.copyNecessaryUpdates(updateUser, user);
 
 			if (file != null && file.getOriginalFilename().length() > 0) {
-				String suggestedFileName =
+				final String suggestedFileName =
 					user.getUsername() + " " + new Random().nextInt(9999) + " " + file.getOriginalFilename()
 						.substring(file.getOriginalFilename().lastIndexOf('.'));
-				String fileName = fileStorageService.storeFile(file, suggestedFileName);
-				String uri =
+				final String fileName = fileStorageService.storeFile(file, suggestedFileName);
+				final String uri =
 					ServletUriComponentsBuilder.fromCurrentContextPath().path("/file/").path(fileName)
 						.toUriString();
 				user.setProfilePicture(uri);
@@ -92,12 +92,33 @@ public class UserProfileController {
 
 	@GetMapping(URLMapping.MY_POSTS)
 	public String myPosts(Model model) {
-		Page<Room> rooms = roomService.getRooms(0);
-		model.addAttribute(AttributeName.ROOMS, rooms.getContent());
-		model.addAttribute(AttributeName.PAGE_NUMBER, 0);
-		model.addAttribute(AttributeName.MAX_PAGE_NUMBER, rooms.getTotalPages());
-		model.addAttribute(AttributeName.USER_DETAIL,
-			userService.findByUsername(securityService.findLoggedInUsername()));
+		final User user = userService.getLoggedInUser();
+		model.addAttribute(AttributeName.ROOMS, roomService.getDistinctRoomsFromPosts
+			(postService.getPostsByUser(user)));
+		model.addAttribute(AttributeName.USER_DETAIL, user);
 		return JSPMapping.PROFILE_MY_POSTS;
+	}
+
+	@GetMapping(URLMapping.MY_ROOMS)
+	public String myRooms(Model model) {
+    final User user = userService.getLoggedInUser();
+		model.addAttribute(AttributeName.ROOMS, roomService.getRoomsForUser(user));
+		model.addAttribute(AttributeName.USER_DETAIL, user);
+		return JSPMapping.PROFILE_MY_ROOMS;
+	}
+
+	@GetMapping("/{username}")
+	public String userProfile(@PathVariable("username") String userName, Model model) {
+    	final User user = userService.findByUsername(userName);
+    	if(userName.equalsIgnoreCase(securityService.findLoggedInUsername())) {
+    		model.addAttribute(AttributeName.IS_USER_PROFILE, true);
+			} else {
+    		model.addAttribute(AttributeName.IS_USER_PROFILE, false);
+			}
+    	if(user != null) {
+				model.addAttribute(AttributeName.USER_DETAIL, user);
+				return JSPMapping.USER_PROFILE_BASIC;
+			}
+    	return JSPMapping.ERROR;
 	}
 }

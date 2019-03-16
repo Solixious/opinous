@@ -5,13 +5,16 @@ import com.opinous.model.Role;
 import com.opinous.model.User;
 import com.opinous.repository.RoleRepository;
 import com.opinous.repository.UserRepository;
+import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
+import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -27,13 +30,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	@Autowired
+	private SecurityService securityService;
+
 	@Override
 	public void saveUser(final User user) {
-		if(user == null) {
-			log.error("User object should not be null.");
-			return;
-		}
-
+		PreCondition.checkNotNull(user, "user");
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		if (roleRepository.count() == 0) {
 			populateDefaultRoles();
@@ -48,10 +50,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void saveUser(final User user, final RoleConst[] roles) {
-		if(user == null || roles == null) {
-			log.error("User object and roles array should not be null. User: {}, Roles: {}",
-				user, roles);
-		}
+		PreCondition.checkNotNull(user, "user");
+		PreCondition.checkNotNull(roles, "roles");
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		if (roleRepository.count() == 0) {
 			populateDefaultRoles();
@@ -76,19 +76,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUser(final User user) {
-		if(user == null) {
-			log.error("The user object should not be null.");
-		}
+		PreCondition.checkNotNull(user, "user");
 		userRepository.save(user);
 	}
 
 	@Override
 	public void copyNecessaryUpdates(final User from, final User to) {
-		if(from == null || to == null) {
-			log.error("Objects from and to should not be null. from: {}, to: {}", from, to);
-			return;
-		}
-
+		PreCondition.checkNotNull(from, "from");
+		PreCondition.checkNotNull(to, "to");
 		if (!from.getEmail().equals(to.getEmail()))
 			to.setEmail(from.getEmail());
 		if (!from.getUsername().equals(to.getUsername()))
@@ -104,21 +99,47 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findByUsername(final String username) {
-		if(username == null) {
-			log.error("Username cannot be null while querying the database.");
-			return null;
-		}
-
+		PreCondition.checkNotNull(username, "username");
 		return userRepository.findByUsername(username);
 	}
 
 	@Override
 	public User findByEmail(final String email) {
-		if(email == null) {
-			log.error("Username cannot be null while querying the database.");
-			return null;
-		}
-
+		PreCondition.checkNotNull(email, "email");
 		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public User getLoggedInUser() {
+		return findByUsername(securityService.findLoggedInUsername());
+	}
+
+	@Override
+	public List<User> findBySpecificRoles(final List<String> roles) {
+		PreCondition.checkNotNull(roles, "roles");
+		return userRepository.findBySpecificRoles(roles);
+	}
+
+	@Override
+	public User findById(final Long id) {
+		PreCondition.checkNotNull(id, "id");
+		return userRepository.findById(id).get();
+	}
+
+	@Override
+	public void delete(final User user) {
+		PreCondition.checkNotNull(user, "user");
+		userRepository.delete(user);
+	}
+
+	@Override
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
+
+	@Override
+	public List<User> search(final String query) {
+		PreCondition.checkNotNull(query, "query");
+		return userRepository.findByUsernameIgnoreCaseContaining(query);
 	}
 }

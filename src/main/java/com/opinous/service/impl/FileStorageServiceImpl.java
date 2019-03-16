@@ -35,13 +35,13 @@ public class FileStorageServiceImpl implements FileStorageService {
 	}
 
 	public String storeFile(final MultipartFile file, final String suggestedFileName) throws FileStorageException {
-		String fileName = StringUtils.cleanPath(suggestedFileName);
+		final String fileName = StringUtils.cleanPath(suggestedFileName);
 		try {
 			if (fileName.contains("..")) {
 				log.error("File name contains invalid path sequence {}", fileName);
 				throw new FileStorageException("File name contains invalid path sequence " + fileName);
 			}
-			Path targetLocation = this.fileStorageLocation.resolve(fileName);
+			final Path targetLocation = this.fileStorageLocation.resolve(fileName);
 			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 			return fileName;
 		} catch (IOException e) {
@@ -52,8 +52,8 @@ public class FileStorageServiceImpl implements FileStorageService {
 
 	public Resource loadFileAsResource(final String fileName) throws MyFileNotFoundException {
 		try {
-			Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
-			Resource resource = new UrlResource(filePath.toUri());
+			final Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+			final Resource resource = new UrlResource(filePath.toUri());
 			if (resource.exists())
 				return resource;
 			else {

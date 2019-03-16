@@ -4,18 +4,21 @@ import com.opinous.constants.AppConfigDefaultValues;
 import com.opinous.constants.AppConfigKeys;
 import com.opinous.model.AnonMap;
 import com.opinous.model.AnonymousUser;
+import com.opinous.model.Post;
 import com.opinous.model.Room;
 import com.opinous.model.User;
 import com.opinous.repository.AnonMapRepository;
 import com.opinous.repository.RoomRepository;
-import com.opinous.repository.UserRepository;
 import com.opinous.service.AnonymousUserService;
 import com.opinous.service.AppConfigService;
 import com.opinous.service.RoomService;
-import com.opinous.service.SecurityService;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import com.opinous.service.UserService;
+import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,23 +40,16 @@ public class RoomServiceImpl implements RoomService {
 	private RoomRepository roomRepository;
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private SecurityService securityService;
-
-	@Autowired
 	private AppConfigService appConfigService;
+
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public void createRoom(final Room room) {
-		if(room == null) {
-			log.error("Cannot create a room with null value.");
-			return;
-		}
-
+		PreCondition.checkNotNull(room, "room");
 		final AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
-		final User user = userRepository.findByUsername(securityService.findLoggedInUsername());
+		final User user = userService.getLoggedInUser();
 		final AnonMap anonMap = new AnonMap();
 		anonMap.setAnonymousUser(anonymousUser);
 		anonMap.setUser(user);
@@ -67,11 +63,7 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public Room getRoomById(final Long roomId) {
-		if(roomId == null) {
-			log.error("RoomId is required to get the room details.");
-			return null;
-		}
-
+		PreCondition.checkNotNull(roomId, "roomId");
 		return roomRepository.getOne(roomId);
 	}
 
@@ -87,8 +79,21 @@ public class RoomServiceImpl implements RoomService {
 			return null;
 		}
 
-		int size = Integer.parseInt(appConfigService.getAppConfig(AppConfigKeys.HOME_PAGE_ROOM_COUNT,
-				AppConfigDefaultValues.HOME_PAGE_ROOM_COUNT_DEFAULT_VALUE));
-		return roomRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Order.desc("updateDate"))));
+		return roomRepository.findAll(PageRequest.of(page, Integer.parseInt(appConfigService
+				.getAppConfig(AppConfigKeys.HOME_PAGE_ROOM_COUNT,
+					AppConfigDefaultValues.HOME_PAGE_ROOM_COUNT_DEFAULT_VALUE)),
+			Sort.by(Sort.Order.desc("updateDate"))));
+	}
+
+	@Override
+	public Set<Room> getDistinctRoomsFromPosts(List<Post> posts) {
+		PreCondition.checkNotNull(posts, "posts");
+		return  posts.stream().map(p -> p.getAnonMap().getRoom()).collect(Collectors.toSet());
+	}
+
+	@Override
+	public List<Room> getRoomsForUser(User user) {
+		PreCondition.checkNotNull(user, "user");
+		return roomRepository.findByCreator_User(user);
 	}
 }

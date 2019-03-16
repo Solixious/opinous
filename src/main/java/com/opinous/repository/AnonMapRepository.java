@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface AnonMapRepository extends JpaRepository<AnonMap, Long> {
 
-	public List<AnonMap> findByUser(User user);
+	List<AnonMap> findByUser(User user);
 
-	public List<AnonMap> findByRoom(Room room);
+	List<AnonMap> findByRoom(Room room);
 
-	public AnonMap findByRoomAndUser(Room room, User user);
+	AnonMap findByRoomAndUser(Room room, User user);
 }

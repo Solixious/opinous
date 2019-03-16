@@ -347,7 +347,7 @@ a {
     padding-bottom: 15px;
 }
 .profile-details-title {
-    width: 600px;
+    width: 800px;
     float: left;
     font-size: 24px;
     margin-left: 104px;
@@ -413,4 +413,8 @@ a {
     position: absolute;
     left: 900px;
     top: 400px;
+}
+.follow-button {
+    margin: 10px 0;
+    width: 100%;
 }
