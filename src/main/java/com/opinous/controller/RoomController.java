@@ -113,7 +113,7 @@ public class RoomController {
 		if (bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.post", bindingResult);
 			redirectAttributes.addFlashAttribute("post", post);
-			return "redirect:" + URLMapping.ROOM + "/" + roomId;
+			return Misc.REDIRECT + URLMapping.ROOM + "/" + roomId;
 		}
 
 		User user = userService.findByUsername(securityService.findLoggedInUsername());
