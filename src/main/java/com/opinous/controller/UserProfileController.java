@@ -57,12 +57,12 @@ public class UserProfileController {
     public String basic(Model model) {
     	final User user = userService.getLoggedInUser();
     	user.setPassword("");
-			model.addAttribute(AttributeName.IS_USER_PROFILE, true);
+		model.addAttribute(AttributeName.IS_USER_PROFILE, true);
         model.addAttribute(AttributeName.USER_DETAIL, user);
         return JSPMapping.USER_PROFILE_BASIC;
     }
 
-	@PostMapping(URLMapping.USER_PROFILE_BASIC)
+	@PostMapping("/{username}")
 	public String basic(@RequestParam("file") MultipartFile file,
 		@ModelAttribute(AttributeName.USER_DETAIL) User updateUser, BindingResult bindingResult,
 		Model model) throws FileStorageException {
@@ -88,6 +88,7 @@ public class UserProfileController {
 			userService.updateUser(user);
 			user.setPassword("");
 			model.addAttribute(AttributeName.USER_DETAIL, user);
+			populateUserData(user, model);
 			return JSPMapping.USER_PROFILE_BASIC;
 		} else {
 			log.error("Illegal attempt to update user details.");
@@ -125,7 +126,7 @@ public class UserProfileController {
 	@GetMapping(URLMapping.FOLLOWERS + "/{username}")
 	public String userFollowers(@PathVariable("username") String userName, Model model) {
     	final User user = userService.findByUsername(userName);
-		populateUserData(user, model);
+    	populateUserData(user, model);
 		model.addAttribute(AttributeName.FOLLOWERS, followService.getFollowers(user));
 		return JSPMapping.PROFILE_FOLLOWERS;
 	}
@@ -140,6 +141,7 @@ public class UserProfileController {
 	
 	private void populateUserData(final User user, final Model model) {
 		PreCondition.checkNotNull(user, "user");
+		user.setPassword("");
 		model.addAttribute(AttributeName.IS_FOLLOWING, followService.isFollowing(user));
 		model.addAttribute(AttributeName.IS_FOLLOWER, followService.isFollower(user));
 		model.addAttribute(AttributeName.USER_DETAIL, user);

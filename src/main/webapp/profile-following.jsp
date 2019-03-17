@@ -25,7 +25,17 @@
         </div>
         <div class="profile-details-basic">
         	<c:forEach items="${following}" var="user">
-        		<span>${user.username}</span>
+        		<a href="${contextPath}/profile/${user.username}" class="follow-link">
+	        		<c:choose>
+		        		<c:when test="${user.profilePicture != null}">
+		        			<img src="${user.profilePicture}" class="follow-dp"/>
+		        		</c:when>
+		        		<c:otherwise>
+		        			<img src="${contextPath}/resources/img/defaultdp.jpg" class="follow-dp"/>
+		        		</c:otherwise>
+	        		</c:choose>
+	        		<span class="follow-username">${user.username}</span>
+        		</a>
         	</c:forEach>
         </div>
     </div>
