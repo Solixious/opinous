@@ -18,4 +18,6 @@ public class AttributeName {
 	public static final String IS_FOLLOWER = "isFollower";
 	public static final String FOLLOWERS = "followers";
 	public static final String FOLLOWING = "following";
+	public static final String FOLLOWERS_COUNT = "followersCount";
+	public static final String FOLLOWING_COUNT = "followingCount";
 }

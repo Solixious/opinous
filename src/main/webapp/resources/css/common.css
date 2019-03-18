@@ -448,3 +448,7 @@ a {
 .follow-content {
 	width: 800px;
 }
+.secondary-text {
+	color: #505050;
+	font-size: 16px;
+}

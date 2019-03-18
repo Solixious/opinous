@@ -144,6 +144,8 @@ public class UserProfileController {
 		user.setPassword("");
 		model.addAttribute(AttributeName.IS_FOLLOWING, followService.isFollowing(user));
 		model.addAttribute(AttributeName.IS_FOLLOWER, followService.isFollower(user));
+		model.addAttribute(AttributeName.FOLLOWERS_COUNT, followService.getFollowerCount(user));
+		model.addAttribute(AttributeName.FOLLOWING_COUNT, followService.getFollowingCount(user));
 		model.addAttribute(AttributeName.USER_DETAIL, user);
 		if(user.getUsername().equalsIgnoreCase(securityService.findLoggedInUsername())) {
     		model.addAttribute(AttributeName.IS_USER_PROFILE, true);

@@ -28,8 +28,8 @@
         <span class="left-nav-menu"><a href="${contextPath}/profile/my-posts">My Posts</a></span>
         <span class="left-nav-menu"><a href="${contextPath}/profile/my-rooms">My Rooms</a></span>
     </c:if>
-    <span class="left-nav-menu"><a href="${contextPath}/profile/followers/${userDetail.username}">Followers</a></span>
-    <span class="left-nav-menu"><a href="${contextPath}/profile/following/${userDetail.username}">Following</a></span>
+    <span class="left-nav-menu"><a href="${contextPath}/profile/followers/${userDetail.username}">Followers <span class="secondary-text">(${followersCount})</span></a></span>
+    <span class="left-nav-menu"><a href="${contextPath}/profile/following/${userDetail.username}">Following <span class="secondary-text">(${followingCount})</span></a></span>
     <c:if test="${isUserProfile}">
         <span class="left-nav-menu"><a href="#">Advanced Settings</a></span>
     </c:if>

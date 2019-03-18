@@ -81,4 +81,16 @@ public class FollowServiceImpl implements FollowService {
 		PreCondition.checkNotNull(user, "user");
 		return exists(user, userService.getLoggedInUser());
 	}
+	
+	@Override
+	public Long getFollowingCount(User user) {
+		PreCondition.checkNotNull(user,  "user");
+		return followRepository.countByFollower(user);
+	}
+	
+	@Override
+	public Long getFollowerCount(User user) {
+		PreCondition.checkNotNull(user, "user");
+		return followRepository.countByFollowing(user);
+	}
 }

@@ -14,4 +14,6 @@ public interface FollowService {
     boolean exists(User follower, User following);
     boolean isFollowing(User user);
     boolean isFollower(User user);
+    Long getFollowerCount(User user);
+    Long getFollowingCount(User user);
 }
