@@ -23,7 +23,7 @@
         <div class="profile-details-title">
             Following
         </div>
-        <div class="profile-details-basic">
+        <div class="profile-details-basic follow-content">
         	<c:forEach items="${following}" var="user">
         		<a href="${contextPath}/profile/${user.username}" class="follow-link">
 	        		<c:choose>

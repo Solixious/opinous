@@ -437,9 +437,14 @@ a {
 }
 .follow-link {
 	color: white;
+	float: left;
+	width: 33%;
 }
 .follow-link:hover {
 	color: #A0A0A0;
 	float: left;
 	display: inline-block;
+}
+.follow-content {
+	width: 800px;
 }
