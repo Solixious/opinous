@@ -9,6 +9,7 @@ import com.opinous.service.ReactionService;
 import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.opinous.model.Post;
@@ -43,7 +44,7 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostDTO> getPostsByRoom(final Room room) {
 		PreCondition.checkNotNull(room, "room");
-		return convertToPostDto(postRepository.findByAnonMap_Room(room));
+		return convertToPostDto(postRepository.findByAnonMap_Room(room, Sort.by("createDate").descending()));
 	}
 
 	@Override
