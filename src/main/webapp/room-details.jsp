@@ -44,6 +44,7 @@
 							<div class="media-date">
 								<fmt:formatDate value="${post.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
 							</div>
+							<div><c:out value="${post.text}"/></div>
 							<div class="media-react">
 								<span class="react-count">${post.reactionCounts['LIKE']}</span>
 								<c:choose>
@@ -64,7 +65,6 @@
                                 </c:choose>
 								<span class="react-count">${post.reactionCounts['DISLIKE']}</span>
 							</div>
-							<p><c:out value="${post.text}"/></p>
 						</div>
 					</div>
 				</c:forEach>
