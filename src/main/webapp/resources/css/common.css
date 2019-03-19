@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Vollkorn');
 
 body {
-  background-color: #000;
   background: url('/resources/img/bg.png') repeat;
   color: #f0f0f0;
   margin: 0;
   font-family: 'Vollkorn';
   width: 100%;
   float: left;
+  background-color: #000;
 }
 
 a {
