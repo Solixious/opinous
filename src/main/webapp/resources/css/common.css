@@ -382,9 +382,8 @@ a {
 }
 .edit-profile-button {
     float: left;
-    width: 600px;
-    margin-left: 104px;
-    margin-top: 20px;
+    margin-left: 8%;
+    margin-top: 2%;
 }
 .hide {
     display:none;
