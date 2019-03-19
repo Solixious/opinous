@@ -142,7 +142,7 @@ a {
 
 .room-card {
     width: 18%;
-    min-height: 100px;
+    min-height: 200px;
     margin: 1%;
     background-color: black;
     float: left;
