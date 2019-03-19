@@ -56,6 +56,7 @@ public class UserProfileController {
     @GetMapping(URLMapping.USER_PROFILE_BASIC)
     public String basic(Model model) {
     	final User user = userService.getLoggedInUser();
+		populateUserData(user, model);
     	user.setPassword("");
 		model.addAttribute(AttributeName.IS_USER_PROFILE, true);
         model.addAttribute(AttributeName.USER_DETAIL, user);
@@ -100,6 +101,7 @@ public class UserProfileController {
 	public String myPosts(Model model) {
 		final User user = userService.getLoggedInUser();
 		PreCondition.checkNotNull(user, "user");
+		populateUserData(user, model);
 		model.addAttribute(AttributeName.ROOMS, roomService.getDistinctRoomsFromPosts
 			(postService.getPostsByUser(user)));
 		model.addAttribute(AttributeName.USER_DETAIL, user);
@@ -111,6 +113,7 @@ public class UserProfileController {
 	public String myRooms(Model model) {
 		final User user = userService.getLoggedInUser();
 		PreCondition.checkNotNull(user, "user");
+		populateUserData(user, model);
 		model.addAttribute(AttributeName.ROOMS, roomService.getRoomsForUser(user));
 		model.addAttribute(AttributeName.USER_DETAIL, user);
 		model.addAttribute(AttributeName.IS_USER_PROFILE, true);

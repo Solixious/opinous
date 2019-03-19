@@ -78,8 +78,8 @@
                         <form:errors path="lastName"></form:errors>
                     </spring:bind>
                     <input type="file" name="file" id="dpInput">
-                    <button class="form-button-primary" type="submit">Update</button>
                     <img src="" class="anon-dp" id="preview"/>
+                    <button class="form-button-primary" type="submit">Update</button>
                 </div>
             </form:form>
         </c:if>
