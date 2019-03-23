@@ -2,6 +2,7 @@ package com.opinous.controller.admin;
 
 import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
+import com.opinous.constants.NavConstants;
 import com.opinous.constants.URLMapping;
 import com.opinous.enums.NotificationType;
 import com.opinous.enums.RoleConst;
@@ -9,6 +10,7 @@ import com.opinous.model.User;
 import com.opinous.service.NotificationService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
+import com.opinous.utils.NavbarUtils;
 import com.opinous.validator.UserValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,7 @@ public class AdminAdminController {
 	public String newAdmin(Model model) {
 		if (securityService.isAdmin()) {
 			model.addAttribute(AttributeName.USER_FORM, new User());
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_NEW_ADMIN;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -65,6 +68,7 @@ public class AdminAdminController {
 			userService.saveUser(userForm, roles);
 			model.addAttribute(AttributeName.USER_FORM, new User());
 			notificationService.notify(model, NotificationType.success, "New administrator created successfully!");
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_NEW_ADMIN;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -78,6 +82,7 @@ public class AdminAdminController {
 			final List<String> roles = new ArrayList<>();
 			roles.add(RoleConst.ADMIN_ROLE.toString());
 			model.addAttribute(AttributeName.USER_LIST, userService.findBySpecificRoles(roles));
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_LIST_ADMIN;
 		} else {
 			log.error("Illegal attempt to access admin page");

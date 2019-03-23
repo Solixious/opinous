@@ -2,6 +2,7 @@ package com.opinous.controller.admin;
 
 import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
+import com.opinous.constants.NavConstants;
 import com.opinous.constants.URLMapping;
 import com.opinous.enums.NotificationType;
 import com.opinous.exception.FileStorageException;
@@ -10,6 +11,8 @@ import com.opinous.service.AnonymousUserService;
 import com.opinous.service.FileStorageService;
 import com.opinous.service.NotificationService;
 import com.opinous.service.SecurityService;
+import com.opinous.utils.NavbarUtils;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +49,7 @@ public class AdminAnonUserController {
 	public String newAnonUser(Model model) {
 		if (securityService.isAdmin()) {
 			model.addAttribute(AttributeName.USER_FORM, new AnonymousUser());
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_NEW_ANON_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -65,6 +69,7 @@ public class AdminAnonUserController {
 			userForm.setDisplayPicture(uri);
 			anonymousUserService.saveAnonymousUser(userForm);
 			notificationService.notify(model, NotificationType.success, "Created new anonymous user successfully!");
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_NEW_ANON_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -73,8 +78,9 @@ public class AdminAnonUserController {
 	}
 
 	@GetMapping(value = URLMapping.UPDATE_ANON)
-	public String updateAnonUser() {
+	public String updateAnonUser(Model model) {
 		if (securityService.isAdmin()) {
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_UPDATE_ANON_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -87,6 +93,7 @@ public class AdminAnonUserController {
 		if (securityService.isAdmin()) {
 			final AnonymousUser user = anonymousUserService.findByName(name);
 			model.addAttribute(AttributeName.USER_FORM, user);
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_UPDATE_ANON_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -111,6 +118,7 @@ public class AdminAnonUserController {
 			}
 			anonymousUserService.saveAnonymousUser(user);
 			notificationService.notify(model, NotificationType.success, "Updated anonymous user details successfully!");
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_UPDATE_ANON_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -122,6 +130,7 @@ public class AdminAnonUserController {
 	public String listAnonUser(Model model) {
 		if (securityService.isAdmin()) {
 			model.addAttribute(AttributeName.USER_LIST, anonymousUserService.findAll());
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_LIST_ANON_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");

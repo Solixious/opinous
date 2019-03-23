@@ -2,6 +2,7 @@ package com.opinous.controller;
 
 import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
+import com.opinous.constants.NavConstants;
 import com.opinous.constants.URLMapping;
 import com.opinous.model.Room;
 import com.opinous.model.RoomDTO;
@@ -9,6 +10,7 @@ import com.opinous.model.User;
 import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
+import com.opinous.utils.NavbarUtils;
 import com.opinous.validator.UserValidator;
 
 import java.util.List;
@@ -59,7 +61,7 @@ public class UserRegistrationController {
 		model.addAttribute(AttributeName.ROOMS, roomList);
         model.addAttribute(AttributeName.PAGE_NUMBER, 0);
         model.addAttribute(AttributeName.MAX_PAGE_NUMBER, rooms.getTotalPages());
-        
+        NavbarUtils.setNavPageActive(model, NavConstants.POPULAR);
 		return JSPMapping.HOME;
 	}
 

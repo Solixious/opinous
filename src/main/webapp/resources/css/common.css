@@ -18,7 +18,7 @@ body {
 
 a {
   text-decoration: none;
-  color: red;
+  color: #CC0000;
   font-weight: normal;
 }
 
@@ -73,7 +73,7 @@ a {
 }
 
 .form-button-primary, .nav-button-primary, .nav-button-secondary, .form-button-secondary {
-	background-color: #FF0000;
+	background-color: #CC0000;
 	border: none;
 	color: #d0d0d0;
 	padding: 12px 24px;
@@ -86,7 +86,7 @@ a {
 
 .form-button-secondary, .nav-button-secondary {
 	background-color: #000;
-	border: 1px solid #FF0000;
+	border: 1px solid #CC0000;
 	margin-left: 15px;
 }
 
@@ -100,9 +100,13 @@ a {
 .container-fluid {
 	width: 100%;
 	float: left;
-	padding: 10px 0;
 	background-color: #000;
+	padding-top: 10px;
 	opacity: 0.8;
+}
+
+.container-fluid .active {
+	border-bottom: 2px solid #CC0000;
 }
 
 .container-fluid * {
@@ -118,7 +122,7 @@ a {
 
 .navbar-nav li a {
 	display: inline-block;
-	padding: 15px;
+	padding: 15px 15px 23px 15px;
 	color: #d0d0d0;
 }
 
@@ -286,7 +290,7 @@ a {
 .page-nav {
 	padding: 10px;
 	background: #000;
-	border: 1px solid #ff0000;
+	border: 1px solid #CC0000;
 	color: #d0d0d0;
 	float: left;
 }
@@ -400,7 +404,7 @@ a {
 #dpInput::before {
   content: 'Select Display Picture';
   display: inline-block;
-  background: #ff0000;
+  background: #CC0000;
   padding: 15px 18px;
   margin-bottom: 15px;
   outline: none;
@@ -413,7 +417,7 @@ a {
   border-color: black;
 }
 #dpInput:active::before {
-  background: #ff0000;
+  background: #CC0000;
 }
 #preview {
     max-width: 100%;

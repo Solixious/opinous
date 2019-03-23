@@ -3,12 +3,14 @@ package com.opinous.controller.admin;
 import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
 import com.opinous.constants.Misc;
+import com.opinous.constants.NavConstants;
 import com.opinous.constants.URLMapping;
 import com.opinous.enums.NotificationType;
 import com.opinous.model.User;
 import com.opinous.service.NotificationService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
+import com.opinous.utils.NavbarUtils;
 import com.opinous.validator.UserValidator;
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,9 +47,10 @@ public class AdminUserController {
 	private NotificationService notificationService;
 
 	@GetMapping(value = URLMapping.USER_HOME)
-	public String adminHome(HttpServletRequest request) {
+	public String adminHome(HttpServletRequest request, Model model) {
 		if (securityService.isAdmin()) {
 			log.debug("Going to admin control panel page.");
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_CONTROL_PANEL;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -59,6 +62,7 @@ public class AdminUserController {
 	public String newUser(Model model) {
 		if (securityService.isAdmin()) {
 			model.addAttribute(AttributeName.USER_FORM, new User());
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_NEW_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -70,6 +74,7 @@ public class AdminUserController {
 	public String newUser(@ModelAttribute(AttributeName.USER_FORM) User userForm, BindingResult bindingResult,
 			Model model) {
 		if (securityService.isAdmin()) {
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			userValidator.validate(userForm, bindingResult);
 			if (bindingResult.hasErrors()) {
 				return JSPMapping.ADMIN_NEW_USER;
@@ -87,8 +92,10 @@ public class AdminUserController {
 
 	@GetMapping(value = URLMapping.UPDATE_USER)
 	public String updateDeleteUser(Model model) {
-		if (securityService.isAdmin())
+		if (securityService.isAdmin()) {
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_UPDATE_DELETE_USER;
+		}
 		else {
 			log.error("Illegal attempt to access admin page");
 			return JSPMapping.ERROR;
@@ -98,6 +105,7 @@ public class AdminUserController {
 	@GetMapping(value = URLMapping.UPDATE_USER + "/{username}")
 	public String updateDeleteUser(@PathVariable("username") String username, Model model) {
 		if (securityService.isAdmin()) {
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			User user = userService.findByUsername(username);
 
 			if (user != null) {
@@ -119,6 +127,7 @@ public class AdminUserController {
 	public String updateDeleteUser(@ModelAttribute(AttributeName.USER_FORM) User updateUser,
 			BindingResult bindingResult, Model model) {
 		if (securityService.isAdmin()) {
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			if (bindingResult.hasErrors()) {
 				return JSPMapping.ADMIN_UPDATE_DELETE_USER;
 			}
@@ -138,6 +147,7 @@ public class AdminUserController {
 	public String deleteUser(@ModelAttribute(AttributeName.USER_FORM) User updateUser, BindingResult bindingResult,
 			Model model) {
 		if (securityService.isAdmin()) {
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			userService.delete(userService.findById(updateUser.getId()));
 			notificationService.notify(model, NotificationType.success, "The user concerned deleted successfully!");
 			return "redirect:" + URLMapping.ADMIN + URLMapping.LIST_USER;
@@ -150,6 +160,7 @@ public class AdminUserController {
 	@GetMapping(value = URLMapping.LIST_USER)
 	public String listUsers(Model model) {
 		if (securityService.isAdmin()) {
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			model.addAttribute(AttributeName.USER_LIST, userService.findAll());
 			return JSPMapping.ADMIN_LIST_USER;
 		} else {
@@ -161,6 +172,7 @@ public class AdminUserController {
 	@GetMapping(value = URLMapping.LIST_USER + "/{username}")
 	public String listUsers(Model model, @PathVariable("username") String username) {
 		if (securityService.isAdmin()) {
+	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			model.addAttribute(AttributeName.USER_LIST, userService.search(username));
 			return JSPMapping.ADMIN_LIST_USER;
 		} else {

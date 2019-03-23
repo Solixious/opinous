@@ -7,11 +7,11 @@
       <a class="navbar-brand" href="#">Opinous</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="/">Popular</a></li>
+      <li class="${isPopularNav}"><a href="/">Popular</a></li>
       <li><a href="#">Recent</a></li>
       <li><a href="#">Notification</a></li>
       <sec:authorize access="hasAuthority('ADMIN_ROLE')">
-        <li><a href="${contextPath}/admin/">Admin CP</a></li>
+        <li class="${isAdminNav}"><a href="${contextPath}/admin/">Admin CP</a></li>
       </sec:authorize>
       <sec:authorize access="hasAuthority('MODERATOR_ROLE')">
         <li><a href="#">Moderator CP</a></li>
