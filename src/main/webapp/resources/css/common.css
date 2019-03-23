@@ -454,7 +454,7 @@ a {
 }
 .room-card .room-title {
 	width: 100%;
-	max-height: 30%;
+	min-height: 30%;
 	float: left;
 	margin-bottom: 5px;
 	overflow: hidden;
