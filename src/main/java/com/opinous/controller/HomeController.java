@@ -4,7 +4,11 @@ import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
 import com.opinous.constants.URLMapping;
 import com.opinous.model.Room;
+import com.opinous.model.RoomDTO;
 import com.opinous.service.RoomService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -21,7 +25,8 @@ public class HomeController {
     @GetMapping(value = URLMapping.USER_HOME)
     public String welcome(Model model) {
         final Page<Room> rooms = roomService.getRooms(0);
-        model.addAttribute(AttributeName.ROOMS, rooms.getContent());
+        final List<RoomDTO> roomList = roomService.convertToRoomDTO(rooms.getContent());
+        model.addAttribute(AttributeName.ROOMS, roomList);
         model.addAttribute(AttributeName.PAGE_NUMBER, 0);
         model.addAttribute(AttributeName.MAX_PAGE_NUMBER, rooms.getTotalPages());
         return JSPMapping.HOME;
@@ -32,7 +37,8 @@ public class HomeController {
         try {
             final int pageNo = Integer.parseInt(page) - 1;
             final Page<Room> rooms = roomService.getRooms(pageNo);
-            model.addAttribute(AttributeName.ROOMS, rooms.getContent());
+            final List<RoomDTO> roomList = roomService.convertToRoomDTO(rooms.getContent());
+            model.addAttribute(AttributeName.ROOMS, roomList);
             model.addAttribute(AttributeName.PAGE_NUMBER, pageNo);
             model.addAttribute(AttributeName.MAX_PAGE_NUMBER, rooms.getTotalPages());
         } catch (NumberFormatException e) {

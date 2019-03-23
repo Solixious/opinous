@@ -15,6 +15,8 @@ public interface PostService {
 	void savePost(Post post);
 
 	List<PostDTO> getPostsByRoom(Room room);
+	
+	Long countPostsByRoom(Room room);
 
 	List<Post> getPostsByUser(User user);
 	

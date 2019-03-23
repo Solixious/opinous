@@ -13,6 +13,8 @@ public interface AnonMapRepository extends JpaRepository<AnonMap, Long> {
 	List<AnonMap> findByUser(User user);
 
 	List<AnonMap> findByRoom(Room room);
+	
+	Long countByRoom(Room room);
 
 	AnonMap findByRoomAndUser(Room room, User user);
 }

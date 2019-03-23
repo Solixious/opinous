@@ -4,11 +4,15 @@ import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
 import com.opinous.constants.URLMapping;
 import com.opinous.model.Room;
+import com.opinous.model.RoomDTO;
 import com.opinous.model.User;
 import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;
 import com.opinous.service.UserService;
 import com.opinous.validator.UserValidator;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -51,7 +55,8 @@ public class UserRegistrationController {
 		securityService.autologin(userForm.getUsername(), userForm.getPassword());
 		
 		final Page<Room> rooms = roomService.getRooms(0);
-        model.addAttribute(AttributeName.ROOMS, rooms.getContent());
+		final List<RoomDTO> roomList = roomService.convertToRoomDTO(rooms.getContent());
+		model.addAttribute(AttributeName.ROOMS, roomList);
         model.addAttribute(AttributeName.PAGE_NUMBER, 0);
         model.addAttribute(AttributeName.MAX_PAGE_NUMBER, rooms.getTotalPages());
         

@@ -2,6 +2,7 @@ package com.opinous.service;
 
 import com.opinous.model.Post;
 import com.opinous.model.Room;
+import com.opinous.model.RoomDTO;
 
 import java.util.List;
 import java.util.Set;
@@ -24,4 +25,6 @@ public interface RoomService {
 	Set<Room> getDistinctRoomsFromPosts(List<Post> posts);
 
 	List<Room> getRoomsForUser(User user);
+	
+	List<RoomDTO> convertToRoomDTO(List<Room> rooms);
 }

@@ -59,6 +59,12 @@ public class PostServiceImpl implements PostService {
 		return postRepository.getOne(id);
 	}
 
+	@Override
+	public Long countPostsByRoom(Room room) {
+		PreCondition.checkNotNull(room, "room");
+		return postRepository.countByAnonMap_Room(room);
+	}
+
 	private List<PostDTO> convertToPostDto(final List<Post> posts) {
 		PreCondition.checkNotNull(posts, "posts");
 		List<PostDTO> postsDto = new LinkedList<>();

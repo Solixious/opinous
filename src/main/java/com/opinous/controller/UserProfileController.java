@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 @Slf4j
@@ -102,8 +103,8 @@ public class UserProfileController {
 		final User user = userService.getLoggedInUser();
 		PreCondition.checkNotNull(user, "user");
 		populateUserData(user, model);
-		model.addAttribute(AttributeName.ROOMS, roomService.getDistinctRoomsFromPosts
-			(postService.getPostsByUser(user)));
+		model.addAttribute(AttributeName.ROOMS, roomService.convertToRoomDTO(new ArrayList<>(roomService.getDistinctRoomsFromPosts
+				(postService.getPostsByUser(user)))));
 		model.addAttribute(AttributeName.USER_DETAIL, user);
 		model.addAttribute(AttributeName.IS_USER_PROFILE, true);
 		return JSPMapping.PROFILE_MY_POSTS;
@@ -114,7 +115,7 @@ public class UserProfileController {
 		final User user = userService.getLoggedInUser();
 		PreCondition.checkNotNull(user, "user");
 		populateUserData(user, model);
-		model.addAttribute(AttributeName.ROOMS, roomService.getRoomsForUser(user));
+		model.addAttribute(AttributeName.ROOMS, roomService.convertToRoomDTO(roomService.getRoomsForUser(user)));
 		model.addAttribute(AttributeName.USER_DETAIL, user);
 		model.addAttribute(AttributeName.IS_USER_PROFILE, true);
 		return JSPMapping.PROFILE_MY_ROOMS;

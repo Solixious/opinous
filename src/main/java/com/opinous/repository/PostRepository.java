@@ -11,5 +11,6 @@ import com.opinous.model.Room;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 	List<Post> findByAnonMap_Room(Room room, Sort sort);
+	Long countByAnonMap_Room(Room room);
 	List<Post> findByAnonMap_User(User user);
 }

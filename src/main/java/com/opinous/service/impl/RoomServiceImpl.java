@@ -6,11 +6,13 @@ import com.opinous.model.AnonMap;
 import com.opinous.model.AnonymousUser;
 import com.opinous.model.Post;
 import com.opinous.model.Room;
+import com.opinous.model.RoomDTO;
 import com.opinous.model.User;
 import com.opinous.repository.AnonMapRepository;
 import com.opinous.repository.RoomRepository;
 import com.opinous.service.AnonymousUserService;
 import com.opinous.service.AppConfigService;
+import com.opinous.service.PostService;
 import com.opinous.service.RoomService;
 
 import java.util.List;
@@ -44,6 +46,9 @@ public class RoomServiceImpl implements RoomService {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PostService postService;
 
 	@Override
 	public void createRoom(final Room room) {
@@ -95,5 +100,25 @@ public class RoomServiceImpl implements RoomService {
 	public List<Room> getRoomsForUser(User user) {
 		PreCondition.checkNotNull(user, "user");
 		return roomRepository.findByCreator_User(user);
+	}
+	
+	@Override
+	public List<RoomDTO> convertToRoomDTO(List<Room> rooms) {
+		return rooms.stream().map(r -> convertToRoomDTO(r)).collect(Collectors.toList());
+	}
+	
+	private RoomDTO convertToRoomDTO(Room room) {
+		final RoomDTO roomDto = new RoomDTO();
+		roomDto.setId(room.getId());
+		roomDto.setCreator(room.getCreator());
+		roomDto.setTitle(room.getTitle());
+		roomDto.setDescription(room.getDescription());
+		roomDto.setCreateDate(room.getCreateDate());
+		roomDto.setUpdateDate(room.getCreateDate());
+		final int participantCount = (int) anonMapRepository.countByRoom(room).longValue();
+		final int postCount = (int) postService.countPostsByRoom(room).longValue();
+		roomDto.setParticipantCount(participantCount);
+		roomDto.setPostCount(postCount);
+		return roomDto;
 	}
 }
