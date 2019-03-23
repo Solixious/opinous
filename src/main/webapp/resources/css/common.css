@@ -153,6 +153,7 @@ a {
 .room-card {
     width: 18%;
     min-height: 200px;
+    max-height: 200px;
     min-width: 180px;
     margin: 1%;
     background-color: black;
@@ -452,8 +453,17 @@ a {
 }
 .room-card .room-title {
 	width: 100%;
-	height: 90%;
+	height: 30%;
 	float: left;
+	margin-bottom: 5px;
+	overflow: hidden;
+}
+.room-card .room-description {
+	width: 100%;
+	height: 55%;
+	padding-bottom: 5px;
+	float: left;
+	overflow: hidden;
 }
 .comment-img {
 	float: left;
@@ -468,3 +478,7 @@ a {
 	float: right;	
 	margin-right: 5px;
 }
+.description-content {
+	float: left;
+}
+

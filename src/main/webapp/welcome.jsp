@@ -21,6 +21,7 @@
 					<div class="room-card">
 						<a href="${contextPath}/room/${room.id}">
 							<span class="room-title"><c:out value="${room.title}"/></span>
+							<span class="room-description secondary-text"><span class="description-content">${room.description}</span></span>
 							<span class="secondary-text"><img src="/resources/img/comment.png" class="comment-img"/><span class="comment-val">${room.postCount}</span></span>
 							<span class="secondary-text"><img src="/resources/img/participant.png" class="participant-img"/><span class="participant-val">${room.participantCount}</span></span>
 						</a>
@@ -41,5 +42,80 @@
 			</div>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script>
+			var animeFlag = false;
+			var e1, e2;
+			var up = "up", down = "down";
+			$(".room-title").bind('mouseover', function() {
+				$(this).stop();
+				$(this).next(".room-description").stop();
+				var currHeight = $(this).height();
+				$(this).css('height','auto');
+				var autoHeight = $(this).height();
+				$(this).css('height', currHeight);
+				$(this).animate({
+				    height: autoHeight
+				}, {duration: 500, queue: false});
+				
+				var descHeight = $(this).next(".room-description").height() - (autoHeight - currHeight);
+				$(this).next(".room-description").animate({
+					height: descHeight
+				}, {duration: 500, queue: false});
+			});
+			$(".room-title").bind('mouseleave', function() {
+				$(this).stop();
+				$(this).next(".room-description").stop();
+				animateTitleToDefault($(this));
+				animateDescriptionToDefault($(this).next(".room-description"));
+			});
+			$(".room-description").bind('mouseover', function() {
+				$(this).stop();
+				var titleHeight = ($(this).prev(".room-title").height()/$(this).prev(".room-title").parent().height())*100;
+				if($(this).height() < $(this).find('.description-content').height() && titleHeight <= 30) {
+					animateContent($(this), $(this).find('.description-content'), down);
+				} else if($(this).height() < $(this).find('.description-content').height() && titleHeight >= 30) {
+					animeFlag = true;
+					e1 = $(this);
+					e2 = $(this).find('.description-content');
+				}
+			});
+			$(".room-description").bind('mouseleave', function() {
+				$(this).stop();
+				animeFlag = false;
+				if($(this).height() < $(this).find('.description-content').height()) {
+					animateContent($(this), $(this).find('.description-content'), up);
+				}
+				
+				animateTitleToDefault($(this).prev("room-title"));
+			});
+			
+			function animateTitleToDefault(ele) {
+				ele.animate({
+					height: "+30%",
+					duration: 500,
+					queue: false
+				}, function() {
+					if(animeFlag) {
+						animateContent(e1, e2, down);
+					}
+				});
+			}
+			function animateDescriptionToDefault(ele) {
+				ele.animate({
+					height: "+55%"
+				}, {duration: 500, queue: false});
+			}
+			function animateContent(ele, ele2, direction) {
+			    var animationOffset = ele.height() - ele2.height();
+			    var speed = "slow";
+			    if (direction == up) {
+			        animationOffset = 0;
+			        speed = "fast";
+			    }
+			    ele2.animate({
+			        "marginTop": animationOffset + "px"
+			    }, speed);
+			}
+		</script>
 	</body>
 </html>
