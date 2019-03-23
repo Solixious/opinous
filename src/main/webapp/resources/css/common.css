@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Vollkorn');
 
 body {
-  color: #f0f0f0;
+  color: #d0d0d0;
   margin: 0;
   font-family: 'Vollkorn';
   width: 100%;
+  height: -webkit-fill-available;
   float: left;
   background: repeating-linear-gradient(
     135deg,
@@ -45,9 +46,11 @@ a {
 	margin-bottom: 16px;
 	margin-top: 0;
 	border-radius: 5px;
+	font-family: 'Vollkorn';
 }
 .form .form-content .form-input, .form .form-content .form-textarea {
-    font-size: 1.1em;
+    font-size: 1em;
+    font-family: 'Vollkorn';
 }
 
 .form .form-content {
@@ -73,12 +76,12 @@ a {
 .form-button-primary, .nav-button-primary, .nav-button-secondary, .form-button-secondary {
 	background-color: #FF0000;
 	border: none;
-	color: white;
+	color: #d0d0d0;
 	padding: 12px 24px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 1.1em;
+	font-size: 1em;
 	margin-top: 8px;
 }
 
@@ -109,7 +112,7 @@ a {
 
 .navbar-nav {
 	list-style: none;
-	font-size: 1.1em;
+	font-size: 1em;
 	margin: 0;
 	padding: 0;
 }
@@ -117,7 +120,7 @@ a {
 .navbar-nav li a {
 	display: inline-block;
 	padding: 15px;
-	color: #fff;
+	color: #d0d0d0;
 }
 
 .room-card a {
@@ -125,14 +128,14 @@ a {
 	padding: 10%;
 	width: 80%;
 	height: 160px;
-	color: #fff;
+	color: #d0d0d0;
 }
 
 .navbar-header a {
 	display: inline-block;
 	padding: 15px;
 	font-weight: 700;
-	font-size: 1.1em;
+	font-size: 1em;
 }
 
 .container {
@@ -200,7 +203,7 @@ a {
     margin-left: -1px;
 }
 .media-object {
-	width: 120px;
+	width: 100%;
 	float: left;
 }
 .user-name {
@@ -242,7 +245,7 @@ a {
 	float: left;
 	width: 100%;
 	color: #505050;
-    font-size: 0.8em;
+    font-size: 0.9em;
     margin-top: 14px;
     margin-bottom: 10px;
 }
@@ -282,7 +285,7 @@ a {
 	padding: 10px;
 	background: #000;
 	border: 1px solid #ff0000;
-	color: #fff;
+	color: #d0d0d0;
 	float: left;
 }
 .page-nav-div {
@@ -369,10 +372,10 @@ a {
 }
 .left-nav-menu a {
     width: 230px;
-    color: #fff;
+    color: #d0d0d0;
     padding: 15px 15px 0 15px;
     float: left;
-    font-size: 1.1em;
+    font-size: 1em;
 }
 .left-nav-menu:last-child a {
     padding-bottom: 15px;
@@ -401,7 +404,7 @@ a {
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;
-  font-size: 1.1em;
+  font-size: 1em;
 }
 #dpInput:hover::before {
   border-color: black;
@@ -433,7 +436,7 @@ a {
 	margin-right: 30px;
 }
 .follow-link {
-	color: white;
+	color: #d0d0d0;
 	float: left;
 	width: 33%;
 }
@@ -444,5 +447,5 @@ a {
 }
 .secondary-text {
 	color: #505050;
-	font-size: 1.1em;
+	font-size: 1em;
 }
