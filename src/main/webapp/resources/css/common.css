@@ -487,4 +487,8 @@ a {
 .description-content {
 	float: left;
 }
+.navbar-nav li.active a {
+	color: #CC0000;
+	font-weight: 700;
+}
 
