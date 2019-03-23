@@ -47,29 +47,46 @@
 			var e1, e2;
 			var up = "up", down = "down";
 			$(".room-title").bind('mouseover', function() {
-				$(this).stop();
-				$(this).next(".room-description").stop();
 				var currHeight = $(this).height();
+				$(this).css("max-height", "80%");
 				$(this).css('height','auto');
 				var autoHeight = $(this).height();
 				$(this).css('height', currHeight);
 				$(this).animate({
-				    height: autoHeight
-				}, {duration: 500, queue: false});
+				    height: autoHeight,
+				    duration: 500,
+				    queue: false
+				});
 				
 				var descHeight = $(this).next(".room-description").height() - (autoHeight - currHeight);
 				$(this).next(".room-description").animate({
-					height: descHeight
-				}, {duration: 500, queue: false});
+					height: descHeight,
+					duration: 500,
+					queue: false
+				});
 			});
 			$(".room-title").bind('mouseleave', function() {
-				$(this).stop();
-				$(this).next(".room-description").stop();
-				animateTitleToDefault($(this));
-				animateDescriptionToDefault($(this).next(".room-description"));
+				var currHeight = $(this).height();
+				$(this).css("max-height", "30%");
+				$(this).css('height','auto');
+				var autoHeight = $(this).height();
+				$(this).css("max-height", "80%");
+				$(this).css('height', currHeight);
+				
+				$(this).next(".room-description").animate({
+					height: "+55%",
+					duration: 500,
+					queue: false
+				});
+				if(autoHeight < currHeight) {
+					$(this).animate({
+					    height: "+30%",
+						duration: 500,
+						queue: false
+					});
+				}
 			});
 			$(".room-description").bind('mouseover', function() {
-				$(this).stop();
 				var titleHeight = ($(this).prev(".room-title").height()/$(this).prev(".room-title").parent().height())*100;
 				if($(this).height() < $(this).find('.description-content').height() && titleHeight <= 30) {
 					animateContent($(this), $(this).find('.description-content'), down);
@@ -80,31 +97,17 @@
 				}
 			});
 			$(".room-description").bind('mouseleave', function() {
-				$(this).stop();
 				animeFlag = false;
 				if($(this).height() < $(this).find('.description-content').height()) {
 					animateContent($(this), $(this).find('.description-content'), up);
 				}
 				
-				animateTitleToDefault($(this).prev("room-title"));
-			});
-			
-			function animateTitleToDefault(ele) {
-				ele.animate({
-					height: "+30%",
+				$(this).prev("room-title").animate({
+				    height: "+30%",
 					duration: 500,
 					queue: false
-				}, function() {
-					if(animeFlag) {
-						animateContent(e1, e2, down);
-					}
 				});
-			}
-			function animateDescriptionToDefault(ele) {
-				ele.animate({
-					height: "+55%"
-				}, {duration: 500, queue: false});
-			}
+			});
 			function animateContent(ele, ele2, direction) {
 			    var animationOffset = ele.height() - ele2.height();
 			    var speed = "slow";
