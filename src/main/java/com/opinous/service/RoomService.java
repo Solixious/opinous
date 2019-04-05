@@ -27,4 +27,6 @@ public interface RoomService {
 	List<Room> getRoomsForUser(User user);
 	
 	List<RoomDTO> convertToRoomDTO(List<Room> rooms);
+	
+	RoomDTO convertToRoomDTO(Room room);
 }

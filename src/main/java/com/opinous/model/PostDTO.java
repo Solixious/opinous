@@ -21,6 +21,8 @@ public class PostDTO {
 
 	private Date updateDate;
 
+	private String updatedTimeAgo;
+	
 	private Map<String, Long> reactionCounts;
 	
 	private Map<String, Long> reactions;

@@ -26,9 +26,12 @@
 					<img src="${room.creator.anonymousUser.displayPicture}" class="media-object">
 					<span class="user-name"><c:out value="${room.creator.anonymousUser.name}"/></span>
 				</div>
-				<div class="media-body">	
+				<div class="media-body tooltip">	
 					<div class="media-date">
-						<fmt:formatDate value="${room.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
+						${room.createdTimeAgo}
+						<span class="tooltiptext">
+							<fmt:formatDate value="${room.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
+						</span>
 					</div>
 					<p><c:out value="${room.description}"/></p>
 				</div>
@@ -41,8 +44,11 @@
 							<span class="user-name"><c:out value="${post.anonMap.anonymousUser.name}"/></span>
 						</div>
 						<div class="media-body">
-							<div class="media-date">
-								<fmt:formatDate value="${post.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
+							<div class="media-date tooltip">
+								${post.updatedTimeAgo}
+								<span class="tooltiptext">
+									<fmt:formatDate value="${post.createDate}" pattern="dd MMM yyyy, hh:mm aa" />
+								</span>
 							</div>
 							<div><c:out value="${post.text}"/></div>
 							<div class="media-react">

@@ -89,7 +89,7 @@ public class RoomController {
 	@GetMapping(value = "/{roomId}")
 	public String viewRoom(@PathVariable("roomId") Long roomId, Model model) {
 		final Room room = roomService.getRoomById(roomId);
-		model.addAttribute(AttributeName.ROOM, room);
+		model.addAttribute(AttributeName.ROOM, roomService.convertToRoomDTO(room));
 		model.addAttribute(AttributeName.POSTS, postService.getPostsByRoom(room));
 		model.addAttribute(AttributeName.IS_USER, securityService.isUser());
 		if (securityService.isUser()) {

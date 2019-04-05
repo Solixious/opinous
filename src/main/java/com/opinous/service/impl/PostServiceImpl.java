@@ -7,6 +7,8 @@ import java.util.List;
 import com.opinous.model.User;
 import com.opinous.service.ReactionService;
 import com.opinous.utils.PreCondition;
+import com.opinous.utils.PrettyTimeUtils;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -82,6 +84,7 @@ public class PostServiceImpl implements PostService {
 		postDto.setCreateDate(post.getCreateDate());
 		postDto.setText(post.getText());
 		postDto.setUpdateDate(post.getUpdateDate());
+		postDto.setUpdatedTimeAgo(PrettyTimeUtils.convertToTimeAgo(post.getUpdateDate()));
 		postDto.setReactionCounts(reactionService.getReactionCountMap(post));
 		postDto.setReactions(reactionService.getReactionList(post));
 	}
