@@ -37,15 +37,26 @@ a {
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
-  background-color: #101010;
+  background-color: #202020;
   color: #a0a0a0;
   text-align: center;
-  border: 1px solid #202020;
   padding: 10px 5px;
 
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
+  top: -5px;
+  left: 115%;
+}
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 25%;
+  right: 100%; /* To the left of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #202020 transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {
