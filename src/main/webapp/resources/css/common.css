@@ -494,15 +494,12 @@ a {
 .comment-img {
 	float: left;
 	margin-top: 3px;
-	margin-right: 3px;
 }
 .participant-img {
-	float: right;
 	margin-top: 3px;
+	margin-left: 15px;
 }
 .participant-val {
-	float: right;	
-	margin-right: 5px;
 }
 .description-content {
 	float: left;
@@ -514,5 +511,14 @@ a {
 
 .time-ago {
     float: left;
-    width: 100%;
+    width: 50%;
+}
+
+.room-stat {
+	float: right;
+	width: 40%;
+}
+.date-text {
+	width: auto;
+	float: left;
 }
