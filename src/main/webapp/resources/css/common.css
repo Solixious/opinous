@@ -146,7 +146,8 @@ a {
 .container {
     float: left;
     width: 84%;
-    margin: 10% 8%;
+    height: 100%;
+    margin: 10% 8% 0 8%;
     min-width: 800px;
 }
 
@@ -491,4 +492,3 @@ a {
 	color: #CC0000;
 	font-weight: 700;
 }
-

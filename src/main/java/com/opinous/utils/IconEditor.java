@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class IconEditor {
 
 	public static void main(String[] args) throws Exception {
-		String filePath = "C:\\Users\\Pratyush\\Downloads\\participant.png";
+		String filePath = "C:\\Users\\Pratyush\\Downloads\\message.png";
 		File file = new File(filePath);
 		BufferedImage bi = ImageIO.read(file);
 		Color c = new Color(96, 96, 96);
