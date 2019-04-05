@@ -16,6 +16,7 @@ public class RoomDTO {
 	private String description;
 	private Integer postCount;
 	private Integer participantCount;
+	private String updatedTimeAgo;
 	private Date createDate;
 	private Date updateDate;
 }
