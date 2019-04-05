@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import com.opinous.service.UserService;
 import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
+import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -114,7 +115,8 @@ public class RoomServiceImpl implements RoomService {
 		roomDto.setTitle(room.getTitle());
 		roomDto.setDescription(room.getDescription());
 		roomDto.setCreateDate(room.getCreateDate());
-		roomDto.setUpdateDate(room.getCreateDate());
+		roomDto.setUpdateDate(room.getUpdateDate());
+		roomDto.setUpdatedTimeAgo(new PrettyTime().format(room.getUpdateDate()));
 		final int participantCount = (int) anonMapRepository.countByRoom(room).longValue();
 		final int postCount = (int) postService.countPostsByRoom(room).longValue();
 		roomDto.setParticipantCount(participantCount);

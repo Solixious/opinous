@@ -165,10 +165,6 @@ a {
     float: left;
 }
 
-.room-card:hover {
-	box-shadow: 0 0 32px rgba(255, 0, 0, 0.4);
-}
-
 .form-login, .form-register, .form-new-room {
     position: absolute;
     left: 50%;
@@ -492,3 +488,7 @@ a {
 	font-weight: 700;
 }
 
+.time-ago {
+    float: left;
+    width: 100%;
+}

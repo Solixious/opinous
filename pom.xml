@@ -80,6 +80,14 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.ocpsoft.prettytime</groupId>
+			<artifactId>prettytime</artifactId>
+			<version>4.0.2.Final</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<dependencyManagement>
