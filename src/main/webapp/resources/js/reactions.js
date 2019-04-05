@@ -127,10 +127,8 @@ $(".room-title").bind('mouseleave', function() {
 
 });
 $(".room-description").bind('mouseover', function() {
-	var titleHeight = ($(this).prev(".room-title").height()/$(this).prev(".room-title").parent().height())*100;
-	if($(this).height() < $(this).find('.description-content').height() && titleHeight <= 30) {
-		animateContent($(this), $(this).find('.description-content'), down);
-	}
+	animateContent($(this), $(this).find('.description-content'), down);
+	
 });
 $(".room-description").bind('mouseleave', function() {
 	if($(this).height() < $(this).find('.description-content').height()) {
@@ -139,7 +137,7 @@ $(".room-description").bind('mouseleave', function() {
 });
 function animateContent(ele, ele2, direction) {
     var animationOffset = ele.height() - ele2.height();
-    var speed = "slow";
+    var speed = ele2.height() * 25;
     if (direction == up) {
         animationOffset = 0;
         speed = "fast";
@@ -148,7 +146,7 @@ function animateContent(ele, ele2, direction) {
     	ele2.stop();
         ele2.animate({
             "marginTop": animationOffset + "px"
-        }, speed, function() {
+        }, speed, "linear", function() {
             inAnimation = false;
         });
 
