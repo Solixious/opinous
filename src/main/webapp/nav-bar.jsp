@@ -7,9 +7,9 @@
       <a class="navbar-brand" href="#">Opinous</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="${isPopularNav}"><a href="/">Popular</a></li>
-      <li><a href="#">Recent</a></li>
-      <li><a href="#">Notification</a></li>
+      <li class="${isPopularNav}"><a href="/"><img class="nav-img popular-img"/>Popular</a></li>
+      <li><a href="#"><img class="nav-img recent-img"/>Recent</a></li>
+      <li><a href="#"><img class="nav-img notification-img"/>Notification</a></li>
       <sec:authorize access="hasAuthority('ADMIN_ROLE')">
         <li class="${isAdminNav}"><a href="${contextPath}/admin/">Admin CP</a></li>
       </sec:authorize>

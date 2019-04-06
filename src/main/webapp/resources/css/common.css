@@ -530,3 +530,24 @@ a {
 	width: auto;
 	float: left;
 }
+.nav-img {
+	margin-right: 5px;
+}
+.popular-img {
+	content: url("/resources/img/popular white.png");
+}
+li.active a .popular-img {
+	content: url("/resources/img/popular.png");
+}
+.recent-img {
+	content: url("/resources/img/recent white.png");
+}
+li.active a .recent-img {
+	content: url("/resources/img/recent.png");
+}
+.notification-img {
+	content: url("/resources/img/notification white.png");
+}
+li.active a .notification-img {
+	content: url("/resources/img/notification.png");
+}
