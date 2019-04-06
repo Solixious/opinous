@@ -8,8 +8,11 @@ public class URLMapping {
 	// User mappings
 	public static final String USER_REGISTRATION = "/registration";
 	public static final String USER_LOGIN = "/login";
+	
 	public static final String USER_HOME = "/";
 	public static final String USER_HOME_PAGINATED = "/home/page/{page}";
+	public static final String RECENT = "/recent";
+	public static final String RECENT_PAGINATED = "/recent/page/{page}";
 
 	// Room mappings
 	public static final String ROOM = "/room";

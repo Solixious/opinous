@@ -23,4 +23,5 @@ public class JSPMapping {
     public static final String PROFILE_MY_ROOMS = "profile-my-rooms";
     public static final String PROFILE_FOLLOWERS = "profile-followers";
     public static final String PROFILE_FOLLOWING = "profile-following";
+    public static final String RECENT = "recent";
 }

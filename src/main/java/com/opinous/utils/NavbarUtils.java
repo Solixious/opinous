@@ -10,6 +10,8 @@ public class NavbarUtils {
 			model.addAttribute("isAdminNav", "active");
 		} else if(page.equals(NavConstants.POPULAR)) {
 			model.addAttribute("isPopularNav", "active");
+		} else if(page.equals(NavConstants.RECENT)) {
+			model.addAttribute("isRecentNav", "active");
 		}
 	}
 }
