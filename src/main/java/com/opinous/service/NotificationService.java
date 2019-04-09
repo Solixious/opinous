@@ -8,4 +8,6 @@ import org.springframework.ui.Model;
 public interface NotificationService {
 
 	void sendUINotification(Model model, NotificationType type, String message);
+
+	void saveNotification();
 }
