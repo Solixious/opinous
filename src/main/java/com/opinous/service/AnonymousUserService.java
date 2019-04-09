@@ -1,6 +1,5 @@
 package com.opinous.service;
 
-import com.opinous.model.AnonMap;
 import com.opinous.model.AnonymousUser;
 import com.opinous.model.Room;
 import com.opinous.model.User;

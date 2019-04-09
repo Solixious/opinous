@@ -1,8 +1,8 @@
 package com.opinous.service;
 
+import com.opinous.model.Alias;
 import org.springframework.stereotype.Service;
 
-import com.opinous.model.AnonMap;
 import com.opinous.model.AnonymousUser;
 import com.opinous.model.Room;
 import com.opinous.model.User;
@@ -10,13 +10,13 @@ import com.opinous.model.User;
 import java.util.List;
 
 @Service
-public interface AnonMapService {
+public interface AliasService {
 
-	AnonMap saveAnonMap(AnonymousUser anonymousUser, User user, Room room);
+	Alias saveAlias(AnonymousUser anonymousUser, User user, Room room);
 
-	AnonMap getAnonMapByRoomAndUser(Room room, User user);
+	Alias getAliasByRoomAndUser(Room room, User user);
 
-	List<AnonMap> getAnonMapsInRoom(Room room);
+	List<Alias> getAliasInRoom(Room room);
 
 	List<AnonymousUser> getAnonymousUsersInRoom(Room room);
 }

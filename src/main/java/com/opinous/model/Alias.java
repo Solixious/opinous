@@ -20,7 +20,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AnonMap {
+public class Alias {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

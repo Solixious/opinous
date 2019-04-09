@@ -9,7 +9,7 @@ public interface ReactionRepository extends JpaRepository<Reaction, Long> {
 
 	Long countByPostAndReactionType(Post post, String reactionType);
 
-	Long countByPostAndReactionTypeAndAnonMap_User_Username(Post post, String reactionType, String username);
+	Long countByPostAndReactionTypeAndAlias_User_Username(Post post, String reactionType, String username);
 
-	Reaction findByPostAndReactionTypeAndAnonMap_User_Username(Post post, String reactionType, String username);
+	Reaction findByPostAndReactionTypeAndAlias_User_Username(Post post, String reactionType, String username);
 }

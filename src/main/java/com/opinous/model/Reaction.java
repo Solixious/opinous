@@ -22,8 +22,8 @@ public class Reaction {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "anonMapId")
-	private AnonMap anonMap;
+	@JoinColumn(name = "aliasId")
+	private Alias alias;
 	
 	@ManyToOne
 	@JoinColumn(name = "postId")

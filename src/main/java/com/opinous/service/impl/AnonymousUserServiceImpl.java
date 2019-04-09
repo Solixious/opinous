@@ -4,7 +4,7 @@ import com.opinous.model.AnonymousUser;
 import com.opinous.model.Room;
 import com.opinous.model.User;
 import com.opinous.repository.AnonymousUserRepository;
-import com.opinous.service.AnonMapService;
+import com.opinous.service.AliasService;
 import com.opinous.service.AnonymousUserService;
 import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +22,13 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 	private AnonymousUserRepository anonymousUserRepository;
 
 	@Autowired
-	private AnonMapService anonMapService;
+	private AliasService aliasService;
 
 	@Override
 	public AnonymousUser getAnonymousUser(final User user, final Room room) {
 		PreCondition.checkNotNull(user, "user");
 		PreCondition.checkNotNull(room, "room");
-		return anonMapService.getAnonMapByRoomAndUser(room, user).getAnonymousUser();
+		return aliasService.getAliasByRoomAndUser(room, user).getAnonymousUser();
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 		PreCondition.checkNotNull(room, "room");
 		final List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
 		if(room.getId() != null) {
-			final List<AnonymousUser> anonymousUsersTaken = anonMapService.getAnonymousUsersInRoom(room);
+			final List<AnonymousUser> anonymousUsersTaken = aliasService.getAnonymousUsersInRoom(room);
 			anonymousUsers.removeAll(anonymousUsersTaken);
 		}
 

@@ -28,8 +28,8 @@ public class Post {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "anonMapId")
-	private AnonMap anonMap;
+	@JoinColumn(name = "aliasId")
+	private Alias alias;
 
 	@Lob
 	private String text;

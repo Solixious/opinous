@@ -42,8 +42,8 @@
 	          	<c:forEach items="${posts}" var="post">
 				<div class="media">
 						<div class="media-left">
-							<img src="${post.anonMap.anonymousUser.displayPicture}" class="media-object">
-							<span class="user-name"><c:out value="${post.anonMap.anonymousUser.name}"/></span>
+							<img src="${post.alias.anonymousUser.displayPicture}" class="media-object">
+							<span class="user-name"><c:out value="${post.alias.anonymousUser.name}"/></span>
 						</div>
 						<div class="media-body">
 							<div class="media-date">

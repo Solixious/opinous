@@ -29,7 +29,7 @@ public class Room {
 
 	@ManyToOne
 	@JoinColumn(name = "creatorId")
-	private AnonMap creator;
+	private Alias creator;
 
 	@Lob
 	private String title;

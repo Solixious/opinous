@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class RoomDTO {
 	private Long id;
-	private AnonMap creator;
+	private Alias creator;
 	private String title;
 	private String description;
 	private Integer postCount;

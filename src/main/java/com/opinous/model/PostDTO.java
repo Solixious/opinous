@@ -13,7 +13,7 @@ import lombok.ToString;
 public class PostDTO {
 	private Long id;
 
-	private AnonMap anonMap;
+	private Alias alias;
 
 	private String text;
 

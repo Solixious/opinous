@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.opinous.enums.ReactionType;
-import com.opinous.model.AnonMap;
+import com.opinous.model.Alias;
 import com.opinous.model.AnonymousUser;
 import com.opinous.model.Post;
 import com.opinous.model.Reaction;
 import com.opinous.model.Room;
 import com.opinous.model.User;
 import com.opinous.repository.ReactionRepository;
-import com.opinous.service.AnonMapService;
+import com.opinous.service.AliasService;
 import com.opinous.service.AnonymousUserService;
 import com.opinous.service.PostService;
 import com.opinous.service.ReactionService;
@@ -34,7 +34,7 @@ public class ReactionServiceImpl implements ReactionService {
 	private PostService postService;
 	
 	@Autowired
-	private AnonMapService anonMapService;
+	private AliasService aliasService;
 	
 	@Autowired
 	private SecurityService securityService;
@@ -54,14 +54,14 @@ public class ReactionServiceImpl implements ReactionService {
 			return;
 		}
 		final Reaction reaction = new Reaction();
-		final Room room = post.getAnonMap().getRoom();
+		final Room room = post.getAlias().getRoom();
 		final User user = userService.getLoggedInUser();
-		AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
-		if (anonMap == null) {
+		Alias alias = aliasService.getAliasByRoomAndUser(room, user);
+		if (alias == null) {
 			AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
-			anonMap = anonMapService.saveAnonMap(anonymousUser, user, room);
+			alias = aliasService.saveAlias(anonymousUser, user, room);
 		}
-		reaction.setAnonMap(anonMap);
+		reaction.setAlias(alias);
 		reaction.setPost(post);
 		reaction.setReactionType(reactionType.name());
 		reactionRepository.save(reaction);
@@ -81,7 +81,7 @@ public class ReactionServiceImpl implements ReactionService {
 	public boolean exists(final Post post, final ReactionType reactionType) {
 		PreCondition.checkNotNull(post, "post");
 		PreCondition.checkNotNull(reactionType, "reactionType");
-		return reactionRepository.countByPostAndReactionTypeAndAnonMap_User_Username(post,
+		return reactionRepository.countByPostAndReactionTypeAndAlias_User_Username(post,
 			reactionType.name(), securityService.findLoggedInUsername()) > 0;
 	}
 
@@ -89,7 +89,7 @@ public class ReactionServiceImpl implements ReactionService {
 	public Reaction getReaction(final Post post, final ReactionType reactionType) {
 		PreCondition.checkNotNull(post, "post");
 		PreCondition.checkNotNull(reactionType, "reactionType");
-		return reactionRepository.findByPostAndReactionTypeAndAnonMap_User_Username(post,
+		return reactionRepository.findByPostAndReactionTypeAndAlias_User_Username(post,
 			reactionType.name(), securityService.findLoggedInUsername());
 	}
 

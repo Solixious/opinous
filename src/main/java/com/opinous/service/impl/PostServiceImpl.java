@@ -37,7 +37,7 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public void savePost(final Post post) {
 		PreCondition.checkNotNull(post, "post");
-		final Room room = post.getAnonMap().getRoom();
+		final Room room = post.getAlias().getRoom();
 		room.setUpdateDate(new Date());
 		roomRepository.save(room);
 		postRepository.save(post);
@@ -46,13 +46,13 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostDTO> getPostsByRoom(final Room room) {
 		PreCondition.checkNotNull(room, "room");
-		return convertToPostDto(postRepository.findByAnonMap_Room(room, Sort.by("createDate").descending()));
+		return convertToPostDto(postRepository.findByAlias_Room(room, Sort.by("createDate").descending()));
 	}
 
 	@Override
 	public List<Post> getPostsByUser(final User user) {
 		PreCondition.checkNotNull(user, "user");
-		return postRepository.findByAnonMap_User(user);
+		return postRepository.findByAlias_User(user);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public Long countPostsByRoom(Room room) {
 		PreCondition.checkNotNull(room, "room");
-		return postRepository.countByAnonMap_Room(room);
+		return postRepository.countByAlias_Room(room);
 	}
 
 	private List<PostDTO> convertToPostDto(final List<Post> posts) {
@@ -80,7 +80,7 @@ public class PostServiceImpl implements PostService {
 
 	private void copyFromPostToPostDto(final Post post, final PostDTO postDto) {
 		postDto.setId(post.getId());
-		postDto.setAnonMap(post.getAnonMap());
+		postDto.setAlias(post.getAlias());
 		postDto.setCreateDate(post.getCreateDate());
 		postDto.setText(post.getText());
 		postDto.setUpdateDate(post.getUpdateDate());

@@ -4,12 +4,11 @@ import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
 import com.opinous.constants.Misc;
 import com.opinous.constants.URLMapping;
-import com.opinous.model.AnonMap;
-import com.opinous.model.AnonymousUser;
+import com.opinous.model.Alias;
 import com.opinous.model.Post;
 import com.opinous.model.Room;
 import com.opinous.model.User;
-import com.opinous.service.AnonMapService;
+import com.opinous.service.AliasService;
 import com.opinous.service.AnonymousUserService;
 import com.opinous.service.PostService;
 import com.opinous.service.RoomService;
@@ -51,7 +50,7 @@ public class RoomController {
 	private PostService postService;
 
 	@Autowired
-	private AnonMapService anonMapService;
+	private AliasService aliasService;
 
 	@Autowired
 	private RoomValidator roomValidator;
@@ -95,9 +94,9 @@ public class RoomController {
 		if (securityService.isUser()) {
 			final User user = userService.getLoggedInUser();
 			model.addAttribute(AttributeName.POST_FORM, new Post());
-			final AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
-			if (anonMap != null) {
-				model.addAttribute(AttributeName.POSTING_AS, anonMap);
+			final Alias alias = aliasService.getAliasByRoomAndUser(room, user);
+			if (alias != null) {
+				model.addAttribute(AttributeName.POSTING_AS, alias);
 			}
 		}
 		return JSPMapping.ROOM_DETAILS;
@@ -116,14 +115,14 @@ public class RoomController {
 
 		final User user = userService.getLoggedInUser();
 		final Room room = roomService.getRoomById(roomId);
-		AnonMap anonMap = anonMapService.getAnonMapByRoomAndUser(room, user);
+		Alias alias = aliasService.getAliasByRoomAndUser(room, user);
 
-		if (anonMap == null) {
-			anonMap = anonMapService.saveAnonMap(anonymousUserService.generateAnonymousUser(room), user,
+		if (alias == null) {
+			alias = aliasService.saveAlias(anonymousUserService.generateAnonymousUser(room), user,
 				room);
 		}
 
-		post.setAnonMap(anonMap);
+		post.setAlias(alias);
 		postService.savePost(post);
 		return Misc.REDIRECT + URLMapping.ROOM + "/" + room.getId();
 	}

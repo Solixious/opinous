@@ -2,13 +2,13 @@ package com.opinous.service.impl;
 
 import com.opinous.constants.AppConfigDefaultValues;
 import com.opinous.constants.AppConfigKeys;
-import com.opinous.model.AnonMap;
+import com.opinous.model.Alias;
 import com.opinous.model.AnonymousUser;
 import com.opinous.model.Post;
 import com.opinous.model.Room;
 import com.opinous.model.RoomDTO;
 import com.opinous.model.User;
-import com.opinous.repository.AnonMapRepository;
+import com.opinous.repository.AliasRepository;
 import com.opinous.repository.RoomRepository;
 import com.opinous.service.AnonymousUserService;
 import com.opinous.service.AppConfigService;
@@ -35,7 +35,7 @@ import org.springframework.stereotype.Service;
 public class RoomServiceImpl implements RoomService {
 
 	@Autowired
-	private AnonMapRepository anonMapRepository;
+	private AliasRepository aliasRepository;
 
 	@Autowired
 	private AnonymousUserService anonymousUserService;
@@ -57,14 +57,14 @@ public class RoomServiceImpl implements RoomService {
 		PreCondition.checkNotNull(room, "room");
 		final AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
 		final User user = userService.getLoggedInUser();
-		final AnonMap anonMap = new AnonMap();
-		anonMap.setAnonymousUser(anonymousUser);
-		anonMap.setUser(user);
-		anonMap.setRoom(room);
+		final Alias alias = new Alias();
+		alias.setAnonymousUser(anonymousUser);
+		alias.setUser(user);
+		alias.setRoom(room);
 		roomRepository.save(room);
-		anonMapRepository.save(anonMap);
+		aliasRepository.save(alias);
 
-		room.setCreator(anonMap);
+		room.setCreator(alias);
 		roomRepository.save(room);
 	}
 
@@ -95,7 +95,7 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public Set<Room> getDistinctRoomsFromPosts(List<Post> posts) {
 		PreCondition.checkNotNull(posts, "posts");
-		return  posts.stream().map(p -> p.getAnonMap().getRoom()).collect(Collectors.toSet());
+		return  posts.stream().map(p -> p.getAlias().getRoom()).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class RoomServiceImpl implements RoomService {
 		roomDto.setUpdateDate(room.getUpdateDate());
 		roomDto.setUpdatedTimeAgo(PrettyTimeUtils.convertToTimeAgo(room.getUpdateDate()));
 		roomDto.setCreatedTimeAgo(PrettyTimeUtils.convertToTimeAgo(room.getCreateDate()));
-		final int participantCount = (int) anonMapRepository.countByRoom(room).longValue();
+		final int participantCount = (int) aliasRepository.countByRoom(room).longValue();
 		final int postCount = (int) postService.countPostsByRoom(room).longValue();
 		roomDto.setParticipantCount(participantCount);
 		roomDto.setPostCount(postCount);
