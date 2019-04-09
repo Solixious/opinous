@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 public class NotificationServiceImpl implements NotificationService {
 
 	@Override
-	public void notify(Model model, final NotificationType type, final String message) {
+	public void sendUINotification(Model model, final NotificationType type, final String message) {
 		PreCondition.checkNotNull(model, "model");
 		PreCondition.checkNotNull(type, "type");
 		PreCondition.checkNotNull(message, "message");

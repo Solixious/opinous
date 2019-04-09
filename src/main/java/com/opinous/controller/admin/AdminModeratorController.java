@@ -66,7 +66,7 @@ public class AdminModeratorController {
 			final RoleConst[] roles = new RoleConst[] { RoleConst.USER_ROLE, RoleConst.MODERATOR_ROLE };
 			userService.saveUser(userForm, roles);
 			model.addAttribute(AttributeName.USER_FORM, new User());
-			notificationService.notify(model, NotificationType.success, "Created new moderator successfully!");
+			notificationService.sendUINotification(model, NotificationType.success, "Created new moderator successfully!");
 			return JSPMapping.ADMIN_NEW_MODERATOR;
 		} else {
 			log.error("Illegal attempt to access admin page");

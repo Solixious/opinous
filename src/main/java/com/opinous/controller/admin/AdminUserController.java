@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -82,7 +81,7 @@ public class AdminUserController {
 
 			userService.saveUser(userForm);
 			model.addAttribute(AttributeName.USER_FORM, new User());
-			notificationService.notify(model, NotificationType.success, "Created new user successfully!");
+			notificationService.sendUINotification(model, NotificationType.success, "Created new user successfully!");
 			return JSPMapping.ADMIN_NEW_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -135,7 +134,7 @@ public class AdminUserController {
 			final User user = userService.findById(updateUser.getId());
 			userService.copyNecessaryUpdates(updateUser, user);
 			userService.updateUser(user);
-			notificationService.notify(model, NotificationType.success, "User details updated successfully!");
+			notificationService.sendUINotification(model, NotificationType.success, "User details updated successfully!");
 			return JSPMapping.ADMIN_UPDATE_DELETE_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");
@@ -149,7 +148,7 @@ public class AdminUserController {
 		if (securityService.isAdmin()) {
 	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			userService.delete(userService.findById(updateUser.getId()));
-			notificationService.notify(model, NotificationType.success, "The user concerned deleted successfully!");
+			notificationService.sendUINotification(model, NotificationType.success, "The user concerned deleted successfully!");
 			return "redirect:" + URLMapping.ADMIN + URLMapping.LIST_USER;
 		} else {
 			log.error("Illegal attempt to access admin page");

@@ -38,4 +38,13 @@ public class AppConfiguration {
 
 	@UpdateTimestamp
 	private Date updateDate;
+
+	public AppConfiguration() {
+
+	}
+
+	public AppConfiguration(final String key, final String value) {
+		this.key = key;
+		this.value = value;
+	}
 }

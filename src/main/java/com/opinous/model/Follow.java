@@ -37,4 +37,14 @@ public class Follow {
 
     @UpdateTimestamp
     private Date updateDate;
+
+    public Follow() {
+
+    }
+
+    public Follow(final User follower, final User following) {
+        this.follower = follower;
+        this.following = following;
+
+    }
 }

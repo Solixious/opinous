@@ -29,16 +29,11 @@ public class FollowServiceImpl implements FollowService {
     public void follow(final User user) {
         PreCondition.checkNotNull(user, "user");
         final User currentUser = userService.getLoggedInUser();
-        final Follow follow = new Follow();
-        
         if(exists(currentUser, user)) {
         	log.warn("The follow entry already exists. currentUser: {}, user: {}", currentUser, user);
         	return;
         }
-        
-        follow.setFollower(currentUser);
-        follow.setFollowing(user);
-        followRepository.save(follow);
+        followRepository.save(new Follow(currentUser, user));
     }
 
     @Override
@@ -54,15 +49,15 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public List<User> getFollowers(final User user) {
         PreCondition.checkNotNull(user, "user");
-        return followRepository.findByFollowing(user).stream().map(
-            u -> u.getFollower()).collect(Collectors.toList());
+        return followRepository.findByFollowing(user).stream().map(Follow::getFollower)
+            .collect(Collectors.toList());
     }
 
     @Override
     public List<User> getFollowing(final User user) {
         PreCondition.checkNotNull(user, "user");
-        return followRepository.findByFollower(user).stream().map(
-            u -> u.getFollowing()).collect(Collectors.toList());
+        return followRepository.findByFollower(user).stream().map(Follow::getFollowing)
+            .collect(Collectors.toList());
     }
     
     @Override

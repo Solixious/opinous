@@ -3,7 +3,6 @@ package com.opinous.service.impl;
 import com.opinous.constants.AppConfigDefaultValues;
 import com.opinous.constants.AppConfigKeys;
 import com.opinous.model.Alias;
-import com.opinous.model.AnonymousUser;
 import com.opinous.model.Post;
 import com.opinous.model.Room;
 import com.opinous.model.RoomDTO;
@@ -55,12 +54,8 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public void createRoom(final Room room) {
 		PreCondition.checkNotNull(room, "room");
-		final AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
-		final User user = userService.getLoggedInUser();
-		final Alias alias = new Alias();
-		alias.setAnonymousUser(anonymousUser);
-		alias.setUser(user);
-		alias.setRoom(room);
+		final Alias alias = new Alias(room, anonymousUserService.generateAnonymousUser(room),
+			userService.getLoggedInUser());
 		roomRepository.save(room);
 		aliasRepository.save(alias);
 
@@ -95,7 +90,7 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public Set<Room> getDistinctRoomsFromPosts(List<Post> posts) {
 		PreCondition.checkNotNull(posts, "posts");
-		return  posts.stream().map(p -> p.getAlias().getRoom()).collect(Collectors.toSet());
+		return  posts.stream().map(RoomServiceImpl::getRoomFromPost).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -120,10 +115,12 @@ public class RoomServiceImpl implements RoomService {
 		roomDto.setUpdateDate(room.getUpdateDate());
 		roomDto.setUpdatedTimeAgo(PrettyTimeUtils.convertToTimeAgo(room.getUpdateDate()));
 		roomDto.setCreatedTimeAgo(PrettyTimeUtils.convertToTimeAgo(room.getCreateDate()));
-		final int participantCount = (int) aliasRepository.countByRoom(room).longValue();
-		final int postCount = (int) postService.countPostsByRoom(room).longValue();
-		roomDto.setParticipantCount(participantCount);
-		roomDto.setPostCount(postCount);
+		roomDto.setParticipantCount((int) aliasRepository.countByRoom(room).longValue());
+		roomDto.setPostCount((int) postService.countPostsByRoom(room).longValue());
 		return roomDto;
+	}
+
+	private static Room getRoomFromPost(final Post p) {
+		return p.getAlias().getRoom();
 	}
 }

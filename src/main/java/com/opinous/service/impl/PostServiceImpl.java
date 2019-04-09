@@ -62,14 +62,14 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public Long countPostsByRoom(Room room) {
+	public Long countPostsByRoom(final Room room) {
 		PreCondition.checkNotNull(room, "room");
 		return postRepository.countByAlias_Room(room);
 	}
 
 	private List<PostDTO> convertToPostDto(final List<Post> posts) {
 		PreCondition.checkNotNull(posts, "posts");
-		List<PostDTO> postsDto = new LinkedList<>();
+		final List<PostDTO> postsDto = new LinkedList<>();
 		for(Post post : posts) {
 			PostDTO postDto = new PostDTO();
 			copyFromPostToPostDto(post, postDto);

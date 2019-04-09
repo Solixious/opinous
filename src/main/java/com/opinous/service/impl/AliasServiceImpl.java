@@ -38,12 +38,7 @@ public class AliasServiceImpl implements AliasService {
 		PreCondition.checkNotNull(anonymousUser, "anonymousUser");
 		PreCondition.checkNotNull(user, "user");
 		PreCondition.checkNotNull(room, "room");
-		Alias alias = new Alias();
-		alias.setAnonymousUser(anonymousUser);
-		alias.setUser(user);
-		alias.setRoom(room);
-		alias = aliasRepository.save(alias);
-
+		final Alias alias = aliasRepository.save(new Alias(room, anonymousUser, user));
 		if(alias == null) {
 			log.error("Failed to save the anoMap to the database. "
 				+ "anonymousUser: {}, user: {}, room: {}", anonymousUser, user, room);
@@ -66,7 +61,7 @@ public class AliasServiceImpl implements AliasService {
 	public List<AnonymousUser> getAnonymousUsersInRoom(final Room room) {
 		PreCondition.checkNotNull(room, "room");
 		final List<AnonymousUser> anonymousUsers =
-			getAliasInRoom(room).stream().map(r -> r.getAnonymousUser()).collect(Collectors.toList());
+			getAliasInRoom(room).stream().map(Alias::getAnonymousUser).collect(Collectors.toList());
 
 		if(anonymousUsers == null || anonymousUsers.size() == 0) {
 			log.error("Failed to retrieve anonymousUsers' data from the data base."

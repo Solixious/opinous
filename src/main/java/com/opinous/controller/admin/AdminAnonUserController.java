@@ -68,7 +68,7 @@ public class AdminAnonUserController {
 					.toUriString();
 			userForm.setDisplayPicture(uri);
 			anonymousUserService.saveAnonymousUser(userForm);
-			notificationService.notify(model, NotificationType.success, "Created new anonymous user successfully!");
+			notificationService.sendUINotification(model, NotificationType.success, "Created new anonymous user successfully!");
 	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_NEW_ANON_USER;
 		} else {
@@ -117,7 +117,7 @@ public class AdminAnonUserController {
 				user.setDisplayPicture(uri);
 			}
 			anonymousUserService.saveAnonymousUser(user);
-			notificationService.notify(model, NotificationType.success, "Updated anonymous user details successfully!");
+			notificationService.sendUINotification(model, NotificationType.success, "Updated anonymous user details successfully!");
 	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_UPDATE_ANON_USER;
 		} else {

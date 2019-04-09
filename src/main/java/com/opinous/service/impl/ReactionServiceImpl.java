@@ -58,8 +58,7 @@ public class ReactionServiceImpl implements ReactionService {
 		final User user = userService.getLoggedInUser();
 		Alias alias = aliasService.getAliasByRoomAndUser(room, user);
 		if (alias == null) {
-			AnonymousUser anonymousUser = anonymousUserService.generateAnonymousUser(room);
-			alias = aliasService.saveAlias(anonymousUser, user, room);
+			alias = aliasService.saveAlias(anonymousUserService.generateAnonymousUser(room), user, room);
 		}
 		reaction.setAlias(alias);
 		reaction.setPost(post);
@@ -105,8 +104,7 @@ public class ReactionServiceImpl implements ReactionService {
 		PreCondition.checkNotNull(post, "post");
 		final Map<String, Long> reactionMap = new HashMap<>();
 		for(ReactionType reactionType : ReactionType.values()) {
-			final long count = getReactionCount(post, reactionType);
-			reactionMap.put(reactionType.name(), count);
+			reactionMap.put(reactionType.name(), getReactionCount(post, reactionType));
 		}
 		return reactionMap;
 	}

@@ -21,17 +21,10 @@ public class AppConfigServiceImpl implements AppConfigService {
 		PreCondition.checkNotNull(key, "key");
 		AppConfiguration appConfig = appConfigRepository.findByKey(key);
 		if(appConfig == null) {
-
-			appConfig = new AppConfiguration();
-			appConfig.setKey(key);
-			appConfig.setValue(defaultValue);
-
-			appConfigRepository.save(appConfig);
+			appConfigRepository.save(new AppConfiguration(key, defaultValue));
 			log.info("Added new app config with key: {}, value: {}", key, defaultValue);
-
 			return defaultValue;
 		}
-
 		return appConfig.getValue();
 	}
 }

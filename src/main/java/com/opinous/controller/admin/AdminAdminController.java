@@ -67,7 +67,7 @@ public class AdminAdminController {
 			final RoleConst[] roles = new RoleConst[] { RoleConst.USER_ROLE, RoleConst.MODERATOR_ROLE, RoleConst.ADMIN_ROLE };
 			userService.saveUser(userForm, roles);
 			model.addAttribute(AttributeName.USER_FORM, new User());
-			notificationService.notify(model, NotificationType.success, "New administrator created successfully!");
+			notificationService.sendUINotification(model, NotificationType.success, "New administrator created successfully!");
 	        NavbarUtils.setNavPageActive(model, NavConstants.ADMIN);
 			return JSPMapping.ADMIN_NEW_ADMIN;
 		} else {

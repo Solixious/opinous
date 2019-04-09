@@ -43,4 +43,14 @@ public class Alias {
 
 	@UpdateTimestamp
 	private Date updateDate;
+
+	public Alias() {
+
+	}
+
+	public Alias(final Room room, final AnonymousUser anonymousUser, final User user) {
+		this.room = room;
+		this.anonymousUser = anonymousUser;
+		this.user = user;
+	}
 }
