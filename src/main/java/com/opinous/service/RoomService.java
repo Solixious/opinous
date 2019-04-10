@@ -14,19 +14,49 @@ import org.springframework.stereotype.Service;
 @Service
 public interface RoomService {
 
+	/**
+	 * @param room The Room object to be persisted in the database
+	 */
 	void createRoom(Room room);
 
+	/**
+	 * @param roomId The room id of the room id to be retrieved
+	 * @return The Room object of the corresponding room id
+	 */
 	Room getRoomById(Long roomId);
 
+	/**
+	 * @return Get list of all the Rooms
+	 */
 	List<Room> getAllRooms();
-	
+
+	/**
+	 * @param page The Page number
+	 * @return List of paginated Room
+	 */
 	Page<Room> getRooms(int page);
 
+	/**
+	 * @param posts List of Post belonging to various Rooms
+	 * @return Distinct list of Room to which the Posts belonged
+	 */
 	Set<Room> getDistinctRoomsFromPosts(List<Post> posts);
 
+	/**
+	 * @param user The User object
+	 * @return The List of Room created by the provided user
+	 */
 	List<Room> getRoomsForUser(User user);
-	
+
+	/**
+	 * @param rooms List of Room
+	 * @return List of corresponding RoomDTO
+	 */
 	List<RoomDTO> convertToRoomDTO(List<Room> rooms);
-	
+
+	/**
+	 * @param room The Room object
+	 * @return The corresponding RoomDTO object
+	 */
 	RoomDTO convertToRoomDTO(Room room);
 }
