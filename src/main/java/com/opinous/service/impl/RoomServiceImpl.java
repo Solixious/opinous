@@ -2,6 +2,7 @@ package com.opinous.service.impl;
 
 import com.opinous.constants.AppConfigDefaultValues;
 import com.opinous.constants.AppConfigKeys;
+import com.opinous.exception.RoomOverloadedException;
 import com.opinous.model.Alias;
 import com.opinous.model.Post;
 import com.opinous.model.Room;
@@ -52,7 +53,7 @@ public class RoomServiceImpl implements RoomService {
 	private PostService postService;
 
 	@Override
-	public void createRoom(final Room room) {
+	public void createRoom(final Room room) throws RoomOverloadedException {
 		PreCondition.checkNotNull(room, "room");
 		final Alias alias = new Alias(room, anonymousUserService.generateAnonymousUser(room),
 			userService.getLoggedInUser());

@@ -1,5 +1,6 @@
 package com.opinous.service;
 
+import com.opinous.exception.RoomOverloadedException;
 import com.opinous.model.Post;
 import com.opinous.model.Room;
 import com.opinous.model.RoomDTO;
@@ -17,7 +18,7 @@ public interface RoomService {
 	/**
 	 * @param room The Room object to be persisted in the database
 	 */
-	void createRoom(Room room);
+	void createRoom(Room room) throws RoomOverloadedException;
 
 	/**
 	 * @param roomId The room id of the room id to be retrieved

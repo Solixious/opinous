@@ -1,5 +1,6 @@
 package com.opinous.service.impl;
 
+import com.opinous.exception.RoomOverloadedException;
 import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,8 @@ public class ReactionServiceImpl implements ReactionService {
 	private AnonymousUserService anonymousUserService;
 		
 	@Override
-	public void addReaction(final ReactionType reactionType, final String postId) {
+	public void addReaction(final ReactionType reactionType, final String postId) throws
+		RoomOverloadedException  {
 		PreCondition.checkNotNull(postId, "postId");
 		PreCondition.checkNotNull(reactionType, "reactionType");
 		final Post post = postService.getPost(Long.parseLong(postId));

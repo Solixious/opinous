@@ -1,5 +1,6 @@
 package com.opinous.service;
 
+import com.opinous.exception.RoomOverloadedException;
 import com.opinous.model.AnonymousUser;
 import com.opinous.model.Room;
 import com.opinous.model.User;
@@ -21,7 +22,7 @@ public interface AnonymousUserService {
 	 * @param room The Room in which we'd like to generate an anonymous user.
 	 * @return The AnonymousUser object that isn't used yet in the provided room.
 	 */
-	AnonymousUser generateAnonymousUser(Room room);
+	AnonymousUser generateAnonymousUser(Room room) throws RoomOverloadedException;
 
 	/**
 	 * @param name The name of the AnonymousUser

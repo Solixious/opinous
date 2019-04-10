@@ -4,6 +4,7 @@ import com.opinous.constants.AttributeName;
 import com.opinous.constants.JSPMapping;
 import com.opinous.constants.Misc;
 import com.opinous.constants.URLMapping;
+import com.opinous.exception.RoomOverloadedException;
 import com.opinous.model.Alias;
 import com.opinous.model.Post;
 import com.opinous.model.Room;
@@ -70,7 +71,7 @@ public class RoomController {
 
 	@PostMapping(value = URLMapping.ROOM_NEW)
 	public String newRoom(@ModelAttribute(AttributeName.ROOM_FORM) Room room, BindingResult bindingResult,
-			Model model) {
+			Model model) throws RoomOverloadedException {
 		roomValidator.validate(room, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return JSPMapping.CREATE_NEW_ROOM;
@@ -105,7 +106,7 @@ public class RoomController {
 	@PostMapping(value = "/{roomId}")
 	public String postReply(@ModelAttribute(AttributeName.POST_FORM) Post post, @PathVariable("roomId") Long roomId,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws RoomOverloadedException  {
 		postValidator.validate(post, bindingResult);
 		if (bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.post", bindingResult);

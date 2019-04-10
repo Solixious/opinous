@@ -1,5 +1,6 @@
 package com.opinous.service;
 
+import com.opinous.exception.RoomOverloadedException;
 import com.opinous.model.Post;
 import com.opinous.model.Reaction;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public interface ReactionService {
 	 * @param reactionType The type of reaction to be added
 	 * @param postId The post id of the post to which the reaction should be added
 	 */
-	void addReaction(ReactionType reactionType, String postId);
+	void addReaction(ReactionType reactionType, String postId) throws RoomOverloadedException;
 
 	/**
 	 * @param reactionType The type of reaction to be removed

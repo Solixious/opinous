@@ -1,5 +1,6 @@
 package com.opinous.service.impl;
 
+import com.opinous.exception.RoomOverloadedException;
 import com.opinous.model.AnonymousUser;
 import com.opinous.model.Room;
 import com.opinous.model.User;
@@ -32,7 +33,7 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 	}
 
 	@Override
-	public AnonymousUser generateAnonymousUser(final Room room) {
+	public AnonymousUser generateAnonymousUser(final Room room) throws RoomOverloadedException {
 		PreCondition.checkNotNull(room, "room");
 		final List<AnonymousUser> anonymousUsers = anonymousUserRepository.findAll();
 		if(room.getId() != null) {
@@ -42,7 +43,7 @@ public class AnonymousUserServiceImpl implements AnonymousUserService {
 
 		if(anonymousUsers.size() == 0) {
 			log.error("There aren't any anonymous users left for room: {}", room);
-			return null;
+			throw new RoomOverloadedException("There aren't any anonymous users left for the room.");
 		}
 
 		return anonymousUsers.get(new Random().nextInt(anonymousUsers.size()));

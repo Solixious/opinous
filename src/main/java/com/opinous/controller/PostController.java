@@ -1,5 +1,6 @@
 package com.opinous.controller;
 
+import com.opinous.exception.RoomOverloadedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class PostController {
 
     @PostMapping("/like/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void likePost(@PathVariable String id) {
+    public void likePost(@PathVariable String id) throws RoomOverloadedException {
         if(securityService.isUser()) {
             reactionService.addReaction(ReactionType.LIKE, id);
         }
@@ -32,7 +33,7 @@ public class PostController {
 
     @PostMapping("/dislike/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void dislikePost(@PathVariable String id) {
+    public void dislikePost(@PathVariable String id) throws RoomOverloadedException {
         if(securityService.isUser()) {
             reactionService.addReaction(ReactionType.DISLIKE, id);
         }
