@@ -1,6 +1,7 @@
 package com.opinous.service;
 
 import com.opinous.enums.NotificationType;
+import com.opinous.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -14,5 +15,5 @@ public interface NotificationService {
 	 */
 	void sendUINotification(Model model, NotificationType type, String message);
 
-	void saveNotification();
+	void saveNotification(User user, String text, String url, String image);
 }

@@ -1,9 +1,11 @@
 package com.opinous.service.impl;
 
+import com.opinous.constants.URLMapping;
 import com.opinous.model.Follow;
 import com.opinous.model.User;
 import com.opinous.repository.FollowRepository;
 import com.opinous.service.FollowService;
+import com.opinous.service.NotificationService;
 import com.opinous.service.UserService;
 import com.opinous.utils.PreCondition;
 
@@ -25,6 +27,9 @@ public class FollowServiceImpl implements FollowService {
     @Autowired
     private FollowRepository followRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Override
     public void follow(final User user) {
         PreCondition.checkNotNull(user, "user");
@@ -34,6 +39,7 @@ public class FollowServiceImpl implements FollowService {
         	return;
         }
         followRepository.save(new Follow(currentUser, user));
+        sendFollowNotification(currentUser, user);
     }
 
     @Override
@@ -88,4 +94,11 @@ public class FollowServiceImpl implements FollowService {
 		PreCondition.checkNotNull(user, "user");
 		return followRepository.countByFollowing(user);
 	}
+
+	private void sendFollowNotification(final User currentUser, final User user) {
+    final String notificationText = currentUser.getUsername() + " followed you.";
+    final String notificationUrl = URLMapping.PROFILE + "/" + currentUser.getUsername();
+    final String notificationImage = currentUser.getProfilePicture();
+    notificationService.saveNotification(user, notificationText, notificationUrl, notificationImage);
+  }
 }

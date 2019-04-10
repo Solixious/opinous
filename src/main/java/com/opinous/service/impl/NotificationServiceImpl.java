@@ -1,6 +1,8 @@
 package com.opinous.service.impl;
 
 import com.opinous.enums.NotificationType;
+import com.opinous.model.Notification;
+import com.opinous.model.User;
 import com.opinous.repository.NotificationRepository;
 import com.opinous.service.NotificationService;
 import com.opinous.utils.PreCondition;
@@ -26,7 +28,11 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public void saveNotification() {
-
+	public void saveNotification(final User user, final String text, final String url,
+		final String image) {
+		PreCondition.checkNotNull(user, "user");
+		PreCondition.checkNotNull(text, "text");
+		PreCondition.checkNotNull(url, "url");
+		notificationRepository.save(new Notification(user, text, url, image));
 	}
 }
