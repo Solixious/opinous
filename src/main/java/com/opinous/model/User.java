@@ -5,29 +5,20 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import com.opinous.model.common.CommonProperties;
 
-import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @ToString
-public class User {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+public class User extends CommonProperties {
 
 	private String email;
 
@@ -48,19 +39,13 @@ public class User {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
-	@CreationTimestamp
-	private Date createDate;
-
-	@UpdateTimestamp
-	private Date updateDate;
-
 	public User() {
 
 	}
 
 	public User(Long id, String email, String username, String password, String confirmPassword, String firstName,
 			String lastName, Set<Role> roles) {
-		this.id = id;
+		setId(id);
 		this.email = email;
 		this.username = username;
 		this.password = password;
@@ -70,6 +55,6 @@ public class User {
 		this.roles = roles;
 	}
 	public User getCopy() {
-		return new User(id, email, username, password, confirmPassword, firstName, lastName, roles);
+		return new User(getId(), email, username, password, confirmPassword, firstName, lastName, roles);
 	}
 }

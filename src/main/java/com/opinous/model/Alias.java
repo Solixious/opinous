@@ -1,16 +1,10 @@
 package com.opinous.model;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import com.opinous.model.common.CommonProperties;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,11 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Alias {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+public class Alias extends CommonProperties {
 
 	@ManyToOne
 	@JoinColumn(name = "roomId")
@@ -37,12 +27,6 @@ public class Alias {
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	private User user;
-
-	@CreationTimestamp
-	private Date createDate;
-
-	@UpdateTimestamp
-	private Date updateDate;
 
 	public Alias() {
 

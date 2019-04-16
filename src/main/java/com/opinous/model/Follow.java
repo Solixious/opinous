@@ -3,26 +3,18 @@ package com.opinous.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.util.Date;
+
+import com.opinous.model.common.CommonProperties;
 
 @Entity
 @Getter
 @Setter
 @ToString
-public class Follow {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Follow extends CommonProperties {
 
     @ManyToOne
     @JoinColumn(name = "followerId")
@@ -31,12 +23,6 @@ public class Follow {
     @ManyToOne
     @JoinColumn(name = "followingId")
     private User following;
-
-    @CreationTimestamp
-    private Date createDate;
-
-    @UpdateTimestamp
-    private Date updateDate;
 
     public Follow() {
 

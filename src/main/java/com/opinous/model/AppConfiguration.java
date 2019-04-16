@@ -1,15 +1,9 @@
 package com.opinous.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import com.opinous.model.common.CommonProperties;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,11 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AppConfiguration {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+public class AppConfiguration extends CommonProperties {
 
 	@Column(name = "confKey")
 	private String key;
@@ -32,12 +22,6 @@ public class AppConfiguration {
 	private String value;
 
 	private String description;
-
-	@CreationTimestamp
-	private Date createDate;
-
-	@UpdateTimestamp
-	private Date updateDate;
 
 	public AppConfiguration() {
 
