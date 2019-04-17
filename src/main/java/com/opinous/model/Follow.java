@@ -8,13 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.opinous.model.common.CommonProperties;
+import com.opinous.model.common.BaseEntity;
 
 @Entity
 @Getter
 @Setter
 @ToString
-public class Follow extends CommonProperties {
+public class Follow extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "followerId")

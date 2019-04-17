@@ -1,7 +1,7 @@
 package com.opinous.model;
 
 import com.opinous.enums.NotificationStatus;
-import com.opinous.model.common.CommonProperties;
+import com.opinous.model.common.BaseEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @ToString
-public class Notification extends CommonProperties {
+public class Notification extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "userId")

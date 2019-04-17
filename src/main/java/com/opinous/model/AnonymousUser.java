@@ -6,13 +6,13 @@ import lombok.ToString;
 
 import javax.persistence.Entity;
 
-import com.opinous.model.common.CommonProperties;
+import com.opinous.model.common.BaseEntity;
 
 @Entity
 @Getter
 @Setter
 @ToString
-public class AnonymousUser extends CommonProperties {
+public class AnonymousUser extends BaseEntity {
 
 	private String name;
 	

@@ -10,7 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
-import com.opinous.model.common.CommonProperties;
+import com.opinous.model.common.BaseEntity;
 
 import java.util.Set;
 
@@ -18,7 +18,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class User extends CommonProperties {
+public class User extends BaseEntity {
 
 	private String email;
 

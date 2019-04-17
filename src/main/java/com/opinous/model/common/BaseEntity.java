@@ -18,11 +18,13 @@ import lombok.ToString;
 @Setter
 @ToString
 @MappedSuperclass
-public class CommonProperties {
+public class BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	private boolean isActive = true;
 
 	@CreationTimestamp
 	private Date createDate;

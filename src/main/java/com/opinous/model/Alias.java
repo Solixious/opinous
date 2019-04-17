@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.opinous.model.common.CommonProperties;
+import com.opinous.model.common.BaseEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Alias extends CommonProperties {
+public class Alias extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "roomId")

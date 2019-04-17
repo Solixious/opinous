@@ -3,7 +3,7 @@ package com.opinous.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import com.opinous.model.common.CommonProperties;
+import com.opinous.model.common.BaseEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AppConfiguration extends CommonProperties {
+public class AppConfiguration extends BaseEntity {
 
 	@Column(name = "confKey")
 	private String key;

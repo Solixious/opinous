@@ -7,7 +7,7 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
-import com.opinous.model.common.CommonProperties;
+import com.opinous.model.common.BaseEntity;
 
 import java.util.Set;
 
@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class Role extends CommonProperties {
+public class Role extends BaseEntity {
 
 	private String name;
 

@@ -9,13 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
-import com.opinous.model.common.CommonProperties;
+import com.opinous.model.common.BaseEntity;
 
 @Entity
 @Getter
 @Setter
 @ToString
-public class Room extends CommonProperties {
+public class Room extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "creatorId")
