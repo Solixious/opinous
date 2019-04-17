@@ -127,8 +127,9 @@ $(".room-title").bind('mouseleave', function() {
 
 });
 $(".room-description").bind('mouseover', function() {
-	animateContent($(this), $(this).find('.description-content'), down);
-	
+    if($(this).height() < $(this).find('.description-content').height()) {
+	    animateContent($(this), $(this).find('.description-content'), down);
+	}
 });
 $(".room-description").bind('mouseleave', function() {
 	if($(this).height() < $(this).find('.description-content').height()) {
