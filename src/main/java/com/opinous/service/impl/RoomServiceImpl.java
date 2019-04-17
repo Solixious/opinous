@@ -67,7 +67,7 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public Room getRoomById(final Long roomId) {
 		PreCondition.checkNotNull(roomId, "roomId");
-		return roomRepository.getOne(roomId);
+		return roomRepository.findOne(roomId);
 	}
 
 	@Override

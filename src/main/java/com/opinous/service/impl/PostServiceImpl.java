@@ -58,7 +58,7 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public Post getPost(final Long id) {
 		PreCondition.checkNotNull(id, "id");
-		return postRepository.getOne(id);
+		return postRepository.findOne(id);
 	}
 
 	@Override

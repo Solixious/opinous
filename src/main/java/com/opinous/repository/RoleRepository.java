@@ -1,8 +1,8 @@
 package com.opinous.repository;
 
 import com.opinous.model.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.opinous.repository.common.CustomPagingAndSortRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends CustomPagingAndSortRepository<Role, Long> {
 	Role findByName(String name);
 }

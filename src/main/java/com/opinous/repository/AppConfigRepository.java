@@ -1,9 +1,8 @@
 package com.opinous.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.opinous.model.AppConfiguration;
+import com.opinous.repository.common.CustomPagingAndSortRepository;
 
-public interface AppConfigRepository extends JpaRepository<AppConfiguration, Long>{
+public interface AppConfigRepository extends CustomPagingAndSortRepository<AppConfiguration, Long> {
 	AppConfiguration findByKey(String key);
 }

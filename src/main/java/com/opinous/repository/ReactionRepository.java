@@ -1,11 +1,10 @@
 package com.opinous.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.opinous.model.Post;
 import com.opinous.model.Reaction;
+import com.opinous.repository.common.CustomPagingAndSortRepository;
 
-public interface ReactionRepository extends JpaRepository<Reaction, Long> {
+public interface ReactionRepository extends CustomPagingAndSortRepository<Reaction, Long> {
 
 	Long countByPostAndReactionType(Post post, String reactionType);
 

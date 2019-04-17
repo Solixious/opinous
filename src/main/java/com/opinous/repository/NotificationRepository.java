@@ -1,7 +1,7 @@
 package com.opinous.repository;
 
 import com.opinous.model.Notification;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.opinous.repository.common.CustomPagingAndSortRepository;
 
-public interface NotificationRepository extends JpaRepository<Notification, Long> {
+public interface NotificationRepository extends CustomPagingAndSortRepository<Notification, Long> {
 }

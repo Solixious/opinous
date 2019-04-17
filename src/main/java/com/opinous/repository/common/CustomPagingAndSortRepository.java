@@ -10,19 +10,21 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @NoRepositoryBean
 public interface CustomPagingAndSortRepository<T extends BaseEntity, ID extends Long>
     extends PagingAndSortingRepository<T, ID> {
 
     @Override
     @Query("select e from #{#entityName} e where e.isActive = true")
-    Iterable<T> findAll(Sort sort);
+    List<T> findAll(Sort sort);
 
     @Override
-    @Query("select e from #{#entityName} e where e.enabled = true")
+    @Query("select e from #{#entityName} e where e.isActive = true")
     Page<T> findAll(Pageable pageable);
 
-    @Query("select e from #{#entityName} e where e.id =?1 and e.enabled = true")
+    @Query("select e from #{#entityName} e where e.id =?1 and e.isActive = true")
     T findOne(Long id);
 
     default boolean exists(Long id){
@@ -30,19 +32,19 @@ public interface CustomPagingAndSortRepository<T extends BaseEntity, ID extends 
     }
 
     @Override
-    @Query("select e from #{#entityName} e where e.enabled = true")
-    Iterable<T> findAll();
+    @Query("select e from #{#entityName} e where e.isActive = true")
+    List<T> findAll();
 
-    @Query("select e from #{#entityName} e where e.enabled = true")
+    @Query("select e from #{#entityName} e where e.isActive = true")
     Iterable<T> findAll(Iterable<ID> iterable);
 
     @Override
-    @Query("select count(e) from #{#entityName} e where e.enabled = true")
+    @Query("select count(e) from #{#entityName} e where e.isActive = true")
     long count();
 
     @Transactional
     @Modifying
-    @Query("update #{#entityName} e set e.enabled=false where e.id=?1 and e.professor = ?#{principal.professor}")
+    @Query("update #{#entityName} e set e.isActive=false where e.id=?1")
     void delete(Long id);
 
     @Override
@@ -61,6 +63,6 @@ public interface CustomPagingAndSortRepository<T extends BaseEntity, ID extends 
     @Override
     @Transactional
     @Modifying
-    @Query("update #{#entityName} e set e.enabled=false where e.professor = ?#{principal.professor}")
+    @Query("update #{#entityName} e set e.isActive=false")
     void deleteAll();
 }
