@@ -24,7 +24,7 @@ public class BaseEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	private boolean isActive = true;
+	private int isActive = 1;
 
 	@CreationTimestamp
 	private Date createDate;
