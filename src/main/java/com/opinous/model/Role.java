@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
 import com.opinous.model.common.BaseEntity;
+import org.hibernate.annotations.Where;
 
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@Where(clause = "is_active=1")
 public class Role extends BaseEntity {
 
 	private String name;

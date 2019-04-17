@@ -6,6 +6,7 @@ import com.opinous.model.common.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @ToString
+@Where(clause = "is_active=1")
 public class Notification extends BaseEntity {
 
     @ManyToOne

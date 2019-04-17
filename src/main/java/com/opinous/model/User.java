@@ -11,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 import com.opinous.model.common.BaseEntity;
+import org.hibernate.annotations.Where;
 
 import java.util.Set;
 
@@ -18,6 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@Where(clause = "is_active=1")
 public class User extends BaseEntity {
 
 	private String email;
