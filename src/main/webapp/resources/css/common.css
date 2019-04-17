@@ -9,10 +9,10 @@ body {
   float: left;
   background: repeating-linear-gradient(
     135deg,
-    #101010,
-    #202020 2px,
-    #202020 3px,
-    #101010 4px
+    #202020,
+    #303030 2px,
+    #303030 3px,
+    #202020 4px
   );
 }
 
