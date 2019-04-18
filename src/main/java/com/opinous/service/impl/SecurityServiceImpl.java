@@ -1,6 +1,7 @@
 package com.opinous.service.impl;
 
 import com.opinous.enums.RoleConst;
+import com.opinous.model.CustomUserDetail;
 import com.opinous.service.SecurityService;
 import com.opinous.utils.PreCondition;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +23,9 @@ public class SecurityServiceImpl implements SecurityService {
 
 	@Override
 	public String findLoggedInUsername() {
-		final Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (userDetails instanceof UserDetails) {
-			return ((UserDetails) userDetails).getUsername();
+		final Object userDetails = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (userDetails instanceof CustomUserDetail) {
+			return ((CustomUserDetail) userDetails).getUsername();
 		}
 		return null;
 	}
@@ -34,7 +34,7 @@ public class SecurityServiceImpl implements SecurityService {
 	public void autologin(final String username, final String password) {
 		PreCondition.checkNotNull(username, "username");
 		PreCondition.checkNotNull(password, "password");
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+		final CustomUserDetail userDetails = (CustomUserDetail) userDetailsService.loadUserByUsername(username);
 		final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				userDetails, password, userDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

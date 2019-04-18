@@ -1,5 +1,6 @@
 package com.opinous.service.impl;
 
+import com.opinous.model.CustomUserDetail;
 import com.opinous.model.Role;
 import com.opinous.model.User;
 import com.opinous.repository.UserRepository;
@@ -8,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,14 +26,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+	public CustomUserDetail loadUserByUsername(final String username) throws UsernameNotFoundException {
 		PreCondition.checkNotNull(username, "username");
 		final User user = userRepository.findByUsername(username);
 		final Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		for (Role role : user.getRoles()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+
+		final CustomUserDetail userDetail = new CustomUserDetail(user.getUsername(), user.getPassword(),
 				grantedAuthorities);
+		userDetail.setFirstName(user.getFirstName());
+		userDetail.setLastName(user.getLastName());
+		return userDetail;
 	}
 }
