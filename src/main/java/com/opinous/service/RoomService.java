@@ -3,7 +3,7 @@ package com.opinous.service;
 import com.opinous.exception.RoomOverloadedException;
 import com.opinous.model.Post;
 import com.opinous.model.Room;
-import com.opinous.model.RoomDTO;
+import com.opinous.model.dto.RoomDTO;
 
 import java.util.List;
 import java.util.Set;

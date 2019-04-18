@@ -5,7 +5,7 @@ import com.opinous.constants.JSPMapping;
 import com.opinous.constants.NavConstants;
 import com.opinous.constants.URLMapping;
 import com.opinous.model.Room;
-import com.opinous.model.RoomDTO;
+import com.opinous.model.dto.RoomDTO;
 import com.opinous.model.User;
 import com.opinous.service.RoomService;
 import com.opinous.service.SecurityService;

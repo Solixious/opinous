@@ -3,7 +3,9 @@ package com.opinous.model;
 import com.opinous.enums.NotificationStatus;
 import com.opinous.model.common.BaseEntity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Where;
@@ -16,6 +18,8 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Where(clause = "is_active=1")
 public class Notification extends BaseEntity {
 
@@ -30,16 +34,4 @@ public class Notification extends BaseEntity {
     private String image;
 
     private NotificationStatus notificationStatus;
-
-    public Notification() {
-
-    }
-
-    public Notification(final User user, final String text, final String url, final String image) {
-        this.user = user;
-        this.text = text;
-        this.url = url;
-        this.image = image;
-        this.notificationStatus = NotificationStatus.unread;
-    }
 }

@@ -6,7 +6,9 @@ import javax.persistence.ManyToOne;
 
 import com.opinous.model.common.BaseEntity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Where;
@@ -15,6 +17,8 @@ import org.hibernate.annotations.Where;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Where(clause = "is_active=1")
 public class Alias extends BaseEntity {
 
@@ -29,14 +33,4 @@ public class Alias extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	private User user;
-
-	public Alias() {
-
-	}
-
-	public Alias(final Room room, final AnonymousUser anonymousUser, final User user) {
-		this.room = room;
-		this.anonymousUser = anonymousUser;
-		this.user = user;
-	}
 }

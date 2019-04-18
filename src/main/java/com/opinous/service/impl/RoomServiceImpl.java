@@ -6,7 +6,7 @@ import com.opinous.exception.RoomOverloadedException;
 import com.opinous.model.Alias;
 import com.opinous.model.Post;
 import com.opinous.model.Room;
-import com.opinous.model.RoomDTO;
+import com.opinous.model.dto.RoomDTO;
 import com.opinous.model.User;
 import com.opinous.repository.AliasRepository;
 import com.opinous.repository.RoomRepository;
@@ -84,7 +84,8 @@ public class RoomServiceImpl implements RoomService {
 
 		return roomRepository.findAll(PageRequest.of(page, Integer.parseInt(appConfigService
 				.getAppConfig(AppConfigKeys.HOME_PAGE_ROOM_COUNT,
-					AppConfigDefaultValues.HOME_PAGE_ROOM_COUNT_DEFAULT_VALUE)),
+					AppConfigDefaultValues.HOME_PAGE_ROOM_COUNT_DEFAULT_VALUE, "No. of rooms in "
+						+ "home page")),
 			Sort.by(Sort.Order.desc("updateDate"))));
 	}
 

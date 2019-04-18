@@ -5,7 +5,9 @@ import javax.persistence.Entity;
 
 import com.opinous.model.common.BaseEntity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Where;
@@ -14,6 +16,8 @@ import org.hibernate.annotations.Where;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Where(clause = "is_active=1")
 public class AppConfiguration extends BaseEntity {
 
@@ -24,13 +28,4 @@ public class AppConfiguration extends BaseEntity {
 	private String value;
 
 	private String description;
-
-	public AppConfiguration() {
-
-	}
-
-	public AppConfiguration(final String key, final String value) {
-		this.key = key;
-		this.value = value;
-	}
 }

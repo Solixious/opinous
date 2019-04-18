@@ -1,6 +1,8 @@
 package com.opinous.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -19,6 +21,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Where(clause = "is_active=1")
 public class User extends BaseEntity {
 
@@ -40,10 +44,6 @@ public class User extends BaseEntity {
 	@ManyToMany
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
-
-	public User() {
-
-	}
 
 	public User(Long id, String email, String username, String password, String confirmPassword, String firstName,
 			String lastName, Set<Role> roles) {

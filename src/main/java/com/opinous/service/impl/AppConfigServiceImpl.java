@@ -17,11 +17,11 @@ public class AppConfigServiceImpl implements AppConfigService {
 	private AppConfigRepository appConfigRepository;
 	
 	@Override
-	public String getAppConfig(final String key, final String defaultValue) {
+	public String getAppConfig(final String key, final String defaultValue, final String description) {
 		PreCondition.checkNotNull(key, "key");
 		AppConfiguration appConfig = appConfigRepository.findByKey(key);
 		if(appConfig == null) {
-			appConfigRepository.save(new AppConfiguration(key, defaultValue));
+			appConfigRepository.save(new AppConfiguration(key, defaultValue, description));
 			log.info("Added new app config with key: {}, value: {}", key, defaultValue);
 			return defaultValue;
 		}

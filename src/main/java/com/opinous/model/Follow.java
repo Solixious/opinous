@@ -1,6 +1,8 @@
 package com.opinous.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -15,6 +17,8 @@ import org.hibernate.annotations.Where;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Where(clause = "is_active=1")
 public class Follow extends BaseEntity {
 
@@ -25,14 +29,4 @@ public class Follow extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "followingId")
     private User following;
-
-    public Follow() {
-
-    }
-
-    public Follow(final User follower, final User following) {
-        this.follower = follower;
-        this.following = following;
-
-    }
 }

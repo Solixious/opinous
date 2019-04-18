@@ -6,7 +6,7 @@ import com.opinous.model.User;
 import org.springframework.stereotype.Service;
 
 import com.opinous.model.Post;
-import com.opinous.model.PostDTO;
+import com.opinous.model.dto.PostDTO;
 import com.opinous.model.Room;
 
 @Service

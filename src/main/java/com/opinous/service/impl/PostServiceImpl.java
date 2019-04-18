@@ -15,7 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.opinous.model.Post;
-import com.opinous.model.PostDTO;
+import com.opinous.model.dto.PostDTO;
 import com.opinous.model.Room;
 import com.opinous.repository.PostRepository;
 import com.opinous.repository.RoomRepository;

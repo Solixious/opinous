@@ -10,5 +10,5 @@ public interface AppConfigService {
 	 * @param defaultValue The default value of the app configuration
 	 * @return The value of the app configuration to be used
 	 */
-	String getAppConfig(String key, String defaultValue);
+	String getAppConfig(String key, String defaultValue, String description);
 }

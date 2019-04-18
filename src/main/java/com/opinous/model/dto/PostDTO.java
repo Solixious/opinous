@@ -1,8 +1,9 @@
-package com.opinous.model;
+package com.opinous.model.dto;
 
 import java.util.Date;
 import java.util.Map;
 
+import com.opinous.model.Alias;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
