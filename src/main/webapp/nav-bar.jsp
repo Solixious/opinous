@@ -19,6 +19,12 @@
     </ul>
     <button class="nav-button-primary" onclick="window.location='${contextPath}/room/new'">New</button>
     <ul class="nav navbar-nav float-right">
+    <li>
+        <form id="searchForm" method="GET" action="${contextPath}/search">
+            <input type="text" id="search" placeholder="Search"/>
+            <img class="search-img"/>
+        </form>
+    </li>
     <c:choose>
         <c:when test="${pageContext.request.userPrincipal.name != null}">
             <li><a href="${contextPath}/profile/${pageContext.request.userPrincipal.name}"><span class="glyphicon glyphicon-user"></span>Welcome <c:out value="${pageContext.request.userPrincipal.name}"/></a></li>

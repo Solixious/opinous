@@ -152,3 +152,6 @@ function animateContent(ele, ele2, direction) {
         });
 
 }
+$(document).on("click", ".search-img", function() {
+	$("#searchForm").submit();
+});

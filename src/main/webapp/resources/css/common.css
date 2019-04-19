@@ -551,3 +551,18 @@ li.active a .recent-img {
 li.active a .notification-img {
 	content: url("/resources/img/notification.png");
 }
+#search {
+    display: inline-block;
+    margin: 15px 15px 23px 15px;
+    padding: 2px 8px;
+    border: none;
+    border-radius: 3px;
+    height: 20px;
+}
+.search-img {
+    content: url("/resources/img/search.png");
+    width: 16px;
+    height: 16px;
+    margin-top: 19px;
+    margin-left: -36px;
+}
