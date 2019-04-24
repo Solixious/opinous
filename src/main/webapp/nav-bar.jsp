@@ -21,7 +21,7 @@
     <ul class="nav navbar-nav float-right">
     <li>
         <form id="searchForm" method="GET" action="${contextPath}/search">
-            <input type="text" id="search" placeholder="Search"/>
+            <input type="text" id="search" name="q" placeholder="Search"/>
             <img class="search-img"/>
         </form>
     </li>

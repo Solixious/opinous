@@ -20,4 +20,5 @@ public class AttributeName {
 	public static final String FOLLOWING = "following";
 	public static final String FOLLOWERS_COUNT = "followersCount";
 	public static final String FOLLOWING_COUNT = "followingCount";
+	public static final String SEARCH_RESPONSE = "searchResponse";
 }
