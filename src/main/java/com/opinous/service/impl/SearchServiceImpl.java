@@ -5,7 +5,9 @@ import com.opinous.service.SearchService;
 import com.opinous.service.UserService;
 import com.opinous.utils.PreCondition;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SearchServiceImpl implements SearchService {
 
     @Autowired
@@ -17,6 +19,6 @@ public class SearchServiceImpl implements SearchService {
 
         final SearchResponse searchResponse = new SearchResponse();
         searchResponse.setUsers(userService.search(q));
-        return null;
+        return searchResponse;
     }
 }

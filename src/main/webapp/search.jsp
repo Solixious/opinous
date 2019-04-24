@@ -16,7 +16,19 @@
 	<body>
 		<jsp:include page="nav-bar.jsp" />
 		<div class="container">
-
+		    <c:forEach items="${searchResponse.users}" var="user">
+            	<a href="${contextPath}/profile/${user.username}" class="follow-link">
+                    <c:choose>
+                        <c:when test="${user.profilePicture != null}">
+                            <img src="${user.profilePicture}" class="follow-dp"/>
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${contextPath}/resources/img/defaultdp.jpg" class="follow-dp"/>
+                        </c:otherwise>
+                    </c:choose>
+                    <span class="follow-username">${user.username}</span>
+                </a>
+            </c:forEach>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="/resources/js/reactions.js"></script>
