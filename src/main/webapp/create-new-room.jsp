@@ -19,23 +19,16 @@
 <body>
 	<jsp:include page="nav-bar.jsp" />
 	<div class="container">
-        <form:form method="POST" modelAttribute="roomForm" class="form form-new-room">
+        <form method="POST" class="form form-new-room" action="/v1/api/room/new">
             <h2 class="form-heading">Create New Room</h2>
             <div class="form-content">
-	            <spring:bind path="title">
-                    <form:input type="text" path="title" class="form-element form-input" placeholder="Title"
-						autofocus="true"></form:input>
-                    <form:errors class="form-error" path="title"></form:errors>
-	            </spring:bind>
-	
-	            <spring:bind path="description">
-					<form:textarea path="description" class="form-element form-textarea" placeholder="Description"
-						rows="5"></form:textarea>
-					<form:errors class="form-error" path="description"></form:errors>
-	            </spring:bind>
-	            <button class="form-button-primary" type="submit">Submit</button>
+	            <input type="text" name="title" class="form-element form-input" placeholder="Title"
+					autofocus="true" />
+                <textarea name="description" class="form-element form-textarea" placeholder="Description"
+					rows="5"></textarea>
+				<button class="form-button-primary" type="submit">Submit</button>
 	        </div>
-        </form:form>
+        </form>
 
 </div>
 <!-- /container -->

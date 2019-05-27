@@ -51,13 +51,13 @@ public interface RoomService {
 
 	/**
 	 * @param rooms List of Room
-	 * @return List of corresponding RoomDTO
+	 * @return List of corresponding CreateRoomRequest
 	 */
 	List<RoomDTO> convertToRoomDTO(List<Room> rooms);
 
 	/**
 	 * @param room The Room object
-	 * @return The corresponding RoomDTO object
+	 * @return The corresponding CreateRoomRequest object
 	 */
 	RoomDTO convertToRoomDTO(Room room);
 }
